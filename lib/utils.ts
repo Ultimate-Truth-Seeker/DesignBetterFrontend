@@ -9,7 +9,7 @@ export function cn(...classes: (string | boolean | undefined)[]): string {
   import  {parseISO}  from 'date-fns/parseISO'
   import  {es}  from 'date-fns/locale/es'
   
-  export function formatDate(
+  export function formatDate( 
     dateString: string,
     pattern: string = 'PP' // 'PP' = 15 ene 2023
   ): string {

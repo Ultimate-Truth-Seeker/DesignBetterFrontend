@@ -2,14 +2,14 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getAccessToken, clearTokens, saveTokens } from "@/lib/auth"
+import { getAccessToken, clearTokens, saveTokens } from "@/lib/auth-client"
 import { refreshToken } from "@/lib/api"
 
 interface AuthContextType {
   isAuthenticated: boolean
   logout: () => void
   login: (access: string, refresh: string) => void
-}
+} 
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,

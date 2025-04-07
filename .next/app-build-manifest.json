@@ -6,10 +6,10 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/forgot-password/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/forgot-password/page.js"
+      "static/chunks/app/page.js"
     ],
     "/register/page": [
       "static/chunks/webpack.js",
@@ -21,20 +21,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/login/page.js"
     ],
-    "/dashboard/layout": [
+    "/forgot-password/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/layout.js"
-    ],
-    "/dashboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/page.js"
-    ],
-    "/reset-password/[uid]/[token]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/reset-password/[uid]/[token]/page.js"
+      "static/chunks/app/forgot-password/page.js"
     ]
   }
 }

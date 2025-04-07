@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { loginUser } from "@/lib/api"
-import { saveTokens } from "@/lib/auth"
+import { saveTokens } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/AuthProvider"
+import Link from "next/link"
 
 
 export default function LoginPage() {
@@ -63,6 +64,12 @@ export default function LoginPage() {
         >
           Entrar
         </button>
+        <p className="text-sm text-center">
+          ¿Olvidaste tu contraseña?{" "}
+          <Link href="/forgot-password" className="text-blue-600 hover:underline">
+            Recupérala aquí
+          </Link>
+        </p>
       </form>
     </div>
   )

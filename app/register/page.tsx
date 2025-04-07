@@ -71,14 +71,16 @@ export default function RegisterPage() {
           required
           className="w-full p-2 border rounded"
         />
-        <input
-          type="role"
-          placeholder="Seleccionar Rol"
+        <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
           required
           className="w-full p-2 border rounded"
-        />
+        >
+          <option value="">Seleccionar Rol</option>
+          <option value="cliente">Cliente</option>
+          <option value="diseñador">Diseñador</option>
+        </select>
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
