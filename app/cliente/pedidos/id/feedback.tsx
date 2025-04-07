@@ -52,23 +52,23 @@ export default async function PedidoDetailPage({
             </Button>
           </div>
 
-          {pedido.archivos?.length > 0 && (
-            <div className="mt-6">
-              <h3 className="font-medium mb-2">Archivos adjuntos</h3>
-              <div className="space-y-2">
-                {pedido.archivos.map(archivo => (
-                  <a 
-                    key={archivo.url} 
-                    href={archivo.url}
-                    className="flex items-center text-blue-600 hover:underline"
-                    download
-                  >
-                    {archivo.nombre}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
+{pedido.archivos && pedido.archivos.length > 0 && (
+  <div className="mt-6">
+    <h3 className="font-medium mb-2">Archivos adjuntos</h3>
+    <div className="space-y-2">
+      {pedido.archivos.map(archivo => (
+        <a 
+          key={archivo.url} 
+          href={archivo.url}
+          className="flex items-center text-blue-600 hover:underline"
+          download
+        >
+          {archivo.nombre}
+        </a>
+      ))}
+    </div>
+  </div>
+)}
         </div>
       </div>
     </div>

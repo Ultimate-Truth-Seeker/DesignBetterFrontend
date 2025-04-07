@@ -1,6 +1,6 @@
+// @/components/clients/StatusBadge.tsx
 import { cn } from '@/lib/utils';
-
-type EstadoPedido = 'pendiente' | 'en_proceso' | 'completado';
+import type { EstadoPedido } from '@/lib/types';
 
 interface StatusBadgeProps {
   estado: EstadoPedido;
@@ -12,14 +12,16 @@ export function StatusBadge({ estado, className }: StatusBadgeProps) {
   const variants = {
     pendiente: 'bg-yellow-100 text-yellow-800',
     en_proceso: 'bg-blue-100 text-blue-800',
-    completado: 'bg-green-100 text-green-800'
+    completado: 'bg-green-100 text-green-800',
+    revision: 'bg-purple-100 text-purple-800'
   };
 
   // Texto a mostrar para cada estado
   const labels = {
     pendiente: 'Pendiente',
     en_proceso: 'En proceso',
-    completado: 'Completado'
+    completado: 'Completado',
+    revision: 'En revisión'
   };
 
   return (

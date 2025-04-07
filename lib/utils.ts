@@ -5,9 +5,9 @@ export function cn(...classes: (string | boolean | undefined)[]): string {
   }
   
   // 2. Formateo de fechas (usando date-fns)
-  import  format  from 'date-fns/format'
-  import  parseISO  from 'date-fns/parseISO'
-  import  es  from 'date-fns/locale/es'
+  import  {format}  from 'date-fns/format'
+  import  {parseISO}  from 'date-fns/parseISO'
+  import  {es}  from 'date-fns/locale/es'
   
   export function formatDate(
     dateString: string,
@@ -57,15 +57,17 @@ export function cn(...classes: (string | boolean | undefined)[]): string {
   }
   
   // 8. Deep merge de objetos (útil para themes)
-  export function deepMerge<T extends object>(...objects: T[]): T {
+  export function deepMerge<T extends Record<string, any>>(...objects: T[]): T {
     return objects.reduce((acc, obj) => {
       Object.keys(obj).forEach((key) => {
         const accValue = acc[key];
         const objValue = obj[key];
-        acc[key] =
-          typeof accValue === 'object' && typeof objValue === 'object'
-            ? deepMerge(accValue, objValue)
-            : objValue;
+        if (typeof accValue === 'object' && accValue !== null && 
+            typeof objValue === 'object' && objValue !== null) {
+          acc[key as keyof T] = deepMerge(accValue, objValue);
+        } else {
+          acc[key as keyof T] = objValue;
+        }
       });
       return acc;
     }, {} as T);
