@@ -13,7 +13,7 @@ RUN npm install
 
 # Copiamos el resto de archivos del proyecto
 COPY . .
-RUN ls -la node_modules/.bin/ && node_modules/.bin/next --version
+#RUN ls -la node_modules/.bin/ && node_modules/.bin/next --version
 
 # Puerto donde se ejecutará la app Next.js en modo desarrollo
 EXPOSE 3000
