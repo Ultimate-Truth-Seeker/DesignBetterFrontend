@@ -1,0 +1,45 @@
+/* Tarjetas de pedidos */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+  }
+  
+  /* Estados (usar variables para colores) */
+  .pendiente {
+    background-color: var(--color-pending, #fff3cd); /* Amarillo claro */
+    color: var(--text-pending, #856404);
+  }
+  
+  .enProceso {
+    background-color: var(--color-process, #cce5ff); /* Azul claro */
+    color: var(--text-process, #004085);
+  }
+  
+  .completado {
+    background-color: var(--color-completed, #d4edda); /* Verde claro */
+    color: var(--text-completed, #155724);
+  }
+  
+  /* Lista de pedidos */
+  .pedidosList {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  /* Elementos interactivos */
+  .button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    opacity: 0.9;
+  }

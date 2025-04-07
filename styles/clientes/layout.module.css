@@ -1,0 +1,39 @@
+/* Estructura principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Tema de fondo y colores */
+  .themeClient {
+    background-color: #f8f9fa; /* Gris claro */
+    min-height: 100vh;
+  }
+  
+  /* Header y footer */
+  .header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer {
+    background-color: #343a40; /* Oscuro */
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+  
+  /* Grid básico para el layout */
+  .mainGrid {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar + contenido */
+    gap: 1rem;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .mainGrid {
+      grid-template-columns: 1fr;
+    }
+  }
