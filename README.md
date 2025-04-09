@@ -1,6 +1,6 @@
 # Sprint Scrum I - Proyecto - Ingeniería Software I - Frontend
 
-Este repositorio contiene el backend de la plataforma **Design Better**, una solución innovadora para el diseño y personalización de moda. La plataforma facilita a diseñadores y clientes la creación, simulación y personalización de prendas, optimizando el flujo de trabajo y mejorando la experiencia de usuario. Desarrollado con Django e integrado con Docker, el sistema ofrece un entorno robusto, seguro y escalable para el desarrollo ágil.
+Este repositorio contiene el **frontend** de la plataforma **Design Better**, una solución innovadora para el diseño y personalización de moda. La plataforma permite a diseñadores y clientes colaborar en la creación, simulación y personalización de prendas, mejorando el flujo de trabajo y la experiencia de usuario. Este módulo frontend está desarrollado con **Next.js**, **Tailwind CSS** y se ejecuta en contenedores Docker para facilitar el desarrollo y despliegue.
 
 ---
 
@@ -16,76 +16,75 @@ Este repositorio contiene el backend de la plataforma **Design Better**, una sol
 
 ## Estructura del Repositorio
 
-La organización del repositorio es la siguiente, lo que facilita la rápida identificación de los distintos componentes del proyecto:
+A continuación se describe la estructura principal del proyecto:
 
 ```
-DesignBetterBackend/
-├── docker-compose.yml         # Configuración de Docker Compose para levantar los contenedores
-├── Dockerfile                 # Instrucciones para construir la imagen Docker del backend
-├── src/                       # Código fuente del backend (aplicaciones, modelos, vistas, etc.)
-├── docs/                      # Documentación adicional (manuales, historial de versiones, etc.)
-├── tests/                     # Pruebas unitarias y de integración
-└── README.md                  # Documentación general, instrucciones y estructura del proyecto
+DesignBetterFrontend/
+├── app/                    # Rutas y vistas principales (Next.js App Router)
+├── components/             # Componentes reutilizables (UI, formularios, etc.)
+├── lib/                    # Funciones y utilidades auxiliares
+├── providers/              # Proveedores de contexto y autenticación
+├── public/                 # Archivos estáticos públicos
+├── styles/                 # Archivos CSS/Tailwind
+├── .next/                  # Carpeta generada por Next.js (build)
+├── Dockerfile              # Imagen Docker para producción
+├── docker-compose.yml      # Configuración de servicios en contenedor
+├── next.config.ts          # Configuración principal de Next.js
+├── tailwind.config.js      # Configuración de Tailwind CSS
+├── tsconfig.json           # Configuración de TypeScript
+├── package.json            # Dependencias y scripts del proyecto
+├── yarn.lock / package-lock.json
+└── README.md               # Documentación principal del proyecto
 ```
 
 ---
 
 ## Requisitos Previos
 
-Antes de construir y ejecutar el proyecto, asegúrese de tener instalado lo siguiente:
-
-- **Docker:** Versión 20.10 o superior.
-- **Docker Compose:** Asegúrese de contar con la versión compatible con su instalación de Docker.
-- **Git:** Para clonar el repositorio.
-- Otros requisitos que se deban configurar en archivos de entorno o configuraciones específicas del proyecto (ver sección de Configuración).
+- **Docker** (v20.10 o superior)
+- **Docker Compose**
+- **Yarn o npm** (solo si deseas ejecutar sin contenedores)
+- **Node.js 18+** (si ejecutas sin contenedor)
 
 ---
 
-## Configuración del Proyecto
+## Ejecución del Proyecto con Docker
 
-- **Variables de Entorno:**  
-  Algunos parámetros y variables de configuración (como la conexión a la base de datos, claves secretas, etc.) se administran mediante archivos de configuración o variables de entorno. Verifique el archivo `.env.example` (o documentación interna) para realizar los ajustes necesarios para su entorno de desarrollo o producción.
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/Ultimate-Truth-Seeker/DesignBetterFrontend.git
+cd DesignBetterFrontend
+```
 
----
+### 2. Crear red Docker (opcional)
+```bash
+docker network create devnetwork
+```
 
-## Construcción y Ejecución con Contenedores Docker
+### 3. Construir y levantar los contenedores
+```bash
+docker compose up -d
+```
 
-Siga estos pasos para construir y ejecutar los contenedores Docker del proyecto:
-
-1. **Clonar el Repositorio:**  
-   Abra la terminal y ejecute:
-   ```bash
-   git clone https://github.com/Ultimate-Truth-Seeker/DesignBetterBackend.git
-   cd DesignBetterBackend
-   ```
-
-2. **Crear la Red de Docker:**  
-   Desde la terminal, ejecute:
-   ```bash
-   docker network create devnetwork
-   ```
-
-3. **Construir y Levantar los Contenedores:**  
-   En la carpeta del backend del proyecto, ejecute:
-   ```bash
-   docker compose up -d
-   ```
+El sitio estará disponible por defecto en `http://localhost:3000`.
 
 ---
 
-## Gestión de Contenedores
+## Detener y Eliminar Contenedores
 
-Para facilitar la administración de los contenedores Docker, utilice los siguientes comandos:
-
-### Detener los Contenedores
+### Detener contenedores
 ```bash
 docker compose down
 ```
 
-### Eliminar Contenedores, Imágenes y Volúmenes
+### Eliminar todo (contenedores, imágenes, volúmenes)
 ```bash
 docker compose down --rmi all --volumes --remove-orphans
 ```
 
+---
 
-Con esta estructura y documentación, se busca facilitar el desarrollo, despliegue y mantenimiento del proyecto, asegurando claridad y un flujo de trabajo eficiente para todos los colaboradores.
+---
+
+Con esta estructura y documentación, el proyecto está preparado para un desarrollo colaborativo eficiente, despliegue en contenedores y futuras iteraciones ágiles.
+```
