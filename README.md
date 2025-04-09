@@ -82,9 +82,6 @@ docker compose down
 docker compose down --rmi all --volumes --remove-orphans
 ```
 
----
-
----
 
 Con esta estructura y documentación, el proyecto está preparado para un desarrollo colaborativo eficiente, despliegue en contenedores y futuras iteraciones ágiles.
-```
+
