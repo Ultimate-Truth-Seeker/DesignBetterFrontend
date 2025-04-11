@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-
+    "zod": "^3.22.4",
+    "lucide-react": "latest",
     "frontend": "file:",
     "next": "^15.2.4",
     "react": "^19.0.0",

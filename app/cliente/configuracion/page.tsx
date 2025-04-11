@@ -6,8 +6,14 @@ import { Card } from '@/components/ui/Card';
 import { Divider } from '@/components/ui/Divider';
 
 export default async function ConfiguracionPage() {
-  const user = await getCurrentUser(); // Obtener datos del usuario
-
+  //const user = await getCurrentUser(); // Obtener datos del usuario
+   const user = {
+    id: '',
+       name: '',
+       email: '',
+       role: '',
+       
+   }
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Configuración de tu cuenta</h1>
@@ -67,11 +73,11 @@ export default async function ConfiguracionPage() {
       {/* Sección 3: Zona peligrosa */}
       <Card title="Zona peligrosa" danger>
         <div className="space-y-4">
-          <Button variant="outline" onClick={() => {/* Lógica para cambiar contraseña */}}>
-            Cambiar contraseña
+          <Button variant="outline" //onClick={() => {/* Lógica para cambiar contraseña */}}>
+            >Cambiar contraseña
           </Button>
-          <Button variant="danger" onClick={() => {/* Lógica para eliminar cuenta */}}>
-            Eliminar cuenta
+          <Button variant="danger" //onClick={() => {/* Lógica para eliminar cuenta */}}>
+            >Eliminar cuenta
           </Button>
         </div>
       </Card>

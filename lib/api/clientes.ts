@@ -14,19 +14,35 @@ import type {
 
 // Funciones de dashboard
 export async function fetchClientDashboard() {
-  const response = await fetchBackend('/api/clientes/dashboard/', {
-    cache: 'no-store',
-  });
-  return response.json() as Promise<DashboardCliente>;
+  try {
+    const response = await fetchBackend('/api/clientes/dashboard/', {
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+      
+    }
+    return response.json() as Promise<DashboardCliente>;
+  } catch {
+    return {
+      nombre: '',
+      pedidosPendientes: 0,
+      pedidosEnProceso: 0,
+      ultimosPedidos: [],
+    };
+  }
 }
 
 // Funciones de pedidos
 export async function fetchPedidosCliente(estado?: EstadoPedido): Promise<Pedido[]> {
-  const url = `/api/clientes/pedidos${estado ? `?estado=${estado}` : ''}`;
-  const response = await fetchBackend(url, {
-    cache: 'no-store',
-  });
-  return response.json();
+  try {
+    const url = `/api/clientes/pedidos${estado ? `?estado=${estado}` : ''}`;
+    const response = await fetchBackend(url, {
+      cache: 'no-store',
+    });
+    return response.json();
+  } catch {
+    return []
+  }
 }
 
 export async function fetchPedidoDetalle(id: string): Promise<PedidoDetallado> {

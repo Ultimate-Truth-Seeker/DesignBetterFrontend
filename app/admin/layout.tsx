@@ -20,32 +20,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     {children}
                 </main>
             </div>
-            <style jsx>{`
-                .admin-layout {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100vh;
-                }
-                .admin-header {
-                    background: #333;
-                    color: #fff;
-                    padding: 1rem;
-                    text-align: center;
-                }
-                .admin-body {
-                    display: flex;
-                    flex: 1;
-                }
-                .admin-sidebar {
-                    width: 250px;
-                    background: #f4f4f4;
-                    padding: 1rem;
-                }
-                .admin-content {
-                    flex: 1;
-                    padding: 1rem;
-                }
-            `}</style>
+            
         </div>
     );
 }

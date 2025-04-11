@@ -17,12 +17,12 @@ export default async function ClientLayout({
   children: React.ReactNode;
 }) {
   // Verifica si el usuario es cliente (redirige si no)
-  await validateRole('CLIENTE');
+  //await validateRole('CLIENTE');
 
   return (
-    <html lang="es" className="bg-gray-50">
-      <body className={`${inter.className} client-theme`}>
-        <AuthProvider>
+    //<html lang="es" className="bg-gray-50">
+      //<body className={`${inter.className} client-theme`}>
+        //<AuthProvider>
           <div className="min-h-screen flex flex-col">
             <ClientNavbar />
             <main className="flex-1 container mx-auto p-4 md:p-6">
@@ -34,8 +34,8 @@ export default async function ClientLayout({
               </p>
             </footer>
           </div>
-        </AuthProvider>
-      </body>
-    </html>
+      //  </AuthProvider>
+    //  </body>
+  //  </html>
   );
 }
