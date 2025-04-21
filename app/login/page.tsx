@@ -6,6 +6,8 @@ import { saveTokens } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/AuthProvider"
 import Link from "next/link"
+import LoginConGoogle from '@/components/LoginConGoogle'
+
 
 
 export default function LoginPage() {
@@ -41,6 +43,8 @@ export default function LoginPage() {
     <div className="max-w-md mx-auto mt-20 p-4 border rounded-xl shadow-md">
       <h1 className="text-2xl font-bold mb-6">Iniciar sesión</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
+      <LoginConGoogle />
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
