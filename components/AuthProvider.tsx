@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getAccessToken, clearTokens, saveTokens } from "@/lib/auth-client"
+import { getAccessToken, clearTokens, saveTokens, decodeAccessToken } from "@/lib/auth-client"
 import { refreshToken } from "@/lib/api"
 
 interface AuthContextType {
@@ -49,6 +49,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (access: string, refresh: string) => {
     saveTokens(access, refresh)
     setIsAuthenticated(true)
+    const decoded = decodeAccessToken(access)
+
+    if (!decoded) return
+
+    const rol = decoded.rol
+    if (rol === 'admin') {
+      router.push('/admin')
+    } else if (rol === 'cliente') {
+      router.push('/cliente')
+    } else if (rol === 'disenador') {
+      router.push('/disenador')
+    } else {
+      router.push('/') // fallback
+    }
   }
 
   return (

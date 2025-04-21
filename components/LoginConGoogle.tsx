@@ -4,6 +4,8 @@
 import { GoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/navigation'
 import { useAuth } from "@/components/AuthProvider"
+import { saveTokens } from "@/lib/auth-client"
+
 
 
 export default function LoginConGoogle() {
@@ -27,7 +29,10 @@ export default function LoginConGoogle() {
           const data = await response.json()
 
           if (response.ok) {
+            saveTokens(data.access, data.refresh)
             login(data.access, data.refresh)
+            console.log('Respuesta del backend:', data) // 👈 Asegúrate que contenga "access" y "refresh"
+
             //router.push('/dashboard')  // redirige al home del usuario
           } else {
             console.error('❌ Error al autenticar en backend:', data)

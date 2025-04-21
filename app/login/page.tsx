@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { loginUser } from "@/lib/api"
-import { saveTokens } from "@/lib/auth-client"
+import { saveTokens, decodeAccessToken } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/AuthProvider"
 import Link from "next/link"
@@ -33,7 +33,22 @@ export default function LoginPage() {
       const { access, refresh } = await loginUser({ email, password })
       saveTokens(access, refresh)
       login(access, refresh) // esta función actualiza el estado global
-      router.push("/dashboard") // O redirigir según el rol
+      //router.push("/dashboard") // O redirigir según el rol
+      const decoded = decodeAccessToken(access)
+
+      if (!decoded) return
+
+      const rol = decoded.rol
+      
+      if (rol === 'admin') {
+        router.push('/admin')
+      } else if (rol === 'cliente') {
+        router.push('/cliente')
+      } else if (rol === 'disenador') {
+        router.push('/disenador')
+      } else {
+        router.push('/') // fallback
+      }
     } catch (err: any) {
       setError(err.message)
     }

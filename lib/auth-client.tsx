@@ -31,3 +31,23 @@ export function clearTokens() {
     localStorage.removeItem("refreshToken");
   }
 }
+
+import { jwtDecode } from 'jwt-decode'
+
+export interface DecodedToken {
+  user_id: number
+  email: string
+  rol: 'admin' | 'cliente' | 'disenador' // o lo que tengas
+  nombre: string
+  exp: number
+  iat: number
+}
+
+export function decodeAccessToken(token: string): DecodedToken | null {
+  try {
+    return jwtDecode<DecodedToken>(token)
+  } catch (error) {
+    console.error('Error decodificando el token:', error)
+    return null
+  }
+}
