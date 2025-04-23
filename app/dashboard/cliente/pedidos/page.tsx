@@ -24,7 +24,7 @@ export default async function PedidosPage({
           </p>
         </div>
         <Button asChild>
-          <Link href="/cliente/pedidos/nuevo">
+          <Link href="/dashboard/cliente/pedidos/nuevo">
             <PlusIcon className="mr-2 h-4 w-4" />
             Nuevo pedido
           </Link>

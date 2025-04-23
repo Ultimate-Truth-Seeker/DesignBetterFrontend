@@ -10,9 +10,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <aside className="admin-sidebar">
                     <nav>
                         <ul>
-                            <li><a href="/admin/dashboard">Dashboard</a></li>
-                            <li><a href="/admin/users">Users</a></li>
-                            <li><a href="/admin/settings">Settings</a></li>
+                            <li><a href="/dashboard/admin/dashboard">Dashboard</a></li>
+                            <li><a href="/dashboard/admin/users">Users</a></li>
+                            <li><a href="/dashboard/admin/settings">Settings</a></li>
                         </ul>
                     </nav>
                 </aside>

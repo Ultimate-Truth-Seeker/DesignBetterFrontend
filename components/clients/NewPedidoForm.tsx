@@ -45,7 +45,7 @@ export function NewPedidoForm({
       <div className="flex gap-4">
         <Button type="submit">Enviar pedido</Button>
         <Button variant="outline" type="button" asChild>
-          <a href="/cliente/pedidos">Cancelar</a>
+          <a href="/dashboard/cliente/pedidos">Cancelar</a>
         </Button>
       </div>
 

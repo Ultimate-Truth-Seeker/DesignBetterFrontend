@@ -20,7 +20,7 @@ export function EmptyState({
         
         {showAction && (
           <Button asChild>
-            <Link href="/cliente/pedidos/nuevo">
+            <Link href="/dashboard/cliente/pedidos/nuevo">
               Crear nuevo pedido
             </Link>
           </Button>
