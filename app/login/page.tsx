@@ -1,22 +1,15 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { loginUser } from "@/lib/api"
-import { saveTokens, decodeAccessToken } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/AuthProvider"
-import Link from "next/link"
-import LoginConGoogle from '@/components/LoginConGoogle'
-
+import LoginForm from "@/components/auth/LoginForm"
 
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+ 
   const { isAuthenticated } = useAuth()
   const router = useRouter()
-  const { login } = useAuth()
 
 
   useEffect(() => {
@@ -25,71 +18,11 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, router])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-
-    try {
-      const { access, refresh } = await loginUser({ email, password })
-      saveTokens(access, refresh)
-      login(access, refresh) // esta función actualiza el estado global
-      //router.push("/dashboard") // O redirigir según el rol
-      const decoded = decodeAccessToken(access)
-
-      if (!decoded) return
-
-      const rol = decoded.rol
-      
-      if (rol === 'admin') {
-        router.push('/admin')
-      } else if (rol === 'cliente') {
-        router.push('/cliente')
-      } else if (rol === 'disenador') {
-        router.push('/disenador')
-      } else {
-        router.push('/') // fallback
-      }
-    } catch (err: any) {
-      setError(err.message)
-    }
-  }
+  
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-4 border rounded-xl shadow-md">
-      <h1 className="text-2xl font-bold mb-6">Iniciar sesión</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <LoginConGoogle />
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Entrar
-        </button>
-        <p className="text-sm text-center">
-          ¿Olvidaste tu contraseña?{" "}
-          <Link href="/forgot-password" className="text-blue-600 hover:underline">
-            Recupérala aquí
-          </Link>
-        </p>
-      </form>
+    <div className="flex justify-center">
+    <LoginForm />
     </div>
   )
 }
