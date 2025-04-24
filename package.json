@@ -10,20 +10,20 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "zod": "^3.22.4",
-    "lucide-react": "latest",
+    "framer-motion": "latest",
     "frontend": "file:",
+    "jwt-decode": "latest",
+    "lucide-react": "latest",
     "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0",
     "three": "latest",
-    "jwt-decode": "latest",
-    "framer-motion": "latest"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@react-oauth/google": "latest",
     "@eslint/eslintrc": "^3",
+    "@react-oauth/google": "latest",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
