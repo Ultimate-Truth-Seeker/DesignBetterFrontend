@@ -7,10 +7,10 @@ Este repositorio contiene el **frontend** de la plataforma **Design Better**, un
 ## Documentación y Recursos
 
 - **Historial de Versiones:**  
-  [Historial de versiones y documentación](https://uvggt-my.sharepoint.com/:w:/g/personal/piv23574_uvg_edu_gt/EZJRR6nZmgVLvWhW3ljZVaABUmeDmoFEFqZ2tBmaSOk5ng?e=v5Vjpr)
+  [Historial de versiones y documentación](https://uvggt-my.sharepoint.com/:w:/g/personal/men23975_uvg_edu_gt/EbODmOJHdNlCt-gt0UDzqIkBXOH8IjRcJTD1jZfejYkbuA)
 
 - **Presentación de la Entrega:**  
-  [Accede a la presentación en Canva](https://www.canva.com/design/DAGj6A2ls68/VbwZEe7RZ4ySxEQi0gXDhA/edit?utm_content=DAGj6A2ls68&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+  [Accede a la presentación en Canva](https://www.canva.com/design/DAGlgSqIQfA/FL8fKKLI_ODLVjm9HwMP-w/edit?utm_content=DAGlgSqIQfA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ---
 
@@ -20,21 +20,28 @@ A continuación se describe la estructura principal del proyecto:
 
 ```
 DesignBetterFrontend/
-├── app/                    # Rutas y vistas principales (Next.js App Router)
-├── components/             # Componentes reutilizables (UI, formularios, etc.)
-├── lib/                    # Funciones y utilidades auxiliares
-├── providers/              # Proveedores de contexto y autenticación
-├── public/                 # Archivos estáticos públicos
-├── styles/                 # Archivos CSS/Tailwind
-├── .next/                  # Carpeta generada por Next.js (build)
-├── Dockerfile              # Imagen Docker para producción
-├── docker-compose.yml      # Configuración de servicios en contenedor
-├── next.config.ts          # Configuración principal de Next.js
-├── tailwind.config.js      # Configuración de Tailwind CSS
-├── tsconfig.json           # Configuración de TypeScript
-├── package.json            # Dependencias y scripts del proyecto
-├── yarn.lock / package-lock.json
-└── README.md               # Documentación principal del proyecto
+├── InvestigacionInterfaz       # CInvestigación e ideas sobre interfaces para las pantallas principales
+├── app/                        # Rutas y vistas principales 
+├── components/                 # Componentes reutilizables (UI, formularios, etc.)
+├── lib/                        # Funciones y utilidades auxiliares (ej. JWT, routing)
+├── providers/                  # Proveedores de contexto y lógica de autenticación
+├── public/                     # Archivos estáticos públicos (imágenes, íconos, etc.)
+├── styles/                     # Archivos CSS y configuración de Tailwind CSS
+├── .gitignore                  # Define los archivos y carpetas ignorados por git
+├── Dockerfile                  # Configuración de imagen Docker para producción
+├── docker-compose.yml          # Orquestación de servicios en contenedores
+├── eslint.config.mjs           # Configuración personalizada para ESLint
+├── LICENSE                     # Licencia del proyecto
+├── next-env.d.ts               # Definiciones de tipo para el entorno Next.js
+├── next.config.ts              # Configuración principal del framework Next.js
+├── package.json                # Información del proyecto, scripts y dependencias
+├── package-lock.json           # Archivo de bloqueo de versiones para npm
+├── postcss.config.mjs          # Configuración de PostCSS (procesador de CSS)
+├── tailwind.config.js          # Configuración de Tailwind CSS (temas, plugins, etc.)
+├── tsconfig.json               # Configuración de TypeScript
+├── yarn.lock                   # Archivo de bloqueo de versiones para yarn
+└── README.md                   # Documentación principal del proyecto
+
 ```
 
 ---
@@ -43,8 +50,6 @@ DesignBetterFrontend/
 
 - **Docker** (v20.10 o superior)
 - **Docker Compose**
-- **Yarn o npm** (solo si deseas ejecutar sin contenedores)
-- **Node.js 18+** (si ejecutas sin contenedor)
 
 ---
 
@@ -56,7 +61,7 @@ git clone https://github.com/Ultimate-Truth-Seeker/DesignBetterFrontend.git
 cd DesignBetterFrontend
 ```
 
-### 2. Crear red Docker (opcional)
+### 2. Crear red Docker
 ```bash
 docker network create devnetwork
 ```
