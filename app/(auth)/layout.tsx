@@ -1,0 +1,15 @@
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    return (
+      <div className="relative min-h-screen flex flex-col md:flex-row">
+        {/* Form section */}
+        <div className="flex-1 flex items-center justify-center px-6 py-8 md:px-12 lg:px-16">
+          <main className="w-full max-w-md">{children}</main>
+        </div>
+  
+        {/* Background image section */}
+        <div className="hidden md:block md:w-1/2 lg:w-7/12 bg-cover bg-center" style={{ 
+          backgroundImage: "url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80')" 
+        }}></div>
+      </div>
+    );
+  }

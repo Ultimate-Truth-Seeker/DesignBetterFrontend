@@ -35,23 +35,13 @@ export default function LoginForm() {
     
           if (!decoded) return
     
-          const rol = decoded.rol
           
-          if (rol === 'admin') {
-            router.push('/admin')
-          } else if (rol === 'cliente') {
-            router.push('/cliente')
-          } else if (rol === 'disenador') {
-            router.push('/disenador')
-          } else {
-            router.push('/') // fallback
-          }
         } catch (err: any) {
           setError(err.message)
         }
       }
     return (
-        <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-2xs dark:bg-neutral-900 dark:border-neutral-700">
+        <div className="">
   <div className="p-4 sm:p-7">
     <div className="text-center">
     <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Iniciar sesión</h1>
