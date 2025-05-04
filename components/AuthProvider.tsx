@@ -55,13 +55,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const rol = decoded.rol
     if (rol === 'admin') {
-      router.push('/admin')
+      router.push('/dashboard/admin')
     } else if (rol === 'cliente') {
-      router.push('/cliente')
+      router.push('/dashboard/cliente')
     } else if (rol === 'disenador') {
-      router.push('/disenador')
+      router.push('/dashboard/disenador')
     } else {
-      router.push('/') // fallback
+      router.push('/welcome') 
     }
   }
 
