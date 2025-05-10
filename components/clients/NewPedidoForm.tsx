@@ -16,14 +16,45 @@ export function NewPedidoForm({
     <form action={formAction} className="space-y-6 max-w-2xl">
       <div className="space-y-4">
         <div>
+          <label htmlFor="plantilla" className="block text-sm font-medium mb-1">
+            Buscar plantilla
+          </label>
+          <Input
+            id="buscarPlantilla"
+            name="buscarPlantilla"
+            placeholder="Buscar plantillas..."
+            label={''}
+          />
+          
+          <div className="mt-2">
+            <label htmlFor="plantilla" className="block text-sm font-medium mb-1">
+              Seleccionar plantilla
+            </label>
+            <select
+              id="plantilla"
+              name="plantilla"
+              className="w-full p-2 border rounded-md text-sm"
+              required
+            >
+              <option value="">Selecciona una plantilla</option>
+              <option value="plantilla1">Plantilla Básica</option>
+              <option value="plantilla2">Plantilla Premium</option>
+              <option value="plantilla3">Plantilla Personalizada</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
           <label htmlFor="titulo" className="block text-sm font-medium mb-1">
             Título del pedido
           </label>
           <Input
-                      id="titulo"
-                      name="titulo"
-                      placeholder="Ej: Diseño de logotipo para restaurante"
-                      required label={''}          />
+            id="titulo"
+            name="titulo"
+            placeholder="Ej: Diseño de logotipo para restaurante"
+            required 
+            label={''}
+          />
         </div>
 
         <div>
