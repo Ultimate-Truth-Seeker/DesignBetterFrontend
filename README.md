@@ -1,4 +1,4 @@
-# Sprint Scrum I - Proyecto - Ingeniería Software I - Frontend
+# Sprint Scrum II - Proyecto - Ingeniería Software I - Frontend
 
 Este repositorio contiene el **frontend** de la plataforma **Design Better**, una solución innovadora para el diseño y personalización de moda. La plataforma permite a diseñadores y clientes colaborar en la creación, simulación y personalización de prendas, mejorando el flujo de trabajo y la experiencia de usuario. Este módulo frontend está desarrollado con **Next.js**, **Tailwind CSS** y se ejecuta en contenedores Docker para facilitar el desarrollo y despliegue.
 
