@@ -6,12 +6,14 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/textarea';
 import { GarmentWizard } from '@/components/garment/GarmentWizard';
+import { BodyMeasurements } from './Medidas';
 
 const TEMPLATES = [
   { id: 'plantilla1', name: 'Plantilla Básica' },
   { id: 'plantilla2', name: 'Plantilla Premium' },
   { id: 'plantilla3', name: 'Plantilla Personalizada' },
 ];
+
 
 export function NewPedidoForm({
   onSubmit,
@@ -26,6 +28,17 @@ export function NewPedidoForm({
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [measurements, setMeasurements] = useState({
+    altura: '',
+    peso: '',
+    pecho: '',
+    cintura: '',
+    cadera: '',
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setMeasurements(prev => ({ ...prev, [name]: value }));
+  };
   useEffect(() => {
     const results = TEMPLATES.filter(template =>
       template.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -167,6 +180,9 @@ export function NewPedidoForm({
 
       <div>
         <GarmentWizard/>
+        <h2 className="text-lg font-bold">Medidas corporales</h2>
+        <BodyMeasurements measurements={measurements} onChange={handleChange} />
+
       </div>
 
       <div className="flex gap-4">
