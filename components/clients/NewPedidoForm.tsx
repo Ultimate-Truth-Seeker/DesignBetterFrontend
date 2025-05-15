@@ -5,6 +5,7 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/textarea';
+import { GarmentWizard } from '@/components/garment/GarmentWizard';
 
 const TEMPLATES = [
   { id: 'plantilla1', name: 'Plantilla Básica' },
@@ -144,7 +145,7 @@ export function NewPedidoForm({
           <Input
             id="titulo"
             name="titulo"
-            placeholder="Ej: Diseño de logotipo para restaurante"
+            placeholder="Ej: Diseño para mi prenda"
             required
             label={''}
           />
@@ -162,6 +163,10 @@ export function NewPedidoForm({
             required
           />
         </div>
+      </div>
+
+      <div>
+        <GarmentWizard/>
       </div>
 
       <div className="flex gap-4">

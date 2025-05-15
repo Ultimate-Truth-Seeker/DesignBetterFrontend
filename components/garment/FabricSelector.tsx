@@ -30,4 +30,12 @@ export const FabricSelector = () => {
           >
             {fabric.texture && (
               <img
-                src={fabric.text
+                src={fabric.text}></img>
+            )}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+      )
+    }

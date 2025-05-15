@@ -1,4 +1,5 @@
 // app/welcome/layout.tsx
+import ProtectedRoute from '@/components/ProtectedRoute'
 import { ReactNode } from 'react'
 
 export const metadata = {
@@ -7,9 +8,11 @@ export const metadata = {
 
 export default function WelcomeLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      {children}
-    </div>
+    <ProtectedRoute>
+      <div>
+        {children}
+      </div>
+    </ProtectedRoute>
   )
 }
 

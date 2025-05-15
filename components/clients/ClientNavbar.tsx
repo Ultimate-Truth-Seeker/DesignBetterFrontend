@@ -7,9 +7,9 @@ export default function ClientNavbar() {
   const pathname = usePathname();
 
   const links = [
-    { href: '/cliente', label: 'Inicio' },
-    { href: '/cliente/pedidos', label: 'Mis Pedidos' },
-    { href: '/cliente/favoritos', label: 'Favoritos' },
+    { href: '/dashboard/cliente', label: 'Inicio' },
+    { href: '/dashboard/cliente/pedidos', label: 'Mis Pedidos' },
+    { href: '/dashboard/cliente/favoritos', label: 'Favoritos' },
   ];
 
   return (

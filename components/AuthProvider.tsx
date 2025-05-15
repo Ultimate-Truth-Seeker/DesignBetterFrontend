@@ -50,16 +50,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     saveTokens(access, refresh)
     setIsAuthenticated(true)
     const decoded = decodeAccessToken(access)
-
+    
     if (!decoded) return
-
+    
     const rol = decoded.rol
+    console.log(access, refresh, decoded, rol)
     if (rol === 'admin') {
       router.push('/dashboard/admin')
     } else if (rol === 'cliente') {
       router.push('/dashboard/cliente')
-    } else if (rol === 'disenador') {
-      router.push('/dashboard/disenador')
+    } else if (rol === 'diseñador') {
+      router.push('/dashboard/disenadores')
     } else {
       router.push('/welcome') 
     }

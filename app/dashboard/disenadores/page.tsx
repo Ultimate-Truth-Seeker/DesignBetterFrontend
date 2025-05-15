@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 interface Medidas {
   [key: string]: number;
@@ -25,7 +24,6 @@ interface PatronFormData {
 }
 
 export default function IngresoPatronesPage() {
-  const { data: session } = useSession();
   const router = useRouter();
   const [formData, setFormData] = useState<PatronFormData>({
     nombre: '',
@@ -86,10 +84,7 @@ export default function IngresoPatronesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!session?.user?.accessToken) {
-      alert('Debes iniciar sesión');
-      return;
-    }
+    
 
     const formDataToSend = new FormData();
     formDataToSend.append('nombre', formData.nombre);
