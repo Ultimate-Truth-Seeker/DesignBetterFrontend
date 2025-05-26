@@ -14,7 +14,6 @@ const TEMPLATES = [
   { id: 'plantilla3', name: 'Plantilla Personalizada' },
 ];
 
-
 export function NewPedidoForm({
   onSubmit,
 }: {
@@ -35,10 +34,21 @@ export function NewPedidoForm({
     cintura: '',
     cadera: '',
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setMeasurements(prev => ({ ...prev, [name]: value }));
+    let numericValue = parseFloat(value);
+    let finalValue = '';
+    
+    if (!isNaN(numericValue)) {
+      finalValue = Math.max(0, numericValue).toString();
+    } else if (value === '') {
+      finalValue = '';
+    }
+    
+    setMeasurements(prev => ({ ...prev, [name]: finalValue }));
   };
+
   useEffect(() => {
     const results = TEMPLATES.filter(template =>
       template.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -84,7 +94,6 @@ export function NewPedidoForm({
   return (
     <form action={formAction} className="space-y-6 max-w-2xl">
       <div className="space-y-4">
-        {/* Campo de búsqueda con sugerencias */}
         <div className="relative">
           <label htmlFor="buscarPlantilla" className="block text-sm font-medium mb-1">
             Buscar plantilla
@@ -127,7 +136,6 @@ export function NewPedidoForm({
           )}
         </div>
 
-        {/* Lista desplegable tradicional */}
         <div>
           <label htmlFor="plantilla" className="block text-sm font-medium mb-1">
             Seleccionar plantilla
@@ -150,7 +158,6 @@ export function NewPedidoForm({
           </select>
         </div>
 
-        {/* Campos restantes del formulario */}
         <div>
           <label htmlFor="titulo" className="block text-sm font-medium mb-1">
             Título del pedido
@@ -182,7 +189,6 @@ export function NewPedidoForm({
         <GarmentWizard/>
         <h2 className="text-lg font-bold">Medidas corporales</h2>
         <BodyMeasurements measurements={measurements} onChange={handleChange} />
-
       </div>
 
       <div className="flex gap-4">
@@ -196,5 +202,63 @@ export function NewPedidoForm({
         <p className="text-red-500 text-sm">{state.error}</p>
       )}
     </form>
+  );
+}
+
+// Componente BodyMeasurements actualizado
+function BodyMeasurements({ measurements, onChange }: { measurements: any, onChange: any }) {
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">Altura (cm)</label>
+        <Input
+          type="number"
+          name="altura"
+          value={measurements.altura}
+          onChange={onChange}
+          min="0"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Peso (kg)</label>
+        <Input
+          type="number"
+          name="peso"
+          value={measurements.peso}
+          onChange={onChange}
+          min="0"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Pecho (cm)</label>
+        <Input
+          type="number"
+          name="pecho"
+          value={measurements.pecho}
+          onChange={onChange}
+          min="0"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Cintura (cm)</label>
+        <Input
+          type="number"
+          name="cintura"
+          value={measurements.cintura}
+          onChange={onChange}
+          min="0"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Cadera (cm)</label>
+        <Input
+          type="number"
+          name="cadera"
+          value={measurements.cadera}
+          onChange={onChange}
+          min="0"
+        />
+      </div>
+    </div>
   );
 }
