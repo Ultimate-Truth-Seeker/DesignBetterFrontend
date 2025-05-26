@@ -13,14 +13,16 @@ export default function ClientNavbar() {
   ];
 
   return (
-    <nav className="client-navbar">
-      <div className="logo">DesignBetter</div>
-      <ul>
+    <nav className="client-navbar flex justify-between items-center px-8 py-4 bg-gray-100">
+      <div className="logo font-bold text-xl">DesignBetter</div>
+      <ul className="flex space-x-6">
         {links.map((link) => (
           <li key={link.href}>
             <Link 
               href={link.href}
-              className={pathname === link.href ? 'active' : ''}
+              className={`hover:text-blue-600 transition-colors ${
+                pathname === link.href ? 'text-blue-600 font-semibold' : 'text-gray-700'
+              }`}
             >
               {link.label}
             </Link>
@@ -28,7 +30,12 @@ export default function ClientNavbar() {
         ))}
       </ul>
       <form action={logoutUser}>
-        <button type="submit">Cerrar sesión</button>
+        <button 
+          type="submit"
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+        >
+          Cerrar sesión
+        </button>
       </form>
     </nav>
   );
