@@ -187,7 +187,7 @@ export function NewPedidoForm({
 
       <div>
         <GarmentWizard/>
-        <h2 className="text-lg font-bold">Medidas corporales</h2>
+        <h2 className="text-lg font-bold mb-4">Medidas corporales</h2>
         <BodyMeasurements measurements={measurements} onChange={handleChange} />
       </div>
 
@@ -209,55 +209,65 @@ export function NewPedidoForm({
 function BodyMeasurements({ measurements, onChange }: { measurements: any, onChange: any }) {
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-1">Altura (cm)</label>
-        <Input
-          type="number"
-          name="altura"
-          value={measurements.altura}
-          onChange={onChange}
-          min="0"
-        />
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Altura (cm)</label>
+          <Input
+            type="number"
+            name="altura"
+            value={measurements.altura}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Peso (kg)</label>
+          <Input
+            type="number"
+            name="peso"
+            value={measurements.peso}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Pecho (cm)</label>
+          <Input
+            type="number"
+            name="pecho"
+            value={measurements.pecho}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Peso (kg)</label>
-        <Input
-          type="number"
-          name="peso"
-          value={measurements.peso}
-          onChange={onChange}
-          min="0"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Pecho (cm)</label>
-        <Input
-          type="number"
-          name="pecho"
-          value={measurements.pecho}
-          onChange={onChange}
-          min="0"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Cintura (cm)</label>
-        <Input
-          type="number"
-          name="cintura"
-          value={measurements.cintura}
-          onChange={onChange}
-          min="0"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Cadera (cm)</label>
-        <Input
-          type="number"
-          name="cadera"
-          value={measurements.cadera}
-          onChange={onChange}
-          min="0"
-        />
+      
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Cintura (cm)</label>
+          <Input
+            type="number"
+            name="cintura"
+            value={measurements.cintura}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Cadera (cm)</label>
+          <Input
+            type="number"
+            name="cadera"
+            value={measurements.cadera}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
     </div>
   );
