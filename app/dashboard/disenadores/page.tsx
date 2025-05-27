@@ -6,6 +6,9 @@ import MedidasForm from '@/components/designer/MedidasForm';
 
 
 
+import { generarGeometria } from '@/components/designer/generarGeometria';
+import Navbar from '@/components/DashNavbar';
+
 interface Medidas {
   [key: string]: number;
 }
@@ -70,6 +73,15 @@ export default function IngresoPatronesPage() {
   const handleParteChange = (index: number, field: keyof PartePatron, value: string | Medidas) => {
     const nuevasPartes = [...formData.partes];
     nuevasPartes[index] = { ...nuevasPartes[index], [field]: value };
+    setFormData((prev: any) => ({ ...prev, partes: nuevasPartes }));
+  };
+  const handleParteMedidasChange = (index: number, medidas: Record<string, number>) => {
+    const nuevasPartes = [...formData.partes];
+    nuevasPartes[index].medidas = medidas;
+
+    // Generar nueva geometría
+    nuevasPartes[index].geometria = generarGeometria(medidas);
+
     setFormData((prev: any) => ({ ...prev, partes: nuevasPartes }));
   };
 
@@ -138,6 +150,7 @@ export default function IngresoPatronesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Navbar/>
       <h1 className="text-2xl font-bold mb-6">Ingreso de Nuevo Patrón</h1>
       
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -302,6 +315,20 @@ export default function IngresoPatronesPage() {
                   rows={2}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
+              </div>
+              {/* Editor visual de geometría */}
+              <div className="mt-2 border p-2">
+                <label className="block text-sm font-bold text-gray-700 mb-1">Vista previa:</label>
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                  {Array.isArray(parte.geometria) &&
+                    parte.geometria.map((el, i) => {
+                      if (el.tipo === "polyline") {
+                        const puntos = el.puntos.map(([x, y]: [number, number]) => `${x},${300 - y}`).join(" ");
+                        return <polyline key={i} points={puntos} stroke={el.color || "black"} fill="none" />;
+                      }
+                      return null;
+                    })}
+                </svg>
               </div>
 
               {formData.partes.length > 1 && (
