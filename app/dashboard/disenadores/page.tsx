@@ -1,6 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import MedidasForm from '@/components/designer/MedidasForm';
+
+
+
 
 interface Medidas {
   [key: string]: number;
@@ -25,7 +29,9 @@ interface PatronFormData {
 
 export default function IngresoPatronesPage() {
   const router = useRouter();
+  const medidasEsperadas = ['largo', 'ancho', 'cintura']; 
   const [formData, setFormData] = useState<PatronFormData>({
+  
     nombre: '',
     tipo_prenda: 'camisa',
     genero: 'unisex',
@@ -274,23 +280,15 @@ export default function IngresoPatronesPage() {
                 {/* Medidas */}
                 <div>
                   <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Medidas (JSON) *
+                    Medidas *
                   </label>
-                  <input
-                    type="text"
-                    value={JSON.stringify(parte.medidas)}
-                    onChange={(e: { target: { value: string; }; }) => {
-                      try {
-                        const parsed = JSON.parse(e.target.value);
-                        handleParteChange(index, 'medidas', parsed);
-                      } catch {
-                        // Manejo de error opcional
-                      }
-                    }}
-                    placeholder='{"largo": 50, "ancho": 30}'
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  <MedidasForm
+                    medidasEsperadas={medidasEsperadas}
+                    valoresIniciales={parte.medidas}
+                    onChange={(nuevasMedidas) => handleParteChange(index, 'medidas', nuevasMedidas)}
                   />
                 </div>
+                
               </div>
 
               {/* Observaciones de la Parte */}
