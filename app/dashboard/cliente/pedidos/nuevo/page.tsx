@@ -23,6 +23,9 @@ export default function NewPedidoPage() {
       redirect('/cliente/pedidos/nuevo?error=true');
     }
   }
+  async function debugSubmit(formData: FormData) {
+    'use server';
+  }
 
   return (
     <div className="space-y-8">
@@ -33,7 +36,7 @@ export default function NewPedidoPage() {
         </p>
       </header>
 
-      <NewPedidoForm onSubmit={handleCreatePedido} />
+      <NewPedidoForm onSubmit={debugSubmit} />
     </div>
   );
 }
