@@ -2,9 +2,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { logoutUser } from '@/lib/auth/actions';
+import { useAuth } from "@/components/AuthProvider"
 
 export default function ClientNavbar() {
   const pathname = usePathname();
+  const { logout } = useAuth()
+
 
   const links = [
     { href: '/dashboard/cliente', label: 'Inicio' },
@@ -31,6 +34,9 @@ export default function ClientNavbar() {
       </ul>
       <form action={logoutUser}>
         <button 
+        
+          onClick={logout}
+        
           type="submit"
           className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
         >
