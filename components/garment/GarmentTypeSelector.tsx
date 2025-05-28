@@ -7,9 +7,9 @@ type GarmentType = {
 };
 
 const garmentTypes: GarmentType[] = [
-  { id: "1", name: "Vestido", image: "/icons/dress.svg" },
-  { id: "2", name: "Blusa", image: "/icons/shirt.svg" },
-  { id: "3", name: "Pantalón", image: "/icons/pants.svg" },
+  { id: "1", name: "Vestido", image: "../icons/dress.png" },
+  { id: "2", name: "Blusa", image: "../icons/shirt.png" },
+  { id: "3", name: "Pantalón", image: "../icons/pants.png" },
   // Más tipos...
 ];
 

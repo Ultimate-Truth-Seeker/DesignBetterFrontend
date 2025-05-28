@@ -7,9 +7,9 @@ type Fabric = {
 };
 
 const fabrics: Fabric[] = [
-  { id: "1", name: "Algodón", texture: "/textures/cotton.jpg" },
-  { id: "2", name: "Seda", texture: "/textures/silk.jpg" },
-  { id: "3", name: "Lino", texture: "/textures/linen.jpg" },
+  { id: "1", name: "Algodón", texture: "../textures/algodon.png" },
+  { id: "2", name: "Seda", texture: "../textures/seda.png" },
+  { id: "3", name: "Lino", texture: "../textures/lino.png" },
   // Más telas...
 ];
 
