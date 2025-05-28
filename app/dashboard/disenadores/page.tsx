@@ -9,6 +9,8 @@ import MedidasForm from '@/components/designer/MedidasForm';
 import { generarGeometria } from '@/components/designer/generarGeometria';
 import Navbar from '@/components/DashNavbar';
 import { DesignerNavbar } from '@/components/designer/DesignerNavbar';
+import { useAuth } from '@/components/AuthProvider';
+import { getAccessToken } from '@/lib/auth-client';
 
 interface Medidas {
   [key: string]: number;
@@ -42,7 +44,7 @@ export default function IngresoPatronesPage() {
     tallas_disponibles: [],
     observaciones: '',
     archivo_patron: null,
-    partes: [{ nombre_parte: '', medidas: {}, observaciones: '' }],
+    partes: [{ nombre_parte: '', medidas: {}, observaciones: '', geometria: [] }],
     materiales: []
   });
 
@@ -102,7 +104,7 @@ export default function IngresoPatronesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    const accessToken = getAccessToken()
     
 
     const formDataToSend = new FormData();
@@ -119,19 +121,17 @@ export default function IngresoPatronesPage() {
       formDataToSend.append('archivo_patron', formData.archivo_patron);
     }
 
-    formData.partes.forEach((parte: { nombre_parte: string | Blob; medidas: any; observaciones: string | Blob; }, index: any) => {
-      formDataToSend.append(`partes[${index}][nombre_parte]`, parte.nombre_parte);
-      formDataToSend.append(`partes[${index}][medidas]`, JSON.stringify(parte.medidas));
-      if (parte.observaciones) {
-        formDataToSend.append(`partes[${index}][observaciones]`, parte.observaciones);
-      }
-    });
+    
+    formDataToSend.append('partes', JSON.stringify(formData.partes));
+    
+    
+    //console.log("Contenido:", JSON.stringify(formData.partes))//DEBUG
 
     try {
-      const response = await fetch('http://localhost:8000/api/patrones/crear/', {
+      const response = await fetch('http://localhost:8000/auth/crear-patron/', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${session.user.accessToken}`
+          Authorization: `Bearer ${accessToken}`
         },
         body: formDataToSend
       });
