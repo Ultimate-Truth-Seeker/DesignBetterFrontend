@@ -1,38 +1,41 @@
-import { Link, useLocation } from "react-router-dom";
-
+import { Link, useLocation, BrowserRouter } from "react-router-dom";
+import { useAuth } from "../AuthProvider";
+import { useState } from "react"
 // Opciones del menú (algunas deshabilitadas temporalmente)
 const menuItems = [
   {
     name: "Inicio",
-    path: "/designer",
+    path: "/dashboard/disenadores",
     enabled: true,
     icon: "🏠",
   },
   {
     name: "Biblioteca de Telas",
-    path: "/designer/fabrics",
+    path: "/dashboard/disenadores/fabrics",
     enabled: true,
     icon: "🧵",
   },
   {
     name: "Editor de Patrones",
-    path: "/designer/patterns",
+    path: "/dashboard/disenadores/patterns",
     enabled: false,
     icon: "✂️",
     disabledMessage: "Próximamente", 
   },
   {
     name: "Paleta de Colores",
-    path: "/designer/colors",
+    path: "/dashboard/disenadores/colors",
     enabled: false,
     icon: "🎨",
   },
 ];
 
 export const DesignerNavbar = () => {
-  const { pathname } = useLocation();
+  const [pathname, setPathname] = useState("");
+  const { logout } = useAuth();
 
   return (
+    <BrowserRouter>
     <nav className="bg-white p-4 border-b">
       <div className="max-w-6xl mx-auto flex items-center gap-8">
         <h1 className="text-xl font-bold text-rose-600">Panel del Diseñador</h1>
@@ -63,6 +66,13 @@ export const DesignerNavbar = () => {
           ))}
         </ul>
       </div>
+      <button
+        onClick={logout}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-red-700"
+      >
+        Cerrar sesión
+      </button>
     </nav>
+    </BrowserRouter>
   );
 };

@@ -8,6 +8,7 @@ import MedidasForm from '@/components/designer/MedidasForm';
 
 import { generarGeometria } from '@/components/designer/generarGeometria';
 import Navbar from '@/components/DashNavbar';
+import { DesignerNavbar } from '@/components/designer/DesignerNavbar';
 
 interface Medidas {
   [key: string]: number;
@@ -150,7 +151,7 @@ export default function IngresoPatronesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Navbar/>
+      <DesignerNavbar/>
       <h1 className="text-2xl font-bold mb-6">Ingreso de Nuevo Patrón</h1>
       
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -273,7 +274,9 @@ export default function IngresoPatronesPage() {
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-4">Partes del Patrón</h2>
           
-          {formData.partes.map((parte: { nombre_parte: any; medidas: any; observaciones: any; }, index: number) => (
+          {formData.partes.map((parte: {
+            geometria: any; nombre_parte: any; medidas: any; observaciones: any; 
+}, index: number) => (
             <div key={index} className="border border-gray-200 rounded p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
                 {/* Nombre de la Parte */}
@@ -298,7 +301,7 @@ export default function IngresoPatronesPage() {
                   <MedidasForm
                     medidasEsperadas={medidasEsperadas}
                     valoresIniciales={parte.medidas}
-                    onChange={(nuevasMedidas) => handleParteChange(index, 'medidas', nuevasMedidas)}
+                    onChange={(nuevasMedidas) => handleParteMedidasChange(index, nuevasMedidas)}
                   />
                 </div>
                 
