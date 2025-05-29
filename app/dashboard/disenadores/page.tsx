@@ -138,7 +138,18 @@ export default function IngresoPatronesPage() {
 
       if (response.ok) {
         alert('Patrón creado exitosamente');
-        router.push('/patrones');
+        //router.push('/patrones');
+        setFormData({
+  
+    nombre: '',
+    tipo_prenda: 'camisa',
+    genero: 'unisex',
+    tallas_disponibles: [],
+    observaciones: '',
+    archivo_patron: null,
+    partes: [{ nombre_parte: '', medidas: {}, observaciones: '', geometria: [] }],
+    materiales: []
+  })
       } else {
         const errorData = await response.json();
         alert(`Error: ${JSON.stringify(errorData)}`);
