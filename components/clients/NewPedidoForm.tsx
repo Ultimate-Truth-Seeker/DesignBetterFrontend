@@ -33,6 +33,9 @@ export function NewPedidoForm({
     pecho: '',
     cintura: '',
     cadera: '',
+    busto: '',
+    largoFalda: '',
+    largoTotal: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,6 +186,107 @@ export function NewPedidoForm({
             required
           />
         </div>
+
+        <div>
+          <label htmlFor="nombre" className="block text-sm font-medium mb-1">
+            Nombre
+          </label>
+          <div className="flex gap-2">
+            <Input
+              id="nombre"
+              name="nombre"
+              placeholder="First Name"
+              required
+              label={''}
+            />
+            <Input
+              id="apellido"
+              name="apellido"
+              placeholder="Last Name"
+              required
+              label={''}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="direccion" className="block text-sm font-medium mb-1">
+            Dirección
+          </label>
+          <Input
+            id="direccion"
+            name="direccion"
+            placeholder="Street Address"
+            required
+            label={''}
+          />
+          <Input
+            id="direccion2"
+            name="direccion2"
+            placeholder="Address Line 2"
+            label={''}
+          />
+          <div className="flex gap-2">
+            <Input
+              id="ciudad"
+              name="ciudad"
+              placeholder="City"
+              required
+              label={''}
+            />
+            <Input
+              id="estado"
+              name="estado"
+              placeholder="State/Region/Province"
+              required
+              label={''}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Input
+              id="codigoPostal"
+              name="codigoPostal"
+              placeholder="Postal / Zip Code"
+              required
+              label={''}
+            />
+            <Input
+              id="pais"
+              name="pais"
+              placeholder="Country"
+              required
+              label={''}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
+            Email
+          </label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+            label={''}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="telefono" className="block text-sm font-medium mb-1">
+            Teléfono
+          </label>
+          <Input
+            id="telefono"
+            name="telefono"
+            type="tel"
+            placeholder="Phone"
+            required
+            label={''}
+          />
+        </div>
       </div>
 
       <div>
@@ -218,8 +322,7 @@ function BodyMeasurements({ measurements, onChange }: { measurements: any, onCha
             value={measurements.altura}
             onChange={onChange}
             min="0"
-            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
-          />
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Peso (kg)</label>
@@ -229,8 +332,7 @@ function BodyMeasurements({ measurements, onChange }: { measurements: any, onCha
             value={measurements.peso}
             onChange={onChange}
             min="0"
-            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
-          />
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Pecho (cm)</label>
@@ -240,8 +342,7 @@ function BodyMeasurements({ measurements, onChange }: { measurements: any, onCha
             value={measurements.pecho}
             onChange={onChange}
             min="0"
-            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
-          />
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
         </div>
       </div>
       
@@ -254,8 +355,7 @@ function BodyMeasurements({ measurements, onChange }: { measurements: any, onCha
             value={measurements.cintura}
             onChange={onChange}
             min="0"
-            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
-          />
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Cadera (cm)</label>
@@ -265,8 +365,40 @@ function BodyMeasurements({ measurements, onChange }: { measurements: any, onCha
             value={measurements.cadera}
             onChange={onChange}
             min="0"
-            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500"
-          />
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Busto (cm)</label>
+          <Input
+            type="number"
+            name="busto"
+            value={measurements.busto}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Largo de Falda (cm)</label>
+          <Input
+            type="number"
+            name="largoFalda"
+            value={measurements.largoFalda}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Largo Total (cm)</label>
+          <Input
+            type="number"
+            name="largoTotal"
+            value={measurements.largoTotal}
+            onChange={onChange}
+            min="0"
+            className="border-2 border-white rounded-lg px-4 py-2 text-base focus:ring-2 focus:ring-blue-500" label={''}          />
         </div>
       </div>
     </div>
