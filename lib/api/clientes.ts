@@ -112,3 +112,17 @@ export async function updateUserProfile(formData: FormData): Promise<User> {
 }
 
 export { fetchBackend };
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+
+export async function fetchPedidoTracking(
+  id: number | string
+): Promise<PedidoDetallado> {
+  const res = await fetch(`${API_BASE}/api/pedidos/${id}/tracking/`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    throw new Error(`Error al obtener tracking: ${res.status}`);
+  }
+  return res.json();
+}

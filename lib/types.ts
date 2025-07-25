@@ -163,3 +163,9 @@ export type UserPreferences = {
     estadisticasPedidos: AdminClientOrderStats[];
     actividad: ClientActivity[];
   };
+
+export interface HistorialItem {
+  fecha: string;
+  estado: EstadoPedido;
+  notas?: string;
+}
