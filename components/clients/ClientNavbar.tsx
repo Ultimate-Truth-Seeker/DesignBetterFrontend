@@ -13,7 +13,7 @@ export default function ClientNavbar() {
   const links = [
     { href: '/dashboard/cliente', label: 'Inicio' },
     { href: '/dashboard/cliente/pedidos', label: 'Mis Pedidos' },
-    { href: '/dashboard/cliente/favoritos', label: 'Favoritos' },yyy
+    { href: '/dashboard/cliente/favoritos', label: 'Favoritos' },
     { href: '/dashboard/cliente/pagos', label: 'Métodos de Pago', component: PaymentMethodSelector }
   ];
 
