@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { logoutUser } from '@/lib/auth/actions';
 import { useAuth } from "@/components/AuthProvider"
+import { PaymentMethodSelector } from '@/components/clients/PaymentMethodSelector';
 
 export default function ClientNavbar() {
   const pathname = usePathname();
@@ -12,7 +13,8 @@ export default function ClientNavbar() {
   const links = [
     { href: '/dashboard/cliente', label: 'Inicio' },
     { href: '/dashboard/cliente/pedidos', label: 'Mis Pedidos' },
-    { href: '/dashboard/cliente/favoritos', label: 'Favoritos' },
+    { href: '/dashboard/cliente/favoritos', label: 'Favoritos' },yyy
+    { href: '/dashboard/cliente/pagos', label: 'Métodos de Pago', component: PaymentMethodSelector }
   ];
 
   return (
