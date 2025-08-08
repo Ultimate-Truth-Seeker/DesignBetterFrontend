@@ -3,6 +3,7 @@ import { AuthProvider } from '@/providers/auth';
 import { validateRole } from '@/lib/auth';
 import ClientNavbar from '@/components/clients/ClientNavbar';
 import type { Metadata } from 'next';
+import { FloatingChat } from '@/components/common/FloatingChat';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,14 +26,17 @@ export default async function ClientLayout({
         //<AuthProvider>
           <div className="min-h-screen flex flex-col">
             <ClientNavbar />
-            <main className="flex-1 container mx-auto p-4 md:p-6">
+            <main className="flex-1 container mx-auto p-4 md:p-6 relative">
               {children}
+              
+              {/* Añadimos el chat flotante aquí */}
+              <FloatingChat />
             </main>
             <footer className="bg-white py-4 border-t">
               <p className="text-center text-gray-600">
                 © 2023 DesignBetter - Área de Cliente
               </p>
-            </footer>
+            </footer>   
           </div>
       //  </AuthProvider>
     //  </body>
