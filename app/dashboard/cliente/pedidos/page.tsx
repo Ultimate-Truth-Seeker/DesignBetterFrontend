@@ -1,4 +1,6 @@
-import { Suspense } from 'react';
+'use client'
+import { Suspense, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { fetchPedidosCliente } from '@/lib/api/clientes';
 import { EmptyState } from '@/components/clients/EmptyState';
 import { PedidoList } from '@/components/clients/PedidoList';
@@ -7,13 +9,9 @@ import { Button } from '@/components/ui/Button';
 import { PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export default async function PedidosPage({
-  searchParams,
-}: {
-  searchParams?: { estado?: string };
-}) {
-  const estadoFiltro = searchParams?.estado || 'todos';
-
+export default function PedidosPage() {
+  const searchParams = useSearchParams();
+  const estadoFiltro = (searchParams.get('estado') ?? 'todos').toLowerCase();
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -48,8 +46,18 @@ export default async function PedidosPage({
   );
 }
 
-async function PedidoListWrapper({ estado }: { estado: string }) {
-  const pedidos = await fetchPedidosCliente(estado);
+function PedidoListWrapper({ estado }: { estado: string }) {
+  const [pedidos, setPedidos] = useState([]);
+  useEffect(() => {
+        (async () => {
+          try {
+            const data = await fetchPedidosCliente();
+            setPedidos(data);
+          } catch (e:any) {
+            console.log(e.message ?? 'Error cargando plantillas');
+          } 
+        })();
+      }, []);
 
   if (pedidos.length === 0) {
     return (

@@ -58,11 +58,16 @@ export type UserPreferences = {
   };
   
   export type DashboardCliente = {
-    nombre: string;
-    pedidosPendientes: number;
-    pedidosEnProceso: number;
-    ultimosPedidos: Pedido[];
-  };
+  nombre: string;
+  pedidosPendientes: number;
+  pedidosEnProceso: number;
+  ultimosPedidos: Array<{
+    id: number;
+    titulo: string;              // derivado de notas o fallback
+    fecha: string;               // ISO o Date
+    estado: string;
+  }>;
+};
   
   // =============================================
   // NUEVOS TIPOS PARA ADMINISTRACIÓN DE CLIENTES

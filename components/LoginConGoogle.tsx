@@ -31,7 +31,7 @@ export default function LoginConGoogle() {
           if (response.ok) {
             saveTokens(data.access, data.refresh)
             login(data.access, data.refresh)
-            console.log('Respuesta del backend:', data) // 👈 Asegúrate que contenga "access" y "refresh"
+            //console.log('Respuesta del backend:', data) // 👈 Asegúrate que contenga "access" y "refresh"
 
             //router.push('/dashboard')  // redirige al home del usuario
           } else {

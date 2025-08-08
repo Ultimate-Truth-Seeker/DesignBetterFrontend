@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!decoded) return
     
     const rol = decoded.rol
-    console.log(access, refresh, decoded, rol)
+    //console.log(access, refresh, decoded, rol)
     if (rol === 'admin') {
       router.push('/dashboard/admin')
     } else if (rol === 'cliente') {

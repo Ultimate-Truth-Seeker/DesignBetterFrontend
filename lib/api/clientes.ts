@@ -13,34 +13,57 @@ import type {
   DashboardCliente
 } from '@/lib/types';
 
+export type PedidoAPI = {
+  id: number;
+  plantilla: number;
+  color: string;
+  ajustes: any;
+  notas: string;
+  estado: string;
+  pago_realizado: boolean;
+  usuario: number;
+  disenador: number | null;
+  fecha_creacion: string;
+};
 // Funciones de dashboard
 export async function fetchClientDashboard() {
-  try {
-    const response = await fetchBackend('/api/clientes/dashboard/', {
-      cache: 'no-store',
-    });
+  //try {
+    const response = await fetchBackend('/orders/pedidos/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+
+    },});
     if (!response.ok) {
-      
+      console.log('hubo error ' + response.text)
     }
     return response.json() as Promise<DashboardCliente>;
-  } catch {
-    return {
-      nombre: '',
-      pedidosPendientes: 0,
-      pedidosEnProceso: 0,
-      ultimosPedidos: [],
-    };
-  }
+  //} //catch {
+    //return {
+      //nombre: '',
+      //pedidosPendientes: 0,
+      //pedidosEnProceso: 0,
+      //ultimosPedidos: [],
+    //};
+  //}
 }
 
 // Funciones de pedidos
-export async function fetchPedidosCliente(estado?: EstadoPedido): Promise<Pedido[]> {
+export async function fetchPedidosCliente(estado?: EstadoPedido) {
   try {
-    const url = `/api/clientes/pedidos${estado ? `?estado=${estado}` : ''}`;
+    const url = `/orders/pedidos/`;
     const response = await fetchBackend(url, {
-      cache: 'no-store',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+
+    },
+    cache: 'no-store'
     });
-    return response.json();
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json() as Promise<PedidoAPI[]>;
   } catch {
     return []
   }

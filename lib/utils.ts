@@ -8,6 +8,8 @@ export function cn(...classes: (string | boolean | undefined)[]): string {
   import  {format}  from 'date-fns/format'
   import  {parseISO}  from 'date-fns/parseISO'
   import  {es}  from 'date-fns/locale/es'
+import { PedidoAPI } from './api/clientes';
+import { DashboardCliente } from './types';
   
   export function formatDate( 
     dateString: string,
@@ -72,3 +74,41 @@ export function cn(...classes: (string | boolean | undefined)[]): string {
       return acc;
     }, {} as T);
   }
+
+export function toDashboardCliente(
+  pedidos: PedidoAPI[],
+  nombre: string = ''
+): DashboardCliente {
+  const counts = pedidos.reduce(
+    (acc, p) => {
+      const e = (p.estado ?? '').toLowerCase();
+      if (e === 'pendiente') acc.pendientes += 1;
+      if (e === 'en_proceso') acc.enProceso += 1;
+      if (e) console.log(e);
+      return acc;
+    },
+    { pendientes: 0, enProceso: 0 }
+  );
+
+  // Ordenar por fecha_creacion DESC y tomar los N más recientes
+  const ultimosPedidos = [...pedidos]
+    .sort(
+      (a, b) =>
+        new Date(b.fecha_creacion).getTime() -
+        new Date(a.fecha_creacion).getTime()
+    )
+    .slice(0, 5)
+    .map((p) => ({
+      id: p.id,
+      titulo: (p.notas?.trim() || '').length > 0 ? p.notas.trim() : `Pedido #${p.id}`,
+      fecha: p.fecha_creacion,
+      estado: p.estado,
+    }));
+    //console.log(nombre, counts)
+  return {
+    nombre,
+    pedidosPendientes: counts.pendientes,
+    pedidosEnProceso: counts.enProceso,
+    ultimosPedidos,
+  };
+}

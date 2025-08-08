@@ -133,7 +133,7 @@ export function NewPedidoForm({
                     index === focusedIndex ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-100'
                   }`}
                 >
-                  {template.name}
+                  {template.nombre}
                 </div>
               ))}
               {filteredTemplates.length === 0 && (
@@ -161,7 +161,7 @@ export function NewPedidoForm({
             <option value="">Selecciona una plantilla</option>
             {templates.map((template) => (
               <option key={template.id} value={template.id}>
-                {template.name}
+                {template.nombre}
               </option>
             ))}
           </select>

@@ -1,9 +1,17 @@
 "use client"
+import { PedidoFilter } from "@/components/clients/PedidoFilter"
+import { TrackingTimeline } from "@/components/clients/TrackingTimeline"
+import { fetchPedidoTracking } from "@/lib/api/clientes"
 import { motion } from "framer-motion"
 
 export default function test() {
     return (
 <div className="relative bg-linear-to-bl from-blue-100 via-transparent dark:from-blue-950 dark:via-transparent">
+  <TrackingTimeline historial={[{
+    fecha: "01-01-2222",
+    estado: 'pendiente',
+    notas: "s",
+  }]}/>
   <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     {/* Grid */}
     <div className="grid items-center md:grid-cols-2 gap-8 lg:gap-12">
