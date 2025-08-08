@@ -1,27 +1,22 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useFormState } from 'react-dom';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/textarea';
 import { GarmentWizard } from '@/components/garment/GarmentWizard';
 import { BodyMeasurements } from './Medidas';
+import { getPlantillas, Plantilla } from '@/lib/api/clientes';
 
-const TEMPLATES = [
-  { id: 'plantilla1', name: 'Plantilla Básica' },
-  { id: 'plantilla2', name: 'Plantilla Premium' },
-  { id: 'plantilla3', name: 'Plantilla Personalizada' },
-];
 
 export function NewPedidoForm({
   onSubmit,
 }: {
   onSubmit: (formData: FormData) => void;
 }) {
-  const [state, formAction] = useFormState(onSubmit, null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredTemplates, setFilteredTemplates] = useState(TEMPLATES);
+  const [templates, setTemplates] = useState<Plantilla[]>([]);
+  const [filteredTemplates, setFilteredTemplates] = useState(templates);
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -38,6 +33,17 @@ export function NewPedidoForm({
     largoTotal: '',
   });
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getPlantillas();
+        setTemplates(data);
+      } catch (e:any) {
+        console.log(e.message ?? 'Error cargando plantillas');
+      } 
+    })();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let numericValue = parseFloat(value);
@@ -53,7 +59,7 @@ export function NewPedidoForm({
   };
 
   useEffect(() => {
-    const results = TEMPLATES.filter(template =>
+    const results = templates.filter(template =>
       template.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredTemplates(results);
@@ -61,7 +67,7 @@ export function NewPedidoForm({
   }, [searchTerm]);
 
   const handleInputSelect = (templateId: string) => {
-    const template = TEMPLATES.find(t => t.id === templateId);
+    const template = templates.find(t => t.id === templateId);
     if (template) {
       setSelectedTemplate(templateId);
       setSearchTerm('');
@@ -95,7 +101,7 @@ export function NewPedidoForm({
   };
 
   return (
-    <form action={formAction} className="space-y-6 max-w-2xl">
+    <form action={onSubmit} method="post" className="space-y-6 max-w-2xl">
       <div className="space-y-4">
         <div className="relative">
           <label htmlFor="buscarPlantilla" className="block text-sm font-medium mb-1">
@@ -153,7 +159,7 @@ export function NewPedidoForm({
             onKeyDown={handleSelectKeyDown}
           >
             <option value="">Selecciona una plantilla</option>
-            {TEMPLATES.map((template) => (
+            {templates.map((template) => (
               <option key={template.id} value={template.id}>
                 {template.name}
               </option>
@@ -169,7 +175,7 @@ export function NewPedidoForm({
             id="titulo"
             name="titulo"
             placeholder="Ej: Diseño para mi prenda"
-            required
+            //required
             label={''}
           />
         </div>
@@ -183,7 +189,7 @@ export function NewPedidoForm({
             name="descripcion"
             rows={6}
             placeholder="Describe en detalle lo que necesitas..."
-            required
+            //required
           />
         </div>
 
@@ -203,7 +209,7 @@ export function NewPedidoForm({
               id="apellido"
               name="apellido"
               placeholder="Last Name"
-              required
+              //required
               label={''}
             />
           </div>
@@ -217,7 +223,7 @@ export function NewPedidoForm({
             id="direccion"
             name="direccion"
             placeholder="Street Address"
-            required
+            //required
             label={''}
           />
           <Input
@@ -231,14 +237,14 @@ export function NewPedidoForm({
               id="ciudad"
               name="ciudad"
               placeholder="City"
-              required
+              //required
               label={''}
             />
             <Input
               id="estado"
               name="estado"
               placeholder="State/Region/Province"
-              required
+              //required
               label={''}
             />
           </div>
@@ -247,14 +253,14 @@ export function NewPedidoForm({
               id="codigoPostal"
               name="codigoPostal"
               placeholder="Postal / Zip Code"
-              required
+              //required
               label={''}
             />
             <Input
               id="pais"
               name="pais"
               placeholder="Country"
-              required
+              //required
               label={''}
             />
           </div>
@@ -268,8 +274,8 @@ export function NewPedidoForm({
             id="email"
             name="email"
             type="email"
-            placeholder="Email"
-            required
+            placeholder="Dejar en blanco para usar correo registrado"
+            //required
             label={''}
           />
         </div>
@@ -283,7 +289,7 @@ export function NewPedidoForm({
             name="telefono"
             type="tel"
             placeholder="Phone"
-            required
+            //required
             label={''}
           />
         </div>
@@ -302,9 +308,6 @@ export function NewPedidoForm({
         </Button>
       </div>
 
-      {state?.error && (
-        <p className="text-red-500 text-sm">{state.error}</p>
-      )}
     </form>
   );
 }

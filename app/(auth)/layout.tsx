@@ -1,4 +1,30 @@
+'use client'
+
+import { useAuth } from "@/components/AuthProvider"
+import { refreshToken } from "@/lib/api"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, login } = useAuth()
+    const router = useRouter()
+  
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+        const refresh = localStorage.getItem("refreshToken")
+        if (refresh) {
+          refreshToken(refresh)
+            .then(({ access }) => {
+              //console.log(decodeAccessToken(access))
+              login(access, refresh)
+            })
+            .catch(() => {
+              
+            })
+        }
+      }
+    }, [isAuthenticated, router])
     return (
       <div className="relative min-h-screen flex flex-col md:flex-row">
         {/* Form section */}

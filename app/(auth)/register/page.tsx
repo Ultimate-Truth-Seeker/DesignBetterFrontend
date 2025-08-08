@@ -8,14 +8,6 @@ import RegisterForm from "@/components/auth/RegisterForm"
 
 export default function RegisterPage() {
   
-  const { isAuthenticated } = useAuth()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard")
-    }
-  }, [isAuthenticated, router])
 
   
 

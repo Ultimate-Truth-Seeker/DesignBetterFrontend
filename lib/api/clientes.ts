@@ -1,4 +1,5 @@
 // @/lib/api/clientes.ts
+import { getAccessToken } from '../auth-client';
 import { fetchBackend } from './fetch';
 import type {
   UserPreferences,
@@ -52,16 +53,46 @@ export async function fetchPedidoDetalle(id: string): Promise<PedidoDetallado> {
   return response.json();
 }
 
-export async function createPedido(data: {
-  titulo: string;
-  descripcion: string;
-  fechaEntrega?: string;
-}): Promise<Pedido> {
-  const response = await fetchBackend('/api/clientes/pedidos/', {
+export interface NuevoPedidoPayload {
+  plantilla: number;
+  color: string;
+  ajustes: string;//Record<string, any>;
+  notas: string;
+}
+
+export async function createPedido(data: NuevoPedidoPayload): Promise<Pedido> {
+  const response = await fetchBackend('/orders/pedidos/crear/', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+
+    },
     body: JSON.stringify(data),
   });
+
+  if (!response.ok) {
+    // opcionalmente parsea un mensaje de error
+    const errText = await response.text();
+    throw new Error(`Error ${response.status}: ${errText}`);
+  }
+
   return response.json();
+}
+
+export type Plantilla = {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  tipo_ropa: string;
+  tipo_cuerpo: string;
+};
+
+export async function getPlantillas(): Promise<Plantilla[]> {
+  //const res = await fetch(`${base}/api/plantillas/`, { cache: 'no-store' });
+  const res = await fetchBackend('/auth/plantillas/', )
+  if (!res.ok) throw new Error(`Error cargando plantillas: ${res.status}`);
+  return res.json();
 }
 
 export async function solicitarRevision(pedidoId: string, mensaje: string): Promise<void> {
