@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { GarmentWizard } from '@/components/garment/GarmentWizard';
 import { BodyMeasurements } from './Medidas';
 import { getPlantillas, Plantilla } from '@/lib/api/clientes';
+import { PaymentMethodSelector } from './PaymentMethodSelector';
 
 
 export function NewPedidoForm({
@@ -299,6 +300,7 @@ export function NewPedidoForm({
         <GarmentWizard/>
         <h2 className="text-lg font-bold mb-4">Medidas corporales</h2>
         <BodyMeasurements measurements={measurements} onChange={handleChange} />
+        <PaymentMethodSelector/>
       </div>
 
       <div className="flex gap-4">

@@ -4,6 +4,7 @@ import { validateRole } from '@/lib/auth';
 import ClientNavbar from '@/components/clients/ClientNavbar';
 import type { Metadata } from 'next';
 import { FloatingChat } from '@/components/common/FloatingChat';
+import FashionChatbot from '../chatbot/chatbot';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,9 +29,7 @@ export default async function ClientLayout({
             <ClientNavbar />
             <main className="flex-1 container mx-auto p-4 md:p-6 relative">
               {children}
-              
-              {/* Añadimos el chat flotante aquí */}
-              <FloatingChat />
+              <FashionChatbot/>
             </main>
             <footer className="bg-white py-4 border-t">
               <p className="text-center text-gray-600">

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Minimize2, Maximize2, User, Bot } from 'lucide-react';
 
@@ -211,7 +212,7 @@ const FashionChatbot = () => {
           onClick={() => setIsMinimized(false)}
         >
           <img 
-            src="./chatbot.png" 
+            src="./chatbot/chatbot.png" 
             alt="Fashion Assistant"
             className="w-10 h-10 rounded-full object-cover border-2 border-white"
             onError={handleImageError}
@@ -228,7 +229,7 @@ const FashionChatbot = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <img 
-                  src="./chatbot.png" 
+                  src="./chatbot/chatbot.png" 
                   alt="Fashion Assistant"
                   className="w-10 h-10 rounded-full object-cover border-2 border-white"
                   onError={handleImageError}
