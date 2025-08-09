@@ -69,6 +69,27 @@ export type UserPreferences = {
   }>;
 };
   
+export type HistorialItem = {
+  fecha: string;        // ISO
+  estado: string;       // slug
+  notas?: string | null;
+  usuario?: string;     // opcional si lo quieres mostrar
+};
+
+export type PedidoTracking = {
+  id: number;
+  plantilla: number;
+  color: string;
+  ajustes: any;
+  notas: string;
+  estado: string;
+  pago_realizado: boolean;
+  usuario: number;
+  disenador: number | null;
+  fecha_creacion: string;
+  historial: HistorialItem[];
+};
+
   // =============================================
   // NUEVOS TIPOS PARA ADMINISTRACIÓN DE CLIENTES
   // =============================================
@@ -168,9 +189,3 @@ export type UserPreferences = {
     estadisticasPedidos: AdminClientOrderStats[];
     actividad: ClientActivity[];
   };
-
-export interface HistorialItem {
-  fecha: string;
-  estado: EstadoPedido;
-  notas?: string;
-}

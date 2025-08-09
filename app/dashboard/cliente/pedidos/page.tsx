@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useState, useEffect } from 'react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { fetchPedidosCliente } from '@/lib/api/clientes';
 import { EmptyState } from '@/components/clients/EmptyState';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 export default function PedidosPage() {
   const searchParams = useSearchParams();
   const estadoFiltro = (searchParams.get('estado') ?? 'todos').toLowerCase();
+  
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -53,13 +54,18 @@ function PedidoListWrapper({ estado }: { estado: string }) {
           try {
             const data = await fetchPedidosCliente();
             setPedidos(data);
+            
           } catch (e:any) {
             console.log(e.message ?? 'Error cargando plantillas');
           } 
         })();
       }, []);
+  const pedidosFiltrados = useMemo(() => {
+    if (estado === 'todos') return pedidos;
+    return pedidos.filter((p: { estado: string; }) => p.estado?.toLowerCase() === estado);
+  }, [pedidos, estado]);
 
-  if (pedidos.length === 0) {
+  if (pedidosFiltrados.length === 0) {
     return (
       <EmptyState
         title="No hay pedidos"
@@ -68,5 +74,5 @@ function PedidoListWrapper({ estado }: { estado: string }) {
     );
   }
 
-  return <PedidoList pedidos={pedidos} />;
+  return <PedidoList pedidos={pedidosFiltrados} />;
 }

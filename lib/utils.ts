@@ -84,7 +84,7 @@ export function toDashboardCliente(
       const e = (p.estado ?? '').toLowerCase();
       if (e === 'pendiente') acc.pendientes += 1;
       if (e === 'en_proceso') acc.enProceso += 1;
-      if (e) console.log(e);
+      //if (e) console.log(e);
       return acc;
     },
     { pendientes: 0, enProceso: 0 }

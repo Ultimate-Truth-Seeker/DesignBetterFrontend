@@ -10,7 +10,8 @@ import type {
   Feedback,
   Pedido,
   PedidoDetallado,
-  DashboardCliente
+  DashboardCliente,
+  PedidoTracking
 } from '@/lib/types';
 
 export type PedidoAPI = {
@@ -116,6 +117,20 @@ export async function getPlantillas(): Promise<Plantilla[]> {
   const res = await fetchBackend('/auth/plantillas/', )
   if (!res.ok) throw new Error(`Error cargando plantillas: ${res.status}`);
   return res.json();
+}
+
+export async function fetchPedidoTrackingClient(pedidoId: number) {
+  const res = await fetchBackend(`/orders/api/pedidos/${pedidoId}/tracking`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+
+    },
+  }
+  )
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+  return res.json() as Promise<PedidoTracking>;
 }
 
 export async function solicitarRevision(pedidoId: string, mensaje: string): Promise<void> {

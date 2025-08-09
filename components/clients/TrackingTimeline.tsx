@@ -5,6 +5,8 @@ interface Props {
 }
 
 export function TrackingTimeline({ historial }: Props) {
+  if (historial.length === 0)
+    return <p className="text-sm text-gray-500">Sin eventos de historial.</p>;
   return (
     <ol className="border-l-2 border-gray-200">
       {historial.map((item, idx) => (
