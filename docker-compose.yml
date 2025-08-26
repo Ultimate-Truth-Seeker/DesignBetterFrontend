@@ -7,7 +7,26 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      NEXT_PUBLIC_API_URL: "http://backend:8000"
+      NEXT_PUBLIC_API_URL: "http://localhost:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000 || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+    networks:
+      - devnetwork
+  
+  cypress:
+    image: cypress/included:13.6.0   # usa la versión que prefieras
+    working_dir: /e2e
+    depends_on:
+      frontend:
+        condition: service_healthy
+    volumes:
+      - ./:/e2e
+    environment:
+      - CYPRESS_baseUrl=http://frontend:3000   # override limpio
+    command: ["cypress", "run", "-C", "/e2e/cypress.config.js"]
     networks:
       - devnetwork
 

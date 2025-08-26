@@ -21,7 +21,7 @@ export default function ClientDashboard() {
         try {
           const data = await fetchPedidosCliente();
 
-          const transformed = toDashboardCliente(data, "ramon")
+          const transformed = toDashboardCliente(data, "usuario")
           setDashboardData(transformed);
         } catch (e:any) {
           console.log(e.message ?? 'Error cargando plantillas');

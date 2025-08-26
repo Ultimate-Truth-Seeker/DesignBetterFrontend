@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/cypress/e2e/screenshots/
 
 # next.js
 /.next/
