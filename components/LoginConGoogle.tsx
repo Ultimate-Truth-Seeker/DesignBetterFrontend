@@ -4,7 +4,7 @@
 import { GoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/navigation'
 import { useAuth } from "@/components/AuthProvider"
-import { saveTokens } from "@/lib/auth-client"
+import { saveTokens } from "@/lib/auth-store"
 
 
 

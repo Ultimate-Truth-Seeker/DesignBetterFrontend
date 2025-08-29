@@ -10,12 +10,12 @@ import Cta from "@/components/CTA";
 export default function Home() {
   return (
     <>
-     <Navbar />
+     
      <Hero />
     <LandingSearch/>
     <Showcase/>
     <Cta/>
-    <Footer/>
+    
     </>
   );
 }

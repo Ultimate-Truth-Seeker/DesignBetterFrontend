@@ -26,7 +26,6 @@ export default async function ClientLayout({
       //<body className={`${inter.className} client-theme`}>
         //<AuthProvider>
           <div className="min-h-screen flex flex-col">
-            <ClientNavbar />
             <main className="flex-1 container mx-auto p-4 md:p-6 relative">
               {children}
               <FashionChatbot/>

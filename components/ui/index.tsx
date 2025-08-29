@@ -8,4 +8,5 @@ export { Slider } from './slider'
 export { Collapsible } from './collapsible'
 export { Avatar } from './avatar'
 export { Select } from './select'
+export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './dropdown-menu'
 export { default as LoadingSkeleton } from './LoadingSkeleton';

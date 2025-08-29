@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getAccessToken, clearTokens, saveTokens, decodeAccessToken } from "@/lib/auth-client"
+import { getAccessToken, decodeAccessToken } from "@/lib/auth-client"
+import { saveTokens, clearTokens } from "@/lib/auth-store"
 import { refreshToken } from "@/lib/api"
 
 interface AuthContextType {
