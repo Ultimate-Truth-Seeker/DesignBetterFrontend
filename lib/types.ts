@@ -47,6 +47,8 @@ export type UserPreferences = {
     disenador?: Disenador;
   };
   
+  export type MetodoPago = 'cash' | 'card' | 'transfer' | 'paid';
+
   export type PedidoDetallado = Pedido & {
     historial: {
       fecha: string;
@@ -55,6 +57,7 @@ export type UserPreferences = {
     }[];
     archivos?: ArchivoAdjunto[];
     feedback?: Feedback;
+    metodopago?: MetodoPago;
   };
   
   export type DashboardCliente = {

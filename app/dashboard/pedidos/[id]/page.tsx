@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { PedidoDetallado } from '@/lib/types';
-import { fetchPedidoDetallado } from '@/lib/api/disenadores';
-import TimelinePage from './timeline'; 
+import { fetchPedidoDetallado } from '@/lib/api/disenadores'; // usamos el mismo API
+import TimelinePage from '@/app/dashboard/disenadores/pedidos/id/timeline';
 import { PaymentMethodViewer } from '@/components/clients/PaymentMethodViewer';
 
-export default function PedidoDisenadorPage({
+export default function PedidoPage({
   params,
 }: {
   params: { id: string };
@@ -34,18 +34,15 @@ export default function PedidoDisenadorPage({
     };
   }, [pedidoId]);
 
-  if (loading) return <p>Cargando pedido...</p>;
+  if (loading) return <p>Cargando...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
   if (!pedido) return <p>No se encontró el pedido.</p>;
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 py-6">
+    <div className="max-w-4xl mx-auto space-y-8 py-6">
       <h1 className="text-2xl font-bold">Pedido #{pedido.id}</h1>
-      <p className="text-gray-600">
-        Estado actual: <span className="font-semibold">{pedido.estado}</span>
-      </p>
 
-      {/* Timeline del pedido */}
+      {/* Timeline del diseñador */}
       <div className="bg-white p-6 rounded-lg border">
         <TimelinePage params={params} />
       </div>
