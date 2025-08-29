@@ -11,6 +11,11 @@
     "pw": "npx playwright test"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slider": "^1.3.6",
     "date-fns": "^4.1.0",
     "framer-motion": "latest",
     "frontend": "file:",
@@ -21,6 +26,7 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0",
     "three": "latest",
+    "tw-animate-css": "^1.3.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {
