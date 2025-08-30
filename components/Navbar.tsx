@@ -1,89 +1,79 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChevronDown } from "lucide-react"
-import Link from "next/link"
-import { DecodedToken } from "@/lib/auth-client"
-import { useUser } from "@/lib/auth-store"
-import { useAuth } from "./AuthProvider"
-
-// Mock user data - replace with your actual auth logic
-
+import { Button } from "@/components/ui/Button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { DecodedToken } from "@/lib/auth-client";
+import { useUser } from "@/lib/auth-store";
+import { useAuth } from "./AuthProvider";
 
 interface NavbarProps {
-  user?: DecodedToken | null
+  user?: DecodedToken | null;
 }
 
-export function Navbar({ user = useUser() }: NavbarProps) {
-  const { logout } = useAuth()
+function Navbar({ user = useUser() }: NavbarProps) {
+  const { logout } = useAuth();
   return (
     <nav className="border-b bg-background px-4 py-3">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="text-2xl font-bold text-foreground hover:opacity-80">
             DesignBetter
           </Link>
         </div>
-
-        {/* Navigation Items */}
         <div className="flex items-center gap-6">
           {!user ? (
-            // Unauthenticated navbar
             <>
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
                 Inicio
               </Link>
-              <Link href="/template/search/" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/template/search/" className="text-muted-foreground transition-colors hover:text-foreground">
                 Buscar Plantillas
               </Link>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground" >
+                <Button variant="outline">
                   <Link href="/login">Sign In</Link>
                 </Button>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90"><Link href="/register">Register</Link></Button>
+                <Button variant="brand">
+                  <Link href="/register">Register</Link>
+                </Button>
               </div>
             </>
           ) : (
-            // Authenticated navbar
             <>
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
                 Inicio
               </Link>
-
               {user.rol === "cliente" ? (
                 <>
-                  <Link href="/template/search/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/template/search/" className="text-muted-foreground transition-colors hover:text-foreground">
                     Buscar Plantillas
                   </Link>
-                  <Link href="/dashboard/cliente/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/dashboard/cliente/" className="text-muted-foreground transition-colors hover:text-foreground">
                     Dashboard
                   </Link>
-                  <Link href="/dashboard/cliente/pedidos/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/dashboard/cliente/pedidos/" className="text-muted-foreground transition-colors hover:text-foreground">
                     Mis Pedidos
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link href="/templates" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/templates" className="text-muted-foreground transition-colors hover:text-foreground">
                     Mis Plantillas
                   </Link>
-                  <Link href="/patterns" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/patterns" className="text-muted-foreground transition-colors hover:text-foreground">
                     Mis Patrones
                   </Link>
-                  <Link href="/orders" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="/orders" className="text-muted-foreground transition-colors hover:text-foreground">
                     Mis Pedidos
                   </Link>
                 </>
               )}
-
-              <Link href="/messages" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/messages" className="text-muted-foreground transition-colors hover:text-foreground">
                 Mensajes
               </Link>
-
-              {/* User Avatar Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-2 hover:opacity-80">
                   <Avatar className="h-8 w-8">
@@ -105,5 +95,8 @@ export function Navbar({ user = useUser() }: NavbarProps) {
         </div>
       </div>
     </nav>
-  )
+  );
 }
+
+export default Navbar;
+export { Navbar };
