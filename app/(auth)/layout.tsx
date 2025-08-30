@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   
         {/* Background image section */}
         <div className="hidden md:block md:w-1/2 lg:w-7/12 bg-cover bg-center" style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80')" 
+          backgroundImage: "url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80')" 
         }}></div>
       </div>
     );

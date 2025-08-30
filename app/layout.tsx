@@ -45,7 +45,7 @@ export default function RootLayout({
       >
         <AuthProvider>
         <GoogleOAuthProvider clientId="454329887491-3vjn6t36k4c45l2l3n96k87gl77v5jjq.apps.googleusercontent.com">
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col theme-purple">
         <Navbar />
         {children}
         <Footer />
