@@ -26,6 +26,38 @@ export type PedidoAPI = {
   disenador: number | null;
   fecha_creacion: string;
 };
+
+// Tipos para la mensajería
+export interface UsuarioMensajeria {
+  id: number;
+  username: string;
+  rol: string;
+}
+
+export interface Mensaje {
+  id: number;
+  remitente: UsuarioMensajeria;
+  rol_remitente: string;
+  contenido: string;
+  enviado_en: string;
+}
+
+export interface Conversacion {
+  id: number;
+  participantes: UsuarioMensajeria[];
+  mensajes: Mensaje[];
+  creado_en: string;
+}
+
+export interface CrearConversacionPayload {
+  participantes: number[]; // IDs de usuarios
+}
+
+export interface EnviarMensajePayload {
+  conversacion: number; // ID de la conversación
+  contenido: string;
+}
+
 // Funciones de dashboard
 export async function fetchClientDashboard() {
   //try {
@@ -178,6 +210,97 @@ export async function updateUserProfile(formData: FormData): Promise<User> {
     },
   });
   return response.json();
+}
+
+// Funciones de mensajería
+export async function crearConversacion(data: CrearConversacionPayload): Promise<Conversacion> {
+  const response = await fetchBackend('/mensajeria/conversaciones/crear/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Error ${response.status}: ${errText}`);
+  }
+
+  return response.json();
+}
+
+export async function listarConversaciones(): Promise<Conversacion[]> {
+  try {
+    const response = await fetchBackend('/mensajeria/conversaciones/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+      },
+      cache: 'no-store'
+    });
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  } catch {
+    return [];
+  }
+}
+
+export async function obtenerConversacion(id: number): Promise<Conversacion> {
+  const response = await fetchBackend(`/mensajeria/conversaciones/${id}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+    },
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Error ${response.status}: ${errText}`);
+  }
+
+  return response.json();
+}
+
+export async function enviarMensaje(data: EnviarMensajePayload): Promise<Mensaje> {
+  const response = await fetchBackend('/mensajeria/mensajes/enviar/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAccessToken()}`
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Error ${response.status}: ${errText}`);
+  }
+
+  return response.json();
+}
+
+export async function listarMensajes(conversacionId: number): Promise<Mensaje[]> {
+  try {
+    const response = await fetchBackend(`/mensajeria/mensajes/${conversacionId}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+      },
+      cache: 'no-store'
+    });
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  } catch {
+    return [];
+  }
 }
 
 export { fetchBackend };

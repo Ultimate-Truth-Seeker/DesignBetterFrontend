@@ -192,3 +192,33 @@ export type PedidoTracking = {
     estadisticasPedidos: AdminClientOrderStats[];
     actividad: ClientActivity[];
   };
+
+  export type UsuarioMensajeria = {
+  id: number;
+  username: string;
+  rol: string;
+};
+
+export type Mensaje = {
+  id: number;
+  remitente: UsuarioMensajeria;
+  rol_remitente: string;
+  contenido: string;
+  enviado_en: string;
+};
+
+export type Conversacion = {
+  id: number;
+  participantes: UsuarioMensajeria[];
+  mensajes: Mensaje[];
+  creado_en: string;
+};
+
+export type CrearConversacionPayload = {
+  participantes: number[];
+};
+
+export type EnviarMensajePayload = {
+  conversacion: number;
+  contenido: string;
+};
