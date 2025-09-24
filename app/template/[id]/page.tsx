@@ -1,6 +1,4 @@
-"use client"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
@@ -10,16 +8,38 @@ import { ChevronDown, Heart, ExternalLink } from "lucide-react"
 import { TemplateReviews } from "@/components/template-reviews"
 import { TemplateCarousel } from "@/components/template-carousel"
 import { sampleTemplates } from "@/types/template"
-import { sampleReviews } from "@/types/review"
+import type { Review } from "@/types/review"
+import { getTemplateReviews } from "@/lib/api/reviews"
 
 export default function TemplateDetailPage() {
   const params = useParams()
   const templateId = params.id as string
 
-  // Find the template (in real app, this would be an API call)
-  const template = sampleTemplates.find((t) => t.id === templateId) || sampleTemplates[0]
-  const reviews = sampleReviews.filter((r) => r.templateId === templateId)
-  const recommendedTemplates = sampleTemplates.filter((t) => t.id !== templateId).slice(0, 6)
+  const template = sampleTemplates.find((t) => String(t.id) === String(templateId)) || sampleTemplates[0]
+  const recommendedTemplates = sampleTemplates.filter((t) => String(t.id) !== String(templateId)).slice(0, 6)
+
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loadingReviews, setLoadingReviews] = useState<boolean>(true)
+
+  useEffect(() => {
+    let alive = true
+    setLoadingReviews(true)
+    getTemplateReviews(templateId)
+      .then((data) => {
+        if (!alive) return
+        setReviews(Array.isArray(data) ? data : [])
+      })
+      .catch((err) => {
+        console.error("Error cargando reseñas", err)
+        if (alive) setReviews([])
+      })
+      .finally(() => {
+        if (alive) setLoadingReviews(false)
+      })
+    return () => {
+      alive = false
+    }
+  }, [templateId])
 
   const [selectedSize, setSelectedSize] = useState("")
   const [selectedColor, setSelectedColor] = useState("")
@@ -87,7 +107,7 @@ export default function TemplateDetailPage() {
                     <SelectValue placeholder="Select size" />
                   </SelectTrigger>
                   <SelectContent>
-                    {template.sizes.map((size) => (
+                    {template.sizes.map((size: string) => (
                       <SelectItem key={size} value={size}>
                         {size}
                       </SelectItem>
@@ -103,7 +123,7 @@ export default function TemplateDetailPage() {
                     <SelectValue placeholder="Select color" />
                   </SelectTrigger>
                   <SelectContent>
-                    {template.colors.map((color) => (
+                    {template.colors.map((color: string) => (
                       <SelectItem key={color} value={color}>
                         {color}
                       </SelectItem>
@@ -147,7 +167,11 @@ export default function TemplateDetailPage() {
 
         {/* Reviews Section */}
         <div className="mt-12">
-          <TemplateReviews reviews={reviews} />
+          {loadingReviews ? (
+            <div className="text-sm text-muted-foreground">Cargando reseñas…</div>
+          ) : (
+            <TemplateReviews reviews={reviews} />
+          )}
         </div>
 
         {/* Recommendations Section */}
