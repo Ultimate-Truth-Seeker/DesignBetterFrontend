@@ -1,0 +1,670 @@
+import type { PatternCategory, ParameterDefinition, Constraint, PatternPiece, GradingRule } from "./pattern"
+
+// Default parameter templates for different clothing types
+export const DEFAULT_PARAMETERS: Record<PatternCategory, ParameterDefinition[]> = {
+  dress: [
+    {
+      key: "bust_ease",
+      type: "number",
+      default: 5,
+      minimum: 0,
+      maximum: 15,
+      step: 0.5,
+      required: true,
+      description: "Holgura en el busto (cm)",
+    },
+    {
+      key: "waist_ease",
+      type: "number",
+      default: 3,
+      minimum: 0,
+      maximum: 10,
+      step: 0.5,
+      required: true,
+      description: "Holgura en la cintura (cm)",
+    },
+    {
+      key: "length_adjustment",
+      type: "number",
+      default: 0,
+      minimum: -10,
+      maximum: 10,
+      step: 1,
+      required: false,
+      description: "Ajuste de largo (cm)",
+    },
+    {
+      key: "sleeve_type",
+      type: "enum",
+      default: "short",
+      enumValues: ["sleeveless", "short", "three_quarter", "long"],
+      required: true,
+      description: "Tipo de manga",
+    },
+  ],
+  shirt: [
+    {
+      key: "chest_ease",
+      type: "number",
+      default: 8,
+      minimum: 2,
+      maximum: 20,
+      step: 1,
+      required: true,
+      description: "Holgura en el pecho (cm)",
+    },
+    {
+      key: "collar_type",
+      type: "enum",
+      default: "standard",
+      enumValues: ["standard", "mandarin", "band", "none"],
+      required: true,
+      description: "Tipo de cuello",
+    },
+    {
+      key: "cuff_style",
+      type: "enum",
+      default: "button",
+      enumValues: ["button", "french", "barrel", "none"],
+      required: true,
+      description: "Estilo de puño",
+    },
+  ],
+  pants: [
+    {
+      key: "waist_ease",
+      type: "number",
+      default: 2,
+      minimum: 0,
+      maximum: 8,
+      step: 0.5,
+      required: true,
+      description: "Holgura en la cintura (cm)",
+    },
+    {
+      key: "hip_ease",
+      type: "number",
+      default: 4,
+      minimum: 2,
+      maximum: 12,
+      step: 1,
+      required: true,
+      description: "Holgura en la cadera (cm)",
+    },
+    {
+      key: "leg_style",
+      type: "enum",
+      default: "straight",
+      enumValues: ["skinny", "straight", "wide", "bootcut"],
+      required: true,
+      description: "Estilo de pierna",
+    },
+  ],
+  skirt: [
+    {
+      key: "waist_ease",
+      type: "number",
+      default: 2,
+      minimum: 0,
+      maximum: 6,
+      step: 0.5,
+      required: true,
+      description: "Holgura en la cintura (cm)",
+    },
+    {
+      key: "hip_ease",
+      type: "number",
+      default: 3,
+      minimum: 1,
+      maximum: 10,
+      step: 0.5,
+      required: true,
+      description: "Holgura en la cadera (cm)",
+    },
+    {
+      key: "skirt_style",
+      type: "enum",
+      default: "a_line",
+      enumValues: ["pencil", "a_line", "circle", "pleated"],
+      required: true,
+      description: "Estilo de falda",
+    },
+  ],
+  jacket: [
+    {
+      key: "chest_ease",
+      type: "number",
+      default: 12,
+      minimum: 8,
+      maximum: 20,
+      step: 1,
+      required: true,
+      description: "Holgura en el pecho (cm)",
+    },
+    {
+      key: "jacket_style",
+      type: "enum",
+      default: "blazer",
+      enumValues: ["blazer", "bomber", "denim", "leather"],
+      required: true,
+      description: "Estilo de chaqueta",
+    },
+  ],
+  top: [
+    {
+      key: "bust_ease",
+      type: "number",
+      default: 4,
+      minimum: 0,
+      maximum: 12,
+      step: 0.5,
+      required: true,
+      description: "Holgura en el busto (cm)",
+    },
+    {
+      key: "fit_style",
+      type: "enum",
+      default: "fitted",
+      enumValues: ["fitted", "relaxed", "oversized"],
+      required: true,
+      description: "Estilo de ajuste",
+    },
+  ],
+  other: [],
+}
+
+// Default constraints for different clothing types
+export const DEFAULT_CONSTRAINTS: Record<PatternCategory, Constraint[]> = {
+  dress: [
+    {
+      id: "bust_waist_relation",
+      type: "relation",
+      expression: "bust_ease >= waist_ease",
+      message: "La holgura del busto debe ser mayor o igual a la de la cintura",
+      severity: "warning",
+    },
+  ],
+  shirt: [
+    {
+      id: "chest_ease_minimum",
+      type: "range",
+      expression: "chest_ease >= 2",
+      message: "La holgura del pecho debe ser al menos 2cm",
+      severity: "error",
+    },
+  ],
+  pants: [
+    {
+      id: "hip_waist_relation",
+      type: "relation",
+      expression: "hip_ease >= waist_ease",
+      message: "La holgura de la cadera debe ser mayor o igual a la de la cintura",
+      severity: "warning",
+    },
+  ],
+  skirt: [
+    {
+      id: "hip_waist_relation",
+      type: "relation",
+      expression: "hip_ease >= waist_ease",
+      message: "La holgura de la cadera debe ser mayor o igual a la de la cintura",
+      severity: "warning",
+    },
+  ],
+  jacket: [
+    {
+      id: "chest_ease_minimum",
+      type: "range",
+      expression: "chest_ease >= 8",
+      message: "La holgura del pecho debe ser al menos 8cm para chaquetas",
+      severity: "error",
+    },
+  ],
+  top: [],
+  other: [],
+}
+
+// Default pieces for different clothing types
+export const DEFAULT_PIECES: Record<PatternCategory, Omit<PatternPiece, "id" | "drawOrder">[]> = {
+  dress: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.5,
+      notches: [],
+      points: [
+        { id: "front_neck", x: 0, y: 0 },
+        { id: "front_shoulder", x: 15, y: 2 },
+        { id: "front_armpit", x: 20, y: 18 },
+        { id: "front_waist", x: 18, y: 35 },
+        { id: "front_hem", x: 25, y: 95 },
+      ],
+      lines: [],
+      expressions: {
+        "front_neck.x": "0",
+        "front_shoulder.x": "shoulder_width / 2",
+        "front_armpit.x": "bust_circumference / 4 + bust_ease / 2",
+        "front_waist.x": "waist_circumference / 4 + waist_ease / 2",
+        "front_hem.x": "hip_circumference / 4 + hip_ease / 2",
+      },
+    },
+    {
+      name: "Espalda",
+      visible: true,
+      seamAllowance: 1.5,
+      notches: [],
+      points: [
+        { id: "back_neck", x: 0, y: 0 },
+        { id: "back_shoulder", x: 15, y: 2 },
+        { id: "back_armpit", x: 20, y: 18 },
+        { id: "back_waist", x: 18, y: 35 },
+        { id: "back_hem", x: 25, y: 95 },
+      ],
+      lines: [],
+      expressions: {
+        "back_neck.x": "0",
+        "back_shoulder.x": "shoulder_width / 2",
+        "back_armpit.x": "bust_circumference / 4 + bust_ease / 2",
+        "back_waist.x": "waist_circumference / 4 + waist_ease / 2",
+        "back_hem.x": "hip_circumference / 4 + hip_ease / 2",
+      },
+    },
+  ],
+  shirt: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "front_neck", x: 0, y: 0 },
+        { id: "front_shoulder", x: 18, y: 2 },
+        { id: "front_armpit", x: 22, y: 20 },
+        { id: "front_hem", x: 24, y: 70 },
+      ],
+      lines: [],
+      expressions: {
+        "front_armpit.x": "chest_circumference / 4 + chest_ease / 2",
+        "front_hem.x": "chest_circumference / 4 + chest_ease / 2",
+      },
+    },
+    {
+      name: "Espalda",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "back_neck", x: 0, y: 0 },
+        { id: "back_shoulder", x: 18, y: 2 },
+        { id: "back_armpit", x: 22, y: 20 },
+        { id: "back_hem", x: 24, y: 70 },
+      ],
+      lines: [],
+      expressions: {
+        "back_armpit.x": "chest_circumference / 4 + chest_ease / 2",
+        "back_hem.x": "chest_circumference / 4 + chest_ease / 2",
+      },
+    },
+    {
+      name: "Manga",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "sleeve_top", x: 15, y: 0 },
+        { id: "sleeve_cuff", x: 12, y: 60 },
+      ],
+      lines: [],
+      expressions: {
+        "sleeve_top.x": "arm_circumference / 2 + sleeve_ease",
+        "sleeve_cuff.x": "wrist_circumference / 2 + cuff_ease",
+      },
+    },
+  ],
+  pants: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "front_waist", x: 0, y: 0 },
+        { id: "front_hip", x: 2, y: 20 },
+        { id: "front_knee", x: 1, y: 60 },
+        { id: "front_hem", x: 0, y: 105 },
+      ],
+      lines: [],
+      expressions: {
+        "front_hip.x": "hip_circumference / 4 + hip_ease / 2",
+        "front_knee.x": "knee_circumference / 4",
+        "front_hem.x": "ankle_circumference / 4",
+      },
+    },
+    {
+      name: "Trasero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "back_waist", x: 0, y: 0 },
+        { id: "back_hip", x: 3, y: 20 },
+        { id: "back_knee", x: 2, y: 60 },
+        { id: "back_hem", x: 1, y: 105 },
+      ],
+      lines: [],
+      expressions: {
+        "back_hip.x": "hip_circumference / 4 + hip_ease / 2 + 1",
+        "back_knee.x": "knee_circumference / 4 + 1",
+        "back_hem.x": "ankle_circumference / 4 + 1",
+      },
+    },
+  ],
+  skirt: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "front_waist", x: 0, y: 0 },
+        { id: "front_hip", x: 2, y: 18 },
+        { id: "front_hem", x: 5, y: 60 },
+      ],
+      lines: [],
+      expressions: {
+        "front_hip.x": "hip_circumference / 4 + hip_ease / 2",
+        "front_hem.x": "hem_circumference / 4",
+      },
+    },
+    {
+      name: "Trasero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "back_waist", x: 0, y: 0 },
+        { id: "back_hip", x: 3, y: 18 },
+        { id: "back_hem", x: 6, y: 60 },
+      ],
+      lines: [],
+      expressions: {
+        "back_hip.x": "hip_circumference / 4 + hip_ease / 2 + 1",
+        "back_hem.x": "hem_circumference / 4 + 1",
+      },
+    },
+  ],
+  jacket: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.5,
+      notches: [],
+      points: [
+        { id: "front_neck", x: 0, y: 0 },
+        { id: "front_shoulder", x: 18, y: 2 },
+        { id: "front_armpit", x: 25, y: 22 },
+        { id: "front_hem", x: 27, y: 75 },
+      ],
+      lines: [],
+      expressions: {
+        "front_armpit.x": "chest_circumference / 4 + chest_ease / 2",
+        "front_hem.x": "chest_circumference / 4 + chest_ease / 2",
+      },
+    },
+    {
+      name: "Espalda",
+      visible: true,
+      seamAllowance: 1.5,
+      notches: [],
+      points: [
+        { id: "back_neck", x: 0, y: 0 },
+        { id: "back_shoulder", x: 18, y: 2 },
+        { id: "back_armpit", x: 25, y: 22 },
+        { id: "back_hem", x: 27, y: 75 },
+      ],
+      lines: [],
+      expressions: {
+        "back_armpit.x": "chest_circumference / 4 + chest_ease / 2",
+        "back_hem.x": "chest_circumference / 4 + chest_ease / 2",
+      },
+    },
+    {
+      name: "Manga",
+      visible: true,
+      seamAllowance: 1.5,
+      notches: [],
+      points: [
+        { id: "sleeve_top", x: 18, y: 0 },
+        { id: "sleeve_cuff", x: 14, y: 65 },
+      ],
+      lines: [],
+      expressions: {
+        "sleeve_top.x": "arm_circumference / 2 + sleeve_ease",
+        "sleeve_cuff.x": "wrist_circumference / 2 + cuff_ease",
+      },
+    },
+  ],
+  top: [
+    {
+      name: "Delantero",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "front_neck", x: 0, y: 0 },
+        { id: "front_shoulder", x: 15, y: 2 },
+        { id: "front_armpit", x: 20, y: 18 },
+        { id: "front_hem", x: 22, y: 55 },
+      ],
+      lines: [],
+      expressions: {
+        "front_armpit.x": "bust_circumference / 4 + bust_ease / 2",
+        "front_hem.x": "bust_circumference / 4 + bust_ease / 2",
+      },
+    },
+    {
+      name: "Espalda",
+      visible: true,
+      seamAllowance: 1.0,
+      notches: [],
+      points: [
+        { id: "back_neck", x: 0, y: 0 },
+        { id: "back_shoulder", x: 15, y: 2 },
+        { id: "back_armpit", x: 20, y: 18 },
+        { id: "back_hem", x: 22, y: 55 },
+      ],
+      lines: [],
+      expressions: {
+        "back_armpit.x": "bust_circumference / 4 + bust_ease / 2",
+        "back_hem.x": "bust_circumference / 4 + bust_ease / 2",
+      },
+    },
+  ],
+  other: [],
+}
+
+// Default grading rules for different clothing types
+export const DEFAULT_GRADING_RULES: Record<PatternCategory, GradingRule[]> = {
+  dress: [
+    {
+      id: "bust_grading",
+      parameter: "bust_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+    {
+      id: "waist_grading",
+      parameter: "waist_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+    {
+      id: "hip_grading",
+      parameter: "hip_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+  ],
+  shirt: [
+    {
+      id: "chest_grading",
+      parameter: "chest_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+  ],
+  pants: [
+    {
+      id: "waist_grading",
+      parameter: "waist_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+    {
+      id: "hip_grading",
+      parameter: "hip_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+  ],
+  skirt: [
+    {
+      id: "waist_grading",
+      parameter: "waist_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -8,
+        S: -4,
+        M: 0,
+        L: 4,
+        XL: 8,
+      },
+      method: "linear",
+    },
+    {
+      id: "hip_grading",
+      parameter: "hip_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+  ],
+  jacket: [
+    {
+      id: "chest_grading",
+      parameter: "chest_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -12,
+        S: -6,
+        M: 0,
+        L: 6,
+        XL: 12,
+      },
+      method: "linear",
+    },
+  ],
+  top: [
+    {
+      id: "bust_grading",
+      parameter: "bust_circumference",
+      baseSize: "M",
+      increments: {
+        XS: -10,
+        S: -5,
+        M: 0,
+        L: 5,
+        XL: 10,
+      },
+      method: "linear",
+    },
+  ],
+  other: [],
+}
+
+// Standard measurements for testing
+export const STANDARD_MEASUREMENTS = {
+  XS: {
+    bust: 81,
+    waist: 63,
+    hips: 89,
+    back_length: 38,
+    front_length: 40,
+  },
+  S: {
+    bust: 86,
+    waist: 68,
+    hips: 94,
+    back_length: 39,
+    front_length: 41,
+  },
+  M: {
+    bust: 91,
+    waist: 73,
+    hips: 99,
+    back_length: 40,
+    front_length: 42,
+  },
+  L: {
+    bust: 96,
+    waist: 78,
+    hips: 104,
+    back_length: 41,
+    front_length: 43,
+  },
+  XL: {
+    bust: 101,
+    waist: 83,
+    hips: 109,
+    back_length: 42,
+    front_length: 44,
+  },
+}
