@@ -3,7 +3,7 @@ import { OrbitControls, useGLTF, Environment } from '@react-three/drei'
 import { Suspense } from 'react'
 
 function TestModel() {
-  const { scene } = useGLTF('/components/3DRender/macbook_laptop.glb')
+  const { scene } = useGLTF('macbook_laptop.glb')
   return <primitive object={scene} scale={0.5} />
 }
 

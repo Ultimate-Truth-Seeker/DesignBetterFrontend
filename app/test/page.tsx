@@ -3,10 +3,12 @@ import { PedidoFilter } from "@/components/clients/PedidoFilter"
 import { TrackingTimeline } from "@/components/clients/TrackingTimeline"
 import { fetchPedidoTracking } from "@/lib/api/clientes"
 import { motion } from "framer-motion"
+import  RenderTest  from "@/components/3DRender/RenderTest"
 
 export default function test() {
     return (
 <div className="relative bg-linear-to-bl from-blue-100 via-transparent dark:from-blue-950 dark:via-transparent">
+  <RenderTest/>
   <TrackingTimeline historial={[{
     fecha: "01-01-2222",
     estado: 'pendiente',

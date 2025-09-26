@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { ChevronLeft, ChevronRight, Save } from "lucide-react"
 import type { PatternStep, StepInfo } from "@/types/pattern"
 
