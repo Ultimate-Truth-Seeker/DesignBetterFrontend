@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 
 function TestModel() {
   const { scene } = useGLTF('macbook_laptop.glb')
-  return <primitive object={scene} scale={0.5} />
+  return <group position={[-66, -4, -18]}><primitive object={scene} scale={10} /></group>
 }
 
 function LoadingFallback() {

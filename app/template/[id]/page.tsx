@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
+import Link from 'next/link';
 import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -145,8 +146,11 @@ export default function TemplateDetailPage() {
                 className="w-full border-green-600 text-green-600 hover:bg-green-50 bg-transparent"
                 size="lg"
               >
-                <ExternalLink className="mr-2 h-4 w-4" />
+                <Link href="/test" target="_blank" rel="noopener noreferrer">
+
+                <ExternalLink className="mr-2 h-4 w-4" onClick="/test"/>
                 Visualizar en 3D
+                </Link>
               </Button>
             </div>
 
