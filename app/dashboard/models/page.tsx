@@ -3,7 +3,7 @@
 import React, { Suspense, useMemo, useState } from 'react'
 // @ts-ignore - no type declarations for next/dynamic in this environment
 import dynamic from 'next/dynamic'
-import { Environment, OrbitControls, useGLTF } from '@react-three/drei'
+import { Environment, OrbitControls, useGLTF, Html } from '@react-three/drei'
 
 // --- Carga diferida del Canvas SOLO en cliente ---
 const Canvas = dynamic(
@@ -17,6 +17,17 @@ function LoadingFallback() {
     <div className="flex items-center justify-center w-full h-96 text-sm text-gray-500 dark:text-gray-400">
       Cargando modelo 3D...
     </div>
+  )
+}
+
+// Fallback seguro para usar DENTRO del <Canvas> (usa Drei Html)
+function CanvasLoadingFallback() {
+  return (
+    <Html center>
+      <div className="text-sm text-gray-500 dark:text-gray-400 bg-white/80 dark:bg-black/40 px-3 py-2 rounded">
+        Cargando modelo 3D...
+      </div>
+    </Html>
   )
 }
 
@@ -83,7 +94,7 @@ export default function ModelsPage() {
           <Canvas camera={{ position: [0, 1, 4] }}>
             <ambientLight intensity={0.5} />
             <directionalLight position={[5, 5, 5]} intensity={1} />
-            <Suspense fallback={<LoadingFallback />}>
+            <Suspense fallback={<CanvasLoadingFallback />}>
               <GLBModel url={modelUrl} />
               <Environment preset="studio" />
             </Suspense>
