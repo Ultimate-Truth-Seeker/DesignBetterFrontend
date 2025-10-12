@@ -1,26 +1,13 @@
 "use client";
 
-import { useState, Suspense, useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import dynamic from "next/dynamic";
+import { useState, useMemo } from "react";
 
-function AvatarModel({ url, scale }: { url: string; scale: [number, number, number] }) {
-  const { scene } = useGLTF(url);
-  return <primitive object={scene} scale={scale} position={[0, -1.5, 0]} />;
-}
-
-function LoadingFallback() {
-  return (
-    <div className="flex items-center justify-center h-[400px] text-gray-500">
-      Cargando modelo 3D...
-    </div>
-  );
-}
+const AvatarViewer = dynamic(() => import("./avatarviewer"), { ssr: false });
 
 export default function AvatarPage() {
   const [gender, setGender] = useState<"male" | "female">("female");
-  const [height, setHeight] = useState(170); // cm
+  const [height, setHeight] = useState(170);
   const [shoulder, setShoulder] = useState(40);
   const [waist, setWaist] = useState(70);
   const [generate, setGenerate] = useState(false);
@@ -30,24 +17,19 @@ export default function AvatarPage() {
     [gender]
   );
 
-  // Calcula escala proporcional
   const scale = useMemo(() => {
-    const baseHeight = 170;
-    const baseShoulder = 40;
-    const baseWaist = 70;
-
-    const heightScale = height / baseHeight;
-    const shoulderScale = shoulder / baseShoulder;
-    const waistScale = waist / baseWaist;
-
-    return [shoulderScale, heightScale, waistScale] as [number, number, number];
+    const base = { height: 170, shoulder: 40, waist: 70 };
+    return [
+      shoulder / base.shoulder,
+      height / base.height,
+      waist / base.waist,
+    ] as [number, number, number];
   }, [height, shoulder, waist]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 px-4">
       <h1 className="text-2xl font-bold mb-6">Generador de Avatar 3D para Moda</h1>
 
-      {/* Selector de género */}
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setGender("female")}
@@ -67,7 +49,6 @@ export default function AvatarPage() {
         </button>
       </div>
 
-      {/* Medidas del cuerpo */}
       <div className="grid grid-cols-3 gap-4 mb-6 w-full max-w-md">
         <div className="flex flex-col items-center">
           <label className="text-sm mb-1">Altura (cm)</label>
@@ -98,7 +79,6 @@ export default function AvatarPage() {
         </div>
       </div>
 
-      {/* Botón de generación */}
       <button
         onClick={() => setGenerate(true)}
         className="bg-black text-white px-6 py-2 rounded-lg mb-8"
@@ -106,20 +86,7 @@ export default function AvatarPage() {
         Generar Avatar
       </button>
 
-      {/* Vista 3D */}
-      {generate && (
-        <div className="w-full max-w-2xl h-[500px] bg-white rounded-lg shadow-md">
-          <Canvas camera={{ position: [0, 1.5, 3], fov: 45 }}>
-            <Suspense fallback={<LoadingFallback />}>
-              <ambientLight intensity={0.6} />
-              <directionalLight position={[2, 4, 5]} intensity={1} />
-              <AvatarModel url={modelUrl} scale={scale} />
-              <Environment preset="studio" />
-              <OrbitControls enablePan={false} />
-            </Suspense>
-          </Canvas>
-        </div>
-      )}
+      {generate && <AvatarViewer url={modelUrl} scale={scale} />}
     </div>
   );
 }
