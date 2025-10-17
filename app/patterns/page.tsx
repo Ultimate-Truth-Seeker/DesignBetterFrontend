@@ -128,7 +128,7 @@ export default function PatternsPage() {
             </Button>
           </div>
 
-          <Link href="/crear-patron">
+          <Link href="/patterns/crear-patron">
             <Button className="gap-2">
               <Plus className="h-4 w-4" />
               Nuevo Patrón
@@ -150,7 +150,7 @@ export default function PatternsPage() {
                 ? "No se encontraron patrones con los filtros aplicados"
                 : "No tienes patrones creados aún"}
             </div>
-            <Link href="/crear-patron">
+            <Link href="/patterns/crear-patron">
               <Button>Crear tu primer patrón</Button>
             </Link>
           </div>

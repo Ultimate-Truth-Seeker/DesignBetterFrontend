@@ -103,7 +103,7 @@ export function DesignerTemplateCard({ template, onDelete, onDuplicate }: Design
         </div>
 
         {/* Edit Button */}
-        <Link href={`/crear-plantilla?id=${template.id}`} className="mt-4 block">
+        <Link href={`/templates/crear-plantilla?id=${template.id}`} className="mt-4 block">
           <Button variant="outline" className="w-full bg-transparent">
             <Edit className="mr-2 h-4 w-4" />
             Editar Plantilla

@@ -126,7 +126,7 @@ export default function TemplatesPage() {
           </div>
 
           {/* Create Button */}
-          <Link href="/crear-plantilla">
+          <Link href="/templates/crear-plantilla">
             <Button className="gap-2">
               <Plus className="h-4 w-4" />
               Nueva Plantilla
@@ -140,7 +140,7 @@ export default function TemplatesPage() {
             <p className="mb-4 text-lg font-medium text-muted-foreground">
               {searchQuery || statusFilter !== "all" ? "No se encontraron plantillas" : "No tienes plantillas creadas"}
             </p>
-            <Link href="/crear-plantilla">
+            <Link href="/templates/crear-plantilla">
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
                 Crear Primera Plantilla

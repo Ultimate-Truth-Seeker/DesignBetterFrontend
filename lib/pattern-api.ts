@@ -264,3 +264,5 @@ export class PatternAPI {
     } as Pattern
   }
 }
+
+export const patternApi = PatternAPI

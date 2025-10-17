@@ -86,3 +86,5 @@ export interface TemplateFormData {
   media: TemplateMedia
   status: PatternStatus
 }
+
+export type TemplateStatus = PatternStatus

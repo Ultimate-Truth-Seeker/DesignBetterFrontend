@@ -227,7 +227,55 @@ export const templateApi = {
     return templates.find((t) => t.id === id) || null
   },
 
-  // Save template (create or update)
+  // Create new template
+  async createTemplate(data: Partial<TemplateFormData>): Promise<DesignerTemplate> {
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 800))
+
+    console.log("[v0] Creating template:", data)
+
+    // Mock response
+    const newTemplate: DesignerTemplate = {
+      id: `tpl-${Date.now()}`,
+      code: data.code || "",
+      name: data.name || "",
+      pattern_base_id: data.pattern_base_id || "",
+      default_params: data.default_params || {},
+      exposed_options: data.exposed_options || [],
+      compatibility_rules: data.compatibility_rules || [],
+      materials_policy: data.materials_policy || { pieces: {} },
+      size_range: data.size_range || { type: "standard", sizes: [] },
+      media: data.media || { hero_url: "", gallery: [] },
+      status: data.status || "draft",
+      version: 1,
+      created_at: new Date().toISOString(),
+    }
+
+    return newTemplate
+  },
+
+  // Update existing template
+  async updateTemplate(id: string, data: Partial<TemplateFormData>): Promise<DesignerTemplate> {
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 800))
+
+    console.log("[v0] Updating template:", { id, data })
+
+    // Mock response - merge with existing data
+    const existingTemplate = await this.fetchTemplate(id)
+    if (!existingTemplate) {
+      throw new Error("Template not found")
+    }
+
+    return {
+      ...existingTemplate,
+      ...data,
+      id, // Keep the same ID
+      version: existingTemplate.version + 1,
+    }
+  },
+
+  // Save template (create or update) - kept for backward compatibility
   async saveTemplate(data: Partial<TemplateFormData>, id?: string): Promise<DesignerTemplate> {
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 800))
