@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
 import { Search } from "lucide-react"
 import { SearchFilters } from "@/components/search-filters"
 import { TemplateCard } from "@/components/template-card"
-import { sampleTemplates } from "@/types/template"
+import { sampleTemplates, Template } from "@/types/template"
 
 type SortOption = "new" | "price-asc" | "price-desc" | "rating"
 
@@ -14,6 +14,7 @@ export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState<SortOption>("new")
   const [templates] = useState(sampleTemplates)
+  const [filteredTemplates, setFilteredTemplates] = useState<Template[]>([])
 
   const sortOptions = [
     { value: "new" as const, label: "New" },
@@ -22,7 +23,27 @@ export default function SearchPage() {
     { value: "rating" as const, label: "Rating" },
   ]
 
-  const sortedTemplates = [...templates].sort((a, b) => {
+  useEffect(() => {
+      filterTemplates()
+    }, [templates, searchQuery])
+  
+  
+  
+  const filterTemplates = () => {
+      let filtered = templates
+  
+      // Filter by search query
+      if (searchQuery) {
+        filtered = filtered.filter(
+          (template) =>
+            template.title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      }
+  
+      setFilteredTemplates(filtered)
+  }
+
+  const sortedTemplates = [...filteredTemplates].sort((a, b) => {
     switch (sortBy) {
       case "new":
         return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)
