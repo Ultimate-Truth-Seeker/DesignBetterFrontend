@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useMemo } from "react"
+import { useSearchParams } from "next/navigation"
 import { PatternSidebar } from "@/components/pattern-creator/pattern-sidebar"
 import { PatternContextPanel } from "@/components/pattern-creator/pattern-context-panel"
 import { PatternNavigation } from "@/components/pattern-creator/pattern-navigation"
@@ -80,12 +81,40 @@ const BASE_STEPS: Omit<StepInfo, "isComplete" | "hasErrors">[] = [
 ]
 
 export default function CrearPatronPage() {
+  const searchParams = useSearchParams()
+  const patternId = searchParams.get("id")
+
   const [currentStep, setCurrentStep] = useState<PatternStep>("metadatos")
   const [pattern, setPattern] = useState<Partial<Pattern>>(initialPattern)
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([])
   const [lastSaved, setLastSaved] = useState<Date>()
   const [isDirty, setIsDirty] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [isLoading, setIsLoading] = useState(!!patternId)
+
+  useEffect(() => {
+    if (patternId) {
+      loadPattern(patternId)
+    }
+  }, [patternId])
+
+  const loadPattern = async (id: string) => {
+    setIsLoading(true)
+    try {
+      const existingPattern = await PatternAPI.getPattern(id)
+      if (existingPattern) {
+        setPattern(existingPattern)
+        toast.success("Patrón cargado correctamente")
+      } else {
+        toast.error("Patrón no encontrado")
+      }
+    } catch (error) {
+      console.error("Failed to load pattern:", error)
+      toast.error("Error al cargar el patrón")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const validateStep = useCallback(
     (step: PatternStep): ValidationError[] => {
@@ -298,9 +327,23 @@ export default function CrearPatronPage() {
     }
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <PageHeader title={patternId ? "Editar Patrón" : "Crear Patrón"} />
+        <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Cargando patrón...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <PageHeader title="Crear Patrón" />
+      <PageHeader title={patternId ? "Editar Patrón" : "Crear Patrón"} />
 
       <div className="flex flex-col h-[calc(100vh-4rem)]">
         <div className="flex flex-1 overflow-hidden">
