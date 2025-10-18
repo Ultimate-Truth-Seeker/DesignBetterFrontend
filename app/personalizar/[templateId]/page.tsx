@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,6 +11,7 @@ import { HelpCircle, Save, ArrowRight, ArrowLeft, User } from "lucide-react"
 import { MEASUREMENT_SCHEMA, MEASUREMENT_GUIDES, type BodyProfile } from "@/types/body-measurement"
 import { MeasurementGuideDialog } from "@/components/measurement-guide-dialog"
 import { BodyProfileStorage } from "@/lib/body-profile-storage"
+import dynamic from "next/dynamic";
 
 export default function PersonalizarTemplatePage({
   params,
@@ -35,6 +36,27 @@ export default function PersonalizarTemplatePage({
   // Load existing profiles
   const [savedProfiles, setSavedProfiles] = useState<BodyProfile[]>([])
   const [selectedProfileId, setSelectedProfileId] = useState<string>("")
+
+  const AvatarViewer = dynamic(() => import("./avatarviewer"), { ssr: false });
+
+  const [height, setHeight] = useState(170);
+  const [shoulder, setShoulder] = useState(40);
+  const [waist, setWaist] = useState(70);
+  const [generate, setGenerate] = useState(false);
+
+  const modelUrl = useMemo(
+    () => (gender === "female" ? "/female.glb" : "/male.glb"),
+    [gender]
+  );
+
+  const scale = useMemo(() => {
+    const base = { height: 170, shoulder: 40, waist: 70 };
+    return [
+      shoulder / base.shoulder,
+      height / base.height,
+      waist / base.waist,
+    ] as [number, number, number];
+  }, [height, shoulder, waist]);
 
   useEffect(() => {
     setSavedProfiles(BodyProfileStorage.getProfiles())
@@ -65,8 +87,13 @@ export default function PersonalizarTemplatePage({
       const newErrors = { ...errors }
       delete newErrors[code]
       setErrors(newErrors)
+      if (code === "waist") {
+        setWaist(value)
+      } else if (code === "shoulder_width") {
+        setShoulder(value)
+      }
     }
-
+    
     setMeasurements({ ...measurements, [code]: numValue })
   }
 
@@ -313,6 +340,15 @@ export default function PersonalizarTemplatePage({
                 ))}
               </div>
             </Card>
+
+            <button
+                onClick={() => setGenerate(true)}
+                className="bg-black text-white px-6 py-2 rounded-lg mb-8"
+            >
+                Generar Avatar
+            </button>
+
+            {generate && <AvatarViewer url={modelUrl} scale={scale} />}
 
             {/* Navigation */}
             <div className="flex justify-between">
