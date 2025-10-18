@@ -138,7 +138,9 @@ export default function TemplateDetailPage() {
             {/* Action Buttons */}
             <div className="space-y-3">
               <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
-                Personaliza esta plantilla
+                <Link href={`/personalizar/${templateId}`}>
+                  Personaliza esta plantilla 
+                </Link>
               </Button>
 
               <Button
