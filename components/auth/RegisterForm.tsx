@@ -21,16 +21,26 @@ export default function RegisterForm() {
     }, [isAuthenticated, router])
   
     const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()
-      setError("")
-  
-      try {
-        await registerUser({ email, name, password, confirmPassword, role })
-        router.push("/login")
-      } catch (err: any) {
-        setError(err.message)
-      }
+    e.preventDefault()
+    setError("")
+
+    // Validación rápida en el cliente
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden")
+      return
     }
+
+    try {
+      await registerUser({ email, name, password, confirmPassword, role })
+      // Aviso del navegador antes de redirigir
+      if (typeof window !== "undefined") {
+        window.alert(Te enviamos un correo de confirmación a ${email}.\nPor favor revisa tu bandeja de entrada y sigue el enlace para activar tu cuenta.)
+      }
+      router.push("/login")
+    } catch (err: any) {
+      setError(err?.message || "No se pudo completar el registro. Inténtalo de nuevo.")
+    }
+  }
     return (
 <div className="">
   <div className="p-4 sm:p-7">
