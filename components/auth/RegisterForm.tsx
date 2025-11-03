@@ -10,7 +10,6 @@ export default function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [name, setName] = useState("")
     const [role, setRole] = useState("")
-    setRole("")
     const [error, setError] = useState("")
     const { isAuthenticated } = useAuth()
     const router = useRouter()
@@ -24,7 +23,7 @@ export default function RegisterForm() {
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
-
+    setRole("")
     // Validación rápida en el cliente
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden")

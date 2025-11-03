@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { ButtonUI } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown } from "lucide-react";
@@ -34,12 +34,12 @@ function Navbar({user}: NavbarProps) {
                 Buscar Plantillas
               </Link>
               <div className="flex items-center gap-2">
-                <Button variant="outline">
+                <ButtonUI variant="outline">
                   <Link href="/login">Sign In</Link>
-                </Button>
-                <Button variant="brand">
+                </ButtonUI>
+                <ButtonUI variant="default">
                   <Link href="/register">Register</Link>
-                </Button>
+                </ButtonUI>
               </div>
             </>
           ) : (

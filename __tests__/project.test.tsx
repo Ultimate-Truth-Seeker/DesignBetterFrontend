@@ -1,8 +1,6 @@
 import { describe, expect, it, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Navbar from '@/components/Navbar'
-import ClientNavbar from '@/unused/ClientNavbar'
-import { DesignerNavbar } from '@/unused/DesignerNavbar'
 
 describe('Navbar', () => {
   it('debe renderizar los enlaces del menú', () => {
@@ -15,14 +13,14 @@ describe('Navbar', () => {
 
 describe('Dashboards', () => {
   it('muestra menu de cliente', () => {
-    render(<ClientNavbar />)
+    render(<Navbar />)
     expect(screen.getByText('DesignBetter')).toBeTruthy()
     expect(screen.getByText('Cerrar sesión')).toBeTruthy()
   })
 
 
 it('muestra menu de diseñador', () => {
-    render(<DesignerNavbar/>)
+    render(<Navbar/>)
     expect(screen.getByText('Inicio')).toBeTruthy()
     expect(screen.getByText('Cerrar sesión')).toBeTruthy()
   })
