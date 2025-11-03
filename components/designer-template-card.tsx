@@ -1,8 +1,8 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { ButtonUI } from "@/components/ui/button"
+import { BadgeUI } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MoreVertical, Edit, Copy, Trash2, Eye } from "lucide-react"
 import type { DesignerTemplate } from "@/types/designer-template"
@@ -39,7 +39,7 @@ export function DesignerTemplateCard({ template, onDelete, onDuplicate }: Design
           className="object-cover transition-transform group-hover:scale-105"
         />
         <div className="absolute right-2 top-2">
-          <Badge className={statusColors[template.status]}>{statusLabels[template.status]}</Badge>
+          <BadgeUI className={statusColors[template.status]}>{statusLabels[template.status]}</BadgeUI>
         </div>
       </div>
 
@@ -54,9 +54,9 @@ export function DesignerTemplateCard({ template, onDelete, onDuplicate }: Design
           {/* Actions Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <ButtonUI variant="ghost" size="sm" className="h-8 w-8 p-0">
                 <MoreVertical className="h-4 w-4" />
-              </Button>
+              </ButtonUI>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
@@ -102,12 +102,12 @@ export function DesignerTemplateCard({ template, onDelete, onDuplicate }: Design
           </div>
         </div>
 
-        {/* Edit Button */}
+        {/* Edit ButtonUI */}
         <Link href={`/templates/crear-plantilla?id=${template.id}`} className="mt-4 block">
-          <Button variant="outline" className="w-full bg-transparent">
+          <ButtonUI variant="outline" className="w-full bg-transparent">
             <Edit className="mr-2 h-4 w-4" />
             Editar Plantilla
-          </Button>
+          </ButtonUI>
         </Link>
       </div>
     </Card>

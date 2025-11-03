@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { DesignerNavbar } from "./DesignerNavbar";
+import { DesignerNavbar } from "../../unused/DesignerNavbar";
 
 export const DesignerPanel = () => {
   return (

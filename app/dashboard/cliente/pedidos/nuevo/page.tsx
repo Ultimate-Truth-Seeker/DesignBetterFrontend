@@ -1,6 +1,6 @@
 'use client'
 
-import { NewPedidoForm } from '@/components/clients/NewPedidoForm';
+import { NewPedidoForm } from '@/unused/NewPedidoForm';
 import { createPedido, NuevoPedidoPayload } from '@/lib/api/clientes';
 
 export default function NewPedidoPage() {

@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { ButtonUI } from "@/components/ui/button"
+import { BadgeUI } from "@/components/ui/badge"
 import type { Pattern, PatternCategory } from "@/types/pattern"
 import { Shuffle } from "lucide-react"
 
@@ -63,7 +63,7 @@ export function MetadatosStep({ pattern, onUpdate }: MetadatosStepProps) {
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="name">Nombre del Patrón *</Label>
-          <Input
+          <InputUI
             id="name"
             value={pattern.name || ""}
             onChange={(e) => onUpdate({ name: e.target.value })}
@@ -74,15 +74,15 @@ export function MetadatosStep({ pattern, onUpdate }: MetadatosStepProps) {
         <div className="grid gap-2">
           <Label htmlFor="code">Código del Patrón *</Label>
           <div className="flex gap-2">
-            <Input
+            <InputUI
               id="code"
               value={pattern.code || ""}
               onChange={(e) => onUpdate({ code: e.target.value })}
               placeholder="Ej: dress-summer-sleeves-2024"
             />
-            <Button type="button" variant="outline" onClick={generateCode} disabled={!pattern.name || isGeneratingCode}>
+            <ButtonUI type="button" variant="outline" onClick={generateCode} disabled={!pattern.name || isGeneratingCode}>
               <Shuffle className="h-4 w-4" />
-            </Button>
+            </ButtonUI>
           </div>
           <p className="text-xs text-muted-foreground">
             El código debe ser único. Usa el botón para generar uno automáticamente.
@@ -125,9 +125,9 @@ export function MetadatosStep({ pattern, onUpdate }: MetadatosStepProps) {
         <div className="grid gap-2">
           <Label>Estado</Label>
           <div className="flex items-center gap-2">
-            <Badge variant={pattern.status === "draft" ? "secondary" : "default"}>
+            <BadgeUI variant={pattern.status === "draft" ? "secondary" : "default"}>
               {pattern.status === "draft" ? "Borrador" : pattern.status === "published" ? "Publicado" : "Archivado"}
-            </Badge>
+            </BadgeUI>
             <span className="text-sm text-muted-foreground">Versión {pattern.version || 1}</span>
           </div>
           <p className="text-xs text-muted-foreground">

@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { GarmentWizard } from '@/components/garment/GarmentWizard';
-import { BodyMeasurements } from './Medidas';
+import { GarmentWizard } from '@/unused/garment/GarmentWizard';
+import { BodyMeasurements } from '@/unused/Medidas';
 import { getPlantillas, Plantilla } from '@/lib/api/clientes';
-import { PaymentMethodSelector } from './PaymentMethodSelector';
+import { PaymentMethodSelector } from '../components/clients/PaymentMethodSelector';
 
 
 export function NewPedidoForm({

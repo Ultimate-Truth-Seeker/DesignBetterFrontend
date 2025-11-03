@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Plus, Trash2, Code, Eye, TrendingUp } from "lucide-react"
 import type { Pattern, GradingRule } from "@/types/pattern"
 import { DEFAULT_GRADING_RULES } from "@/types/pattern-defaults"
@@ -84,14 +84,14 @@ export function GradacionStep({ pattern, onUpdate }: GradacionStepProps) {
         </div>
         <div className="flex gap-2">
           {pattern.category && pattern.category !== "other" && (
-            <Button variant="outline" onClick={loadDefaults}>
+            <ButtonUI variant="outline" onClick={loadDefaults}>
               Cargar Predeterminadas
-            </Button>
+            </ButtonUI>
           )}
-          <Button onClick={addGradingRule}>
+          <ButtonUI onClick={addGradingRule}>
             <Plus className="h-4 w-4 mr-2" />
             Nueva Regla
-          </Button>
+          </ButtonUI>
         </div>
       </div>
 
@@ -128,10 +128,10 @@ export function GradacionStep({ pattern, onUpdate }: GradacionStepProps) {
                   <TableRow key={rule.id}>
                     <TableCell className="font-medium">{rule.parameter}</TableCell>
                     <TableCell>
-                      <Badge variant="outline">{rule.baseSize}</Badge>
+                      <BadgeUI variant="outline">{rule.baseSize}</BadgeUI>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary">{rule.method}</Badge>
+                      <BadgeUI variant="secondary">{rule.method}</BadgeUI>
                     </TableCell>
                     {SIZES.slice(0, 5).map((size) => (
                       <TableCell key={size} className="text-center">
@@ -143,12 +143,12 @@ export function GradacionStep({ pattern, onUpdate }: GradacionStepProps) {
                     ))}
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" onClick={() => setEditingRule(rule)}>
+                        <ButtonUI variant="ghost" size="sm" onClick={() => setEditingRule(rule)}>
                           Editar
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => deleteGradingRule(rule.id)}>
+                        </ButtonUI>
+                        <ButtonUI variant="ghost" size="sm" onClick={() => deleteGradingRule(rule.id)}>
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </ButtonUI>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -267,7 +267,7 @@ export function GradacionStep({ pattern, onUpdate }: GradacionStepProps) {
                   {SIZES.slice(0, 5).map((size) => (
                     <div key={size}>
                       <Label className="text-xs">{size}</Label>
-                      <Input
+                      <InputUI
                         type="number"
                         value={editingRule.increments[size] || 0}
                         onChange={(e) =>
@@ -303,12 +303,12 @@ export function GradacionStep({ pattern, onUpdate }: GradacionStepProps) {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button onClick={() => saveGradingRule(editingRule)} disabled={!editingRule.parameter}>
+                <ButtonUI onClick={() => saveGradingRule(editingRule)} disabled={!editingRule.parameter}>
                   Guardar
-                </Button>
-                <Button variant="outline" onClick={() => setEditingRule(null)}>
+                </ButtonUI>
+                <ButtonUI variant="outline" onClick={() => setEditingRule(null)}>
                   Cancelar
-                </Button>
+                </ButtonUI>
               </div>
             </div>
           </div>

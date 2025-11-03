@@ -1,5 +1,5 @@
 import { Link, BrowserRouter } from "react-router-dom";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../components/AuthProvider";
 import { useState } from "react"
 // Opciones del menú (algunas deshabilitadas temporalmente)
 const menuItems = [

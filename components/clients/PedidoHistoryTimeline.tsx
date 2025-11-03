@@ -183,7 +183,7 @@ export function PedidoHistoryTimeline({ pedidoId, className }: PedidoHistoryTime
 
         <div className="space-y-8">
           {events.map((event, index) => (
-            <div key={event.id} className="relative flex" name={index}>
+            <div key={event.id || index} className="relative flex">
               {/* Punto en la línea de tiempo */}
               <div className={cn(
                 "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center border-2",

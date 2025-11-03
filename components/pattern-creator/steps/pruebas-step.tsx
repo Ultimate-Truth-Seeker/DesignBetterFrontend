@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { ButtonUI } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { AlertCircle, CheckCircle, Play, Eye, Cable as Cube } from "lucide-react"
 import type { Pattern } from "@/types/pattern"
 
@@ -94,7 +94,7 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
           <div key={key} className="space-y-2">
             <Label htmlFor={key}>{schema.title || key}</Label>
             {schema.type === "number" ? (
-              <Input
+              <InputUI
                 id={key}
                 type="number"
                 value={testParameters[key] || schema.default || ""}
@@ -130,7 +130,7 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
                 </SelectContent>
               </Select>
             ) : (
-              <Input
+              <InputUI
                 id={key}
                 value={testParameters[key] || schema.default || ""}
                 onChange={(e) =>
@@ -194,7 +194,7 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
                     {["bust", "waist", "hip", "back_length"].map((measurement) => (
                       <div key={measurement} className="space-y-1">
                         <Label htmlFor={measurement}>{measurement.replace("_", " ")}</Label>
-                        <Input
+                        <InputUI
                           id={measurement}
                           type="number"
                           value={customMeasurements[measurement] || ""}
@@ -233,18 +233,18 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
           </div>
 
           <div className="flex gap-3">
-            <Button onClick={handleValidatePattern} disabled={isValidating}>
+            <ButtonUI onClick={handleValidatePattern} disabled={isValidating}>
               <Play className="w-4 h-4 mr-2" />
               {isValidating ? "Validando..." : "Validar Patrón"}
-            </Button>
-            <Button variant="outline" onClick={handleResolveGeometry} disabled={isResolving}>
+            </ButtonUI>
+            <ButtonUI variant="outline" onClick={handleResolveGeometry} disabled={isResolving}>
               <Eye className="w-4 h-4 mr-2" />
               {isResolving ? "Resolviendo..." : "Resolver Geometría"}
-            </Button>
-            <Button variant="outline" disabled>
+            </ButtonUI>
+            <ButtonUI variant="outline" disabled>
               <Cube className="w-4 h-4 mr-2" />
               Generar 3D (Próximamente)
-            </Button>
+            </ButtonUI>
           </div>
         </TabsContent>
 
@@ -263,7 +263,7 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">Prueba {result.timestamp.toLocaleTimeString()}</CardTitle>
-                    <Badge
+                    <BadgeUI
                       variant={
                         result.status === "success"
                           ? "default"
@@ -275,7 +275,7 @@ export function PruebasStep({ pattern, onUpdate }: PruebasStepProps) {
                       {result.status === "success" && <CheckCircle className="w-3 h-3 mr-1" />}
                       {result.status !== "success" && <AlertCircle className="w-3 h-3 mr-1" />}
                       {result.status}
-                    </Badge>
+                    </BadgeUI>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">

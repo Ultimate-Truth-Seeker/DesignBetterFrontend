@@ -3,13 +3,13 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Trash2, Code, Eye } from "lucide-react"
@@ -154,6 +154,7 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
       [key]: {
         ...pattern.params_schema?.properties[key],
         [field]: processedValue,
+        type: pattern.params_schema?.properties[key]?.type || ""
       },
     }
 
@@ -233,7 +234,7 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
     }
 
     return (
-      <Input
+      <InputUI
         value={tempValue}
         onChange={(e) => setTempValue(e.target.value)}
         onBlur={handleSave}
@@ -260,14 +261,14 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
         </div>
         <div className="flex gap-2">
           {pattern.category && pattern.category !== "other" && (
-            <Button variant="outline" onClick={loadDefaults}>
+            <ButtonUI variant="outline" onClick={loadDefaults}>
               Cargar Predeterminados
-            </Button>
+            </ButtonUI>
           )}
-          <Button onClick={addParameter}>
+          <ButtonUI onClick={addParameter}>
             <Plus className="h-4 w-4 mr-2" />
             Agregar Parámetro
-          </Button>
+          </ButtonUI>
         </div>
       </div>
 
@@ -305,13 +306,13 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
                       {editingCell?.key === param.key && editingCell?.field === "type" ? (
                         <InlineCellEditor param={param} field="type" value={param.type} />
                       ) : (
-                        <Badge
+                        <BadgeUI
                           variant="outline"
                           className="cursor-pointer"
                           onClick={() => setEditingCell({ key: param.key, field: "type" })}
                         >
                           {param.type}
-                        </Badge>
+                        </BadgeUI>
                       )}
                     </TableCell>
                     <TableCell>
@@ -383,12 +384,12 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" onClick={() => setEditingParam(param)}>
+                        <ButtonUI variant="ghost" size="sm" onClick={() => setEditingParam(param)}>
                           Editar
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => deleteParameter(param.key)}>
+                        </ButtonUI>
+                        <ButtonUI variant="ghost" size="sm" onClick={() => deleteParameter(param.key)}>
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </ButtonUI>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -431,7 +432,7 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="param-key">Clave *</Label>
-                <Input
+                <InputUI
                   id="param-key"
                   value={editingParam.key}
                   onChange={(e) => setEditingParam({ ...editingParam, key: e.target.value })}
@@ -461,7 +462,7 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
 
               <div>
                 <Label htmlFor="param-description">Descripción</Label>
-                <Input
+                <InputUI
                   id="param-description"
                   value={editingParam.description}
                   onChange={(e) => setEditingParam({ ...editingParam, description: e.target.value })}
@@ -479,12 +480,12 @@ export function ParametrosStep({ pattern, onUpdate }: ParametrosStepProps) {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button onClick={() => saveParameter(editingParam)} disabled={!editingParam.key}>
+                <ButtonUI onClick={() => saveParameter(editingParam)} disabled={!editingParam.key}>
                   Guardar
-                </Button>
-                <Button variant="outline" onClick={() => setEditingParam(null)}>
+                </ButtonUI>
+                <ButtonUI variant="outline" onClick={() => setEditingParam(null)}>
                   Cancelar
-                </Button>
+                </ButtonUI>
               </div>
             </div>
           </div>

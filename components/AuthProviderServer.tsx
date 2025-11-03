@@ -2,11 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { User } from '@/lib/auth-types';
+import { DecodedToken } from '@/lib/auth-client';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: User | null;
+  user: DecodedToken | null;
   login: (credentials: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -21,11 +21,11 @@ const AuthContext = createContext<AuthContextType>({
 type Props = {
   children: React.ReactNode;
   /** Hidratación SSR → evita flicker (puedes pasarlo desde layout) */
-  initialUser?: User | null;
+  initialUser?: DecodedToken | null;
 };
 
 export function AuthProvider({ children, initialUser = null }: Props) {
-  const [user, setUser] = useState<User | null>(initialUser);
+  const [user, setUser] = useState<DecodedToken | null>(initialUser);
   const isAuthenticated = !!user;
   const router = useRouter();
 

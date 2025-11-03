@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Plus, Search, Filter } from "lucide-react"
 import { templateApi } from "@/lib/template-api"
 import type { DesignerTemplate } from "@/types/designer-template"
 import { DesignerTemplateCard } from "@/components/designer-template-card"
 import { PageHeader } from "@/components/page-header"
-import { LoadingSkeleton } from "@/components/loading-skeleton"
+import { TemplateGridSkeleton } from "@/components/loading-skeleton"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Link from "next/link"
 
@@ -84,7 +84,7 @@ export default function TemplatesPage() {
       <div className="min-h-screen bg-background">
         <PageHeader title="Mis Plantillas" />
         <div className="mx-auto max-w-7xl px-4 py-8">
-          <LoadingSkeleton count={6} />
+          <TemplateGridSkeleton count={6} />
         </div>
       </div>
     )
@@ -101,7 +101,7 @@ export default function TemplatesPage() {
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
+              <InputUI
                 type="text"
                 placeholder="Buscar plantillas..."
                 value={searchQuery}
@@ -125,12 +125,12 @@ export default function TemplatesPage() {
             </Select>
           </div>
 
-          {/* Create Button */}
+          {/* Create ButtonUI */}
           <Link href="/templates/crear-plantilla">
-            <Button className="gap-2">
+            <ButtonUI className="gap-2">
               <Plus className="h-4 w-4" />
               Nueva Plantilla
-            </Button>
+            </ButtonUI>
           </Link>
         </div>
 
@@ -141,10 +141,10 @@ export default function TemplatesPage() {
               {searchQuery || statusFilter !== "all" ? "No se encontraron plantillas" : "No tienes plantillas creadas"}
             </p>
             <Link href="/templates/crear-plantilla">
-              <Button>
+              <ButtonUI>
                 <Plus className="mr-2 h-4 w-4" />
                 Crear Primera Plantilla
-              </Button>
+              </ButtonUI>
             </Link>
           </div>
         ) : (

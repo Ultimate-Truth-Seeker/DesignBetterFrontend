@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ButtonUI } from "@/components/ui/button"
 import { TemplateCard } from "@/components/template-card"
 import type { Template } from "@/types/template"
 
@@ -31,7 +31,7 @@ export function TemplateCarousel({ title, templates, onTemplateClick }: Template
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-foreground">{title}</h2>
         <div className="flex gap-2">
-          <Button
+          <ButtonUI
             variant="outline"
             size="sm"
             onClick={goToPrevious}
@@ -39,8 +39,8 @@ export function TemplateCarousel({ title, templates, onTemplateClick }: Template
             className="h-8 w-8 p-0 bg-transparent"
           >
             <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
+          </ButtonUI>
+          <ButtonUI
             variant="outline"
             size="sm"
             onClick={goToNext}
@@ -48,7 +48,7 @@ export function TemplateCarousel({ title, templates, onTemplateClick }: Template
             className="h-8 w-8 p-0"
           >
             <ChevronRight className="h-4 w-4" />
-          </Button>
+          </ButtonUI>
         </div>
       </div>
 

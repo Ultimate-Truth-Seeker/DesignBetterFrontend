@@ -1,7 +1,7 @@
 "use client"
 
 import type { Template } from "@/types/template"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 
 interface TemplateCardProps {
@@ -22,7 +22,7 @@ export function TemplateCard({ template, onClick }: TemplateCardProps) {
           alt={template.title}
           className="h-48 w-full object-cover transition-transform group-hover:scale-105"
         />
-        {template.isNew && <Badge className="absolute right-2 top-2 bg-green-600 text-white">New</Badge>}
+        {template.isNew && <BadgeUI className="absolute right-2 top-2 bg-green-600 text-white">New</BadgeUI>}
       </div>
 
       {/* Template Info */}

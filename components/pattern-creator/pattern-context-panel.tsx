@@ -2,7 +2,7 @@
 
 import type { PatternStep, ValidationError } from "@/types/pattern"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { AlertTriangle, Info, CheckCircle, Clock } from "lucide-react"
 
@@ -90,15 +90,15 @@ export function PatternContextPanel({ currentStep, validationErrors, lastSaved, 
         <h3 className="font-semibold text-foreground">{stepHelp.title}</h3>
         <div className="flex items-center gap-2 mt-2">
           {isDirty ? (
-            <Badge variant="secondary" className="text-xs">
+            <BadgeUI variant="secondary" className="text-xs">
               <Clock className="h-3 w-3 mr-1" />
               Sin guardar
-            </Badge>
+            </BadgeUI>
           ) : (
-            <Badge variant="outline" className="text-xs">
+            <BadgeUI variant="outline" className="text-xs">
               <CheckCircle className="h-3 w-3 mr-1" />
               Guardado
-            </Badge>
+            </BadgeUI>
           )}
           {lastSaved && <span className="text-xs text-muted-foreground">{lastSaved.toLocaleTimeString()}</span>}
         </div>

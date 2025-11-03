@@ -5,10 +5,12 @@
  * @param access Token de acceso
  * @param refresh Token de refresco
  */
-export function saveTokens(access: string, refresh: string) {
+export function saveTokens(access: string, refresh?: string) {
   if (typeof window !== 'undefined') {
     localStorage.setItem("accessToken", access);
-    localStorage.setItem("refreshToken", refresh);
+    if (refresh){
+      localStorage.setItem("refreshToken", refresh);
+    }
   }
 }
 
@@ -35,6 +37,7 @@ export function clearTokens() {
 import { jwtDecode } from 'jwt-decode'
 
 export interface DecodedToken {
+  avatar?: string;
   user_id: number
   email: string
   rol: 'admin' | 'cliente' | 'disenador' // o lo que tengas

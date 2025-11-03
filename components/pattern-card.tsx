@@ -1,8 +1,8 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { ButtonUI } from "@/components/ui/button"
+import { BadgeUI } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import type { Pattern } from "@/types/pattern"
 import { Edit, MoreVertical, Copy, Trash2 } from "lucide-react"
@@ -27,6 +27,7 @@ export function PatternCard({ pattern, onDelete, onDuplicate }: PatternCardProps
     dress: "Vestido",
     jacket: "Chaqueta",
     skirt: "Falda",
+    top: "Top",
     other: "Otro",
   }
 
@@ -41,9 +42,9 @@ export function PatternCard({ pattern, onDelete, onDuplicate }: PatternCardProps
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <ButtonUI variant="ghost" size="sm" className="h-8 w-8 p-0">
                 <MoreVertical className="h-4 w-4" />
-              </Button>
+              </ButtonUI>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
@@ -89,19 +90,19 @@ export function PatternCard({ pattern, onDelete, onDuplicate }: PatternCardProps
           </div>
         </div>
 
-        {/* Status Badge */}
+        {/* Status BadgeUI */}
         <div className="flex items-center justify-between">
-          <Badge className={statusColors[pattern.status]}>
+          <BadgeUI className={statusColors[pattern.status]}>
             {pattern.status === "draft" && "Borrador"}
             {pattern.status === "published" && "Publicado"}
             {pattern.status === "archived" && "Archivado"}
-          </Badge>
+          </BadgeUI>
 
           <Link href={`/patterns/crear-patron?id=${pattern.id}`}>
-            <Button size="sm" variant="outline" className="gap-2 bg-transparent">
+            <ButtonUI size="sm" variant="outline" className="gap-2 bg-transparent">
               <Edit className="h-3 w-3" />
               Editar
-            </Button>
+            </ButtonUI>
           </Link>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { describe, expect, it, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import Navbar from '@/components/Navbar'
-import ClientNavbar from '@/components/clients/ClientNavbar'
-import { DesignerNavbar } from '@/components/designer/DesignerNavbar'
+import ClientNavbar from '@/unused/ClientNavbar'
+import { DesignerNavbar } from '@/unused/DesignerNavbar'
 
 describe('Navbar', () => {
   it('debe renderizar los enlaces del menú', () => {

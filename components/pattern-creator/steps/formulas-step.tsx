@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Plus, Trash2, Code, Eye, AlertTriangle, CheckCircle } from "lucide-react"
 import type { Pattern, Constraint } from "@/types/pattern"
 import { DEFAULT_CONSTRAINTS } from "@/types/pattern-defaults"
@@ -96,14 +96,14 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
         </div>
         <div className="flex gap-2">
           {pattern.category && pattern.category !== "other" && (
-            <Button variant="outline" onClick={loadDefaults}>
+            <ButtonUI variant="outline" onClick={loadDefaults}>
               Cargar Predeterminadas
-            </Button>
+            </ButtonUI>
           )}
-          <Button onClick={addConstraint}>
+          <ButtonUI onClick={addConstraint}>
             <Plus className="h-4 w-4 mr-2" />
             Nueva Restricción
-          </Button>
+          </ButtonUI>
         </div>
       </div>
 
@@ -140,16 +140,16 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
                     <TableRow key={constraint.id}>
                       <TableCell className="font-mono text-sm">{constraint.id}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{constraint.type}</Badge>
+                        <BadgeUI variant="outline">{constraint.type}</BadgeUI>
                       </TableCell>
                       <TableCell className="font-mono text-sm max-w-[200px] truncate">
                         {constraint.expression}
                       </TableCell>
                       <TableCell className="max-w-[200px] truncate">{constraint.message}</TableCell>
                       <TableCell>
-                        <Badge variant={constraint.severity === "error" ? "destructive" : "secondary"}>
+                        <BadgeUI variant={constraint.severity === "error" ? "destructive" : "secondary"}>
                           {constraint.severity}
-                        </Badge>
+                        </BadgeUI>
                       </TableCell>
                       <TableCell>
                         {validation.valid ? (
@@ -160,12 +160,12 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
-                          <Button variant="ghost" size="sm" onClick={() => setEditingConstraint(constraint)}>
+                          <ButtonUI variant="ghost" size="sm" onClick={() => setEditingConstraint(constraint)}>
                             Editar
-                          </Button>
-                          <Button variant="ghost" size="sm" onClick={() => deleteConstraint(constraint.id)}>
+                          </ButtonUI>
+                          <ButtonUI variant="ghost" size="sm" onClick={() => deleteConstraint(constraint.id)}>
                             <Trash2 className="h-4 w-4" />
-                          </Button>
+                          </ButtonUI>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -189,7 +189,7 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
               {Object.entries(pattern.params_schema?.properties || {}).map(([key, schema]) => (
                 <div key={key}>
                   <Label className="text-xs">{key}</Label>
-                  <Input
+                  <InputUI
                     type="number"
                     placeholder={String(schema.default || 0)}
                     value={testValues[key] || ""}
@@ -238,7 +238,7 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="constraint-id">ID *</Label>
-                <Input
+                <InputUI
                   id="constraint-id"
                   value={editingConstraint.id}
                   onChange={(e) => setEditingConstraint({ ...editingConstraint, id: e.target.value })}
@@ -250,7 +250,7 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
                 <Label htmlFor="constraint-type">Tipo *</Label>
                 <Select
                   value={editingConstraint.type}
-                  onValueChange={(value: "range" | "relation" | "custom") =>
+                  onValueChange={(value: "range" | "relation" | "forbid" | "require") =>
                     setEditingConstraint({ ...editingConstraint, type: value })
                   }
                 >
@@ -260,14 +260,15 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
                   <SelectContent>
                     <SelectItem value="range">Rango</SelectItem>
                     <SelectItem value="relation">Relación</SelectItem>
-                    <SelectItem value="custom">Personalizada</SelectItem>
+                    <SelectItem value="forbid">Restringir</SelectItem>
+                    <SelectItem value="require">Requerir</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
                 <Label htmlFor="constraint-expression">Expresión *</Label>
-                <Input
+                <InputUI
                   id="constraint-expression"
                   value={editingConstraint.expression}
                   onChange={(e) => setEditingConstraint({ ...editingConstraint, expression: e.target.value })}
@@ -278,7 +279,7 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
 
               <div>
                 <Label htmlFor="constraint-message">Mensaje</Label>
-                <Input
+                <InputUI
                   id="constraint-message"
                   value={editingConstraint.message}
                   onChange={(e) => setEditingConstraint({ ...editingConstraint, message: e.target.value })}
@@ -305,12 +306,12 @@ export function FormulasStep({ pattern, onUpdate }: FormulasStepProps) {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button onClick={() => saveConstraint(editingConstraint)} disabled={!editingConstraint.expression}>
+                <ButtonUI onClick={() => saveConstraint(editingConstraint)} disabled={!editingConstraint.expression}>
                   Guardar
-                </Button>
-                <Button variant="outline" onClick={() => setEditingConstraint(null)}>
+                </ButtonUI>
+                <ButtonUI variant="outline" onClick={() => setEditingConstraint(null)}>
                   Cancelar
-                </Button>
+                </ButtonUI>
               </div>
             </div>
           </div>

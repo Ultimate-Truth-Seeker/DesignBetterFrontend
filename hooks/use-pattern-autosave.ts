@@ -20,8 +20,8 @@ export function usePatternAutosave({
   onSaveError,
   interval = 30000, // 30 seconds
 }: UsePatternAutosaveOptions) {
-  const intervalRef = useRef<NodeJS.Timeout>()
-  const lastSaveRef = useRef<string>()
+  const intervalRef = useRef<NodeJS.Timeout>(null)
+  const lastSaveRef = useRef<string>(null)
 
   const performSave = useCallback(async () => {
     if (!isDirty) return

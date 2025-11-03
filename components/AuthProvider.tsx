@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push('/dashboard/admin')
     } else if (rol === 'cliente') {
       router.push('/dashboard/cliente')
-    } else if (rol === 'diseñador') {
+    } else if (rol === 'disenador') {
       router.push('/dashboard/disenadores')
     } else {
       router.push('/welcome') 

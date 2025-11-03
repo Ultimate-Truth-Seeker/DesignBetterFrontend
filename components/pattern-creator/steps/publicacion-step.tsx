@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { ButtonUI } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -209,9 +209,9 @@ export function PublicacionStep({ pattern, onUpdate }: PublicacionStepProps) {
             )}
           </div>
         </div>
-        <Badge variant="outline" className={getChangeColor()}>
+        <BadgeUI variant="outline" className={getChangeColor()}>
           {entry.type}
-        </Badge>
+        </BadgeUI>
       </div>
     )
   }
@@ -252,13 +252,13 @@ export function PublicacionStep({ pattern, onUpdate }: PublicacionStepProps) {
                     <div className="font-medium">{check.label}</div>
                     <div className="text-sm text-muted-foreground">{check.message}</div>
                   </div>
-                  <Badge
+                  <BadgeUI
                     variant={
                       check.status === "passed" ? "default" : check.status === "warning" ? "secondary" : "destructive"
                     }
                   >
                     {check.status}
-                  </Badge>
+                  </BadgeUI>
                 </div>
               ))}
             </CardContent>
@@ -294,9 +294,9 @@ export function PublicacionStep({ pattern, onUpdate }: PublicacionStepProps) {
                 </div>
                 <div>
                   <Label className="text-muted-foreground">Estado:</Label>
-                  <Badge variant={pattern.status === "published" ? "default" : "secondary"}>
+                  <BadgeUI variant={pattern.status === "published" ? "default" : "secondary"}>
                     {pattern.status || "draft"}
-                  </Badge>
+                  </BadgeUI>
                 </div>
               </div>
 
@@ -314,24 +314,24 @@ export function PublicacionStep({ pattern, onUpdate }: PublicacionStepProps) {
           </Card>
 
           <div className="flex gap-3">
-            <Button variant="outline" onClick={handleSaveDraft} disabled={isSaving}>
+            <ButtonUI variant="outline" onClick={handleSaveDraft} disabled={isSaving}>
               <Save className="w-4 h-4 mr-2" />
               {isSaving ? "Guardando..." : "Guardar Borrador"}
-            </Button>
+            </ButtonUI>
 
-            <Button variant="outline" onClick={handleCreateVersion} disabled={isPublishing}>
+            <ButtonUI variant="outline" onClick={handleCreateVersion} disabled={isPublishing}>
               <GitBranch className="w-4 h-4 mr-2" />
               {isPublishing ? "Creando..." : "Nueva Versión"}
-            </Button>
+            </ButtonUI>
 
-            <Button
+            <ButtonUI
               onClick={handlePublish}
               disabled={!canPublish || isPublishing}
               className="bg-green-600 hover:bg-green-700"
             >
               <Upload className="w-4 h-4 mr-2" />
               {isPublishing ? "Publicando..." : "Publicar"}
-            </Button>
+            </ButtonUI>
           </div>
 
           {!canPublish && (

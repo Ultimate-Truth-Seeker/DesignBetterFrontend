@@ -48,7 +48,7 @@ export function TemplateReviews({ reviews }: TemplateReviewsProps) {
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">{review.reviewer.name}</p>
-                <p className="text-xs text-muted-foreground">{new Date(review.reviewer.date).toLocaleDateString()}</p>
+                <p className="text-xs text-muted-foreground">{new Date(review.reviewer.date || "").toLocaleDateString()}</p>
               </div>
             </div>
           </div>

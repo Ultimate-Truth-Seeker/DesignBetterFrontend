@@ -26,21 +26,24 @@ export class PatternAPI {
         params_schema: {
           type: "object",
           properties: {
-            chest: { type: "number", title: "Contorno de pecho", default: 100 },
-            waist: { type: "number", title: "Contorno de cintura", default: 90 },
-            shoulder: { type: "number", title: "Ancho de hombros", default: 45 },
+            chest: { type: "number", description: "Contorno de pecho", default: 100 },
+            waist: { type: "number", description: "Contorno de cintura", default: 90 },
+            shoulder: { type: "number", description: "Ancho de hombros", default: 45 },
           },
           required: ["chest", "waist", "shoulder"],
         },
-        constraints: [{ formula: "chest > waist", description: "El pecho debe ser mayor que la cintura" }],
+        constraints: [{id: "1", type: "require", expression: "chest > waist", message: "El pecho debe ser mayor que la cintura", severity: "error" }],
         pieces: [
-          { id: "front", name: "Delantero", points: [], symmetry: "none" },
-          { id: "back", name: "Espalda", points: [], symmetry: "none" },
+          { id: "front", name: "Delantero", points: [], visible: true, drawOrder: 1, lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "back", name: "Espalda", points: [], visible: true, drawOrder: 2, lines: [], seamAllowance: 0, notches: [], expressions: {} },
         ],
         grading_rules: [
-          { size: "S", param: "chest", value: 95 },
-          { size: "M", param: "chest", value: 100 },
-          { size: "L", param: "chest", value: 105 },
+          { id: "1", parameter: "chest", baseSize: "M", "method": "linear",increments: {
+           "S":  95 ,
+            "M":  100 ,
+           "L":  105 ,
+          }
+          }
         ],
         geometry_dsl: "",
         created_at: "2025-01-15T10:00:00Z",
@@ -57,16 +60,16 @@ export class PatternAPI {
         params_schema: {
           type: "object",
           properties: {
-            waist: { type: "number", title: "Contorno de cintura", default: 80 },
-            hip: { type: "number", title: "Contorno de cadera", default: 100 },
-            inseam: { type: "number", title: "Largo de entrepierna", default: 75 },
+            waist: { type: "number", description: "Contorno de cintura", default: 80 },
+            hip: { type: "number", description: "Contorno de cadera", default: 100 },
+            inseam: { type: "number", description: "Largo de entrepierna", default: 75 },
           },
           required: ["waist", "hip", "inseam"],
         },
         constraints: [],
         pieces: [
-          { id: "front", name: "Delantero", points: [], symmetry: "vertical" },
-          { id: "back", name: "Trasero", points: [], symmetry: "vertical" },
+          { id: "front", name: "Delantero", points: [], visible: true, drawOrder: 1, lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "back", name: "Trasero", points: [], visible: true, drawOrder: 2, lines: [], seamAllowance: 0, notches: [], expressions: {} },
         ],
         grading_rules: [],
         geometry_dsl: "",
@@ -84,22 +87,24 @@ export class PatternAPI {
         params_schema: {
           type: "object",
           properties: {
-            bust: { type: "number", title: "Contorno de busto", default: 90 },
-            waist: { type: "number", title: "Contorno de cintura", default: 70 },
-            length: { type: "number", title: "Largo total", default: 100 },
+            bust: { type: "number", description: "Contorno de busto", default: 90 },
+            waist: { type: "number", description: "Contorno de cintura", default: 70 },
+            length: { type: "number", description: "Largo total", default: 100 },
           },
           required: ["bust", "waist", "length"],
         },
-        constraints: [{ formula: "bust > waist", description: "El busto debe ser mayor que la cintura" }],
+        constraints: [{id: "1", type: "require", severity:"error", expression: "bust > waist", message: "El busto debe ser mayor que la cintura" }],
         pieces: [
-          { id: "bodice_front", name: "Corpiño delantero", points: [], symmetry: "vertical" },
-          { id: "bodice_back", name: "Corpiño trasero", points: [], symmetry: "vertical" },
-          { id: "skirt", name: "Falda", points: [], symmetry: "vertical" },
+          { id: "bodice_front", name: "Corpiño delantero", points: [], visible: true, drawOrder: 1, lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "bodice_back", name: "Corpiño trasero", points: [],  visible: true, drawOrder: 2, lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "skirt", name: "Falda", points: [],  visible: true, drawOrder: 3, lines: [], seamAllowance: 0, notches: [], expressions: {} },
         ],
         grading_rules: [
-          { size: "XS", param: "bust", value: 85 },
-          { size: "S", param: "bust", value: 90 },
-          { size: "M", param: "bust", value: 95 },
+          { id: "1", parameter: "bust", baseSize: "M", method: "polynomial", increments: {
+          "XS": 85 ,
+          "S": 90 ,
+          "M": 95 ,
+          }}
         ],
         geometry_dsl: "",
         created_at: "2025-01-18T11:20:00Z",
@@ -116,16 +121,16 @@ export class PatternAPI {
         params_schema: {
           type: "object",
           properties: {
-            chest: { type: "number", title: "Contorno de pecho", default: 105 },
-            sleeve: { type: "number", title: "Largo de manga", default: 60 },
+            chest: { type: "number", description: "Contorno de pecho", default: 105 },
+            sleeve: { type: "number", description: "Largo de manga", default: 60 },
           },
           required: ["chest", "sleeve"],
         },
         constraints: [],
         pieces: [
-          { id: "front", name: "Delantero", points: [], symmetry: "none" },
-          { id: "back", name: "Espalda", points: [], symmetry: "none" },
-          { id: "sleeve", name: "Manga", points: [], symmetry: "vertical" },
+          { id: "front", name: "Delantero", points: [], visible: true, drawOrder: 1, lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "back", name: "Espalda", points: [], visible: true, drawOrder: 2 , lines: [], seamAllowance: 0, notches: [], expressions: {} },
+          { id: "sleeve", name: "Manga", points: [], visible: true, drawOrder: 3, lines: [], seamAllowance: 0, notches: [], expressions: {} },
         ],
         grading_rules: [],
         geometry_dsl: "",
@@ -240,7 +245,7 @@ export class PatternAPI {
     return {
       pieces: pattern.pieces?.map((piece) => ({
         ...piece,
-        resolvedPoints: piece.points.map((point) => ({
+        resolvedPoints: piece.points?.map((point) => ({
           ...point,
           x: typeof point.x === "string" ? Math.random() * 100 : point.x,
           y: typeof point.y === "string" ? Math.random() * 100 : point.y,

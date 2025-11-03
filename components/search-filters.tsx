@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { X } from "lucide-react"
 
 interface SearchFiltersProps {
@@ -40,10 +40,10 @@ export function SearchFilters({ onFiltersChange }: SearchFiltersProps) {
         <h3 className="mb-3 font-medium text-foreground">Keywords</h3>
         <div className="flex flex-wrap gap-2">
           {selectedKeywords.map((keyword) => (
-            <Badge key={keyword} variant="secondary" className="flex items-center gap-1">
+            <BadgeUI key={keyword} variant="secondary" className="flex items-center gap-1">
               {keyword}
               <X className="h-3 w-3 cursor-pointer" onClick={() => removeKeyword(keyword)} />
-            </Badge>
+            </BadgeUI>
           ))}
         </div>
       </div>

@@ -1,7 +1,8 @@
 // components/clients/PedidoList.tsx
 import Link from 'next/link';
 import { StatusBadge } from './StatusBadge';
-import type { PedidoAPI } from '@/lib/api/clientes.client';
+import type { PedidoAPI } from '@/lib/api/clientes';
+import { EstadoPedido } from '@/lib/types';
 
 interface PedidoListProps {
   pedidos: PedidoAPI[];
@@ -38,7 +39,7 @@ export function PedidoList({ pedidos }: PedidoListProps) {
                   Diseñador: <span className="text-gray-700">{disenadorText}</span>
                 </p>
               </div>
-              <StatusBadge estado={p.estado} />
+              <StatusBadge estado={p.estado as EstadoPedido} />
             </div>
           </Link>
         );

@@ -7,7 +7,7 @@ import MedidasForm from '@/components/designer/MedidasForm';
 
 
 import { generarGeometria } from '@/components/designer/generarGeometria';
-import { DesignerNavbar } from '@/components/designer/DesignerNavbar';
+import { DesignerNavbar } from '@/unused/DesignerNavbar';
 import { getAccessToken } from '@/lib/auth-client';
 
 interface Medidas {

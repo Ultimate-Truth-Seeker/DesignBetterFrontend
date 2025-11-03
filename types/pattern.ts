@@ -83,9 +83,11 @@ export interface Constraint {
 
 // Grading rules for sizing
 export interface GradingRule {
+  id: string
   parameter: string
-  sizes: Record<string, number> // Size name -> value
-  interpolation: "linear" | "polynomial"
+  baseSize: string
+  increments: Record<string, number> // Size name -> value
+  method: "linear" | "polynomial"
 }
 
 // Complete pattern structure

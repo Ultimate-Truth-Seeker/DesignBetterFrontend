@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { Plus, Move, Square, Circle, Minus } from "lucide-react"
 import type { Pattern, PatternPiece } from "@/types/pattern"
 import { DEFAULT_PIECES } from "@/types/pattern-defaults"
@@ -85,14 +85,14 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
         </div>
         <div className="flex gap-2">
           {pattern.category && pattern.category !== "other" && (
-            <Button variant="outline" onClick={loadDefaultPieces}>
+            <ButtonUI variant="outline" onClick={loadDefaultPieces}>
               Cargar Piezas Predeterminadas
-            </Button>
+            </ButtonUI>
           )}
-          <Button onClick={addPiece}>
+          <ButtonUI onClick={addPiece}>
             <Plus className="h-4 w-4 mr-2" />
             Nueva Pieza
-          </Button>
+          </ButtonUI>
         </div>
       </div>
 
@@ -111,9 +111,9 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
               >
                 <div className="flex items-center justify-between">
                   <span className="font-medium">{piece.name}</span>
-                  <Badge variant={piece.visible ? "default" : "secondary"} className="text-xs">
+                  <BadgeUI variant={piece.visible ? "default" : "secondary"} className="text-xs">
                     {piece.visible ? "Visible" : "Oculta"}
-                  </Badge>
+                  </BadgeUI>
                 </div>
                 <div className="text-xs opacity-75 mt-1">
                   {piece.points.length} puntos, {piece.lines.length} líneas
@@ -134,15 +134,15 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
         <div className="col-span-6 border rounded-lg relative bg-white">
           {/* Toolbar */}
           <div className="absolute top-4 left-4 flex gap-2 z-10">
-            <Button variant={tool === "select" ? "default" : "outline"} size="sm" onClick={() => setTool("select")}>
+            <ButtonUI variant={tool === "select" ? "default" : "outline"} size="sm" onClick={() => setTool("select")}>
               <Move className="h-4 w-4" />
-            </Button>
-            <Button variant={tool === "point" ? "default" : "outline"} size="sm" onClick={() => setTool("point")}>
+            </ButtonUI>
+            <ButtonUI variant={tool === "point" ? "default" : "outline"} size="sm" onClick={() => setTool("point")}>
               <Circle className="h-4 w-4" />
-            </Button>
-            <Button variant={tool === "line" ? "default" : "outline"} size="sm" onClick={() => setTool("line")}>
+            </ButtonUI>
+            <ButtonUI variant={tool === "line" ? "default" : "outline"} size="sm" onClick={() => setTool("line")}>
               <Minus className="h-4 w-4" />
-            </Button>
+            </ButtonUI>
           </div>
 
           {/* Canvas Content */}
@@ -165,7 +165,7 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="piece-name">Nombre</Label>
-                <Input
+                <InputUI
                   id="piece-name"
                   value={selectedPieceData.name}
                   onChange={(e) => updatePiece(selectedPieceData.id, { name: e.target.value })}
@@ -174,7 +174,7 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
 
               <div>
                 <Label htmlFor="seam-allowance">Margen de Costura (cm)</Label>
-                <Input
+                <InputUI
                   id="seam-allowance"
                   type="number"
                   step="0.1"
@@ -187,7 +187,7 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
 
               <div>
                 <Label htmlFor="draw-order">Orden de Dibujo</Label>
-                <Input
+                <InputUI
                   id="draw-order"
                   type="number"
                   value={selectedPieceData.drawOrder}
@@ -209,7 +209,7 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
                     {selectedPieceData.points.length} puntos definidos
                   </div>
                   {selectedPieceData.points.map((point, index) => (
-                    <div key={point.id} className="text-xs p-2 bg-accent rounded" name={index}>
+                    <div key={point.id || index} className="text-xs p-2 bg-accent rounded">
                       <div className="font-mono">{point.id}</div>
                       <div>
                         X: {point.x}, Y: {point.y}
@@ -227,10 +227,10 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
                         <div className="text-muted-foreground">{expression}</div>
                       </div>
                     ))}
-                    <Button size="sm" variant="outline" className="w-full bg-transparent">
+                    <ButtonUI size="sm" variant="outline" className="w-full bg-transparent">
                       <Plus className="h-3 w-3 mr-1" />
                       Agregar Expresión
-                    </Button>
+                    </ButtonUI>
                   </div>
                 </TabsContent>
 
@@ -268,14 +268,14 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
                 </TabsContent>
               </Tabs>
 
-              <Button
+              <ButtonUI
                 variant="destructive"
                 size="sm"
                 onClick={() => deletePiece(selectedPieceData.id)}
                 className="w-full"
               >
                 Eliminar Pieza
-              </Button>
+              </ButtonUI>
             </div>
           ) : (
             <div className="text-center text-muted-foreground py-8">

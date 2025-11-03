@@ -3,17 +3,17 @@
 import "client-only"
 import { useState, useEffect, useMemo } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
+import { BadgeUI } from "@/components/ui/badge"
 import { ArrowLeft, Save, Upload, X, Plus, Trash2 } from "lucide-react"
-import type { DesignerTemplate, TemplateStatus } from "@/types/designer-template"
+import type { DesignerTemplate, ExposedOption, TemplateStatus } from "@/types/designer-template"
 import type { Pattern } from "@/types/pattern"
 import { templateApi } from "@/lib/template-api"
 import { patternApi } from "@/lib/pattern-api"
@@ -81,10 +81,10 @@ export default function CrearPlantillaPage() {
       }
 
       // Initialize materials_policy from pattern's pieces
-      const materialsPolicy: Record<string, Record<string, string[]>> = {}
+      const materialsPolicy: Record<string, {allowed_materials: string[]}> = {}
       if (selectedPattern.pieces) {
         selectedPattern.pieces.forEach((piece: any) => {
-          materialsPolicy[piece.id] = {"allowed_materials" : []}
+          materialsPolicy[piece.id]["allowed_materials"] = []
         })
       }
 
@@ -160,13 +160,13 @@ export default function CrearPlantillaPage() {
 
   const toggleExposedOption = (paramKey: string, controlType: string) => {
     setTemplate((prev) => {
-      const newExposedOptions = { ...prev.exposed_options }
+      const newExposedOptions = { ...prev.exposed_options } as Record<string, any>
       if (newExposedOptions[paramKey]) {
         delete newExposedOptions[paramKey]
       } else {
         newExposedOptions[paramKey] = { type: controlType }
       }
-      return { ...prev, exposed_options: newExposedOptions }
+      return { ...prev, exposed_options: newExposedOptions as ExposedOption[] }
     })
     setHasUnsavedChanges(true)
   }
@@ -174,7 +174,7 @@ export default function CrearPlantillaPage() {
   const addCompatibilityRule = () => {
     setTemplate((prev) => ({
       ...prev,
-      compatibility_rules: [...(prev.compatibility_rules || []), { condition: "", action: "", description: "" }],
+      compatibility_rules: [...(prev.compatibility_rules || []), { id: "", target: "", message: "", condition: "", action: "suggest", description: "" }],
     }))
     setHasUnsavedChanges(true)
   }
@@ -187,6 +187,8 @@ export default function CrearPlantillaPage() {
     })
     setHasUnsavedChanges(true)
   }
+
+  
 
   const removeCompatibilityRule = (index: number) => {
     setTemplate((prev) => ({
@@ -201,21 +203,27 @@ export default function CrearPlantillaPage() {
       ...prev,
       materials_policy: {
         ...prev.materials_policy,
-        [pieceId]: materials,
+        pieces: {
+          ...prev.materials_policy?.pieces,
+          pieceId: {
+            ...prev.materials_policy?.pieces?.pieceId,
+            allowed_materials: materials
+          }
+        }
       },
     }))
     setHasUnsavedChanges(true)
   }
 
   const addMaterialToPiece = (pieceId: string, material: string) => {
-    const currentMaterials = template.materials_policy?.[pieceId] || []
+    const currentMaterials = template.materials_policy?.pieces?.pieceId?.allowed_materials || []
     if (!currentMaterials.includes(material)) {
       updateMaterialsPolicy(pieceId, [...currentMaterials, material])
     }
   }
 
   const removeMaterialFromPiece = (pieceId: string, material: string) => {
-    const currentMaterials = template.materials_policy?.[pieceId] || []
+    const currentMaterials = template.materials_policy?.pieces?.pieceId?.allowed_materials || []
     updateMaterialsPolicy(
       pieceId,
       currentMaterials.filter((m) => m !== material),
@@ -242,9 +250,9 @@ export default function CrearPlantillaPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => router.push("/templates")}>
+              <ButtonUI variant="ghost" size="icon" onClick={() => router.push("/templates")}>
                 <ArrowLeft className="h-5 w-5" />
-              </Button>
+              </ButtonUI>
               <div>
                 <h1 className="text-2xl font-bold">{isEditing ? "Editar Plantilla" : "Crear Plantilla"}</h1>
                 {lastSaved && (
@@ -253,11 +261,11 @@ export default function CrearPlantillaPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              {hasUnsavedChanges && <Badge variant="outline">Cambios sin guardar</Badge>}
-              <Button onClick={() => handleSave()} disabled={isSaving}>
+              {hasUnsavedChanges && <BadgeUI variant="outline">Cambios sin guardar</BadgeUI>}
+              <ButtonUI onClick={() => handleSave()} disabled={isSaving}>
                 <Save className="mr-2 h-4 w-4" />
                 {isSaving ? "Guardando..." : "Guardar"}
-              </Button>
+              </ButtonUI>
             </div>
           </div>
         </div>
@@ -285,7 +293,7 @@ export default function CrearPlantillaPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="code">Código *</Label>
-                    <Input
+                    <InputUI
                       id="code"
                       value={template.code}
                       onChange={(e) => updateTemplate({ code: e.target.value })}
@@ -294,7 +302,7 @@ export default function CrearPlantillaPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="name">Nombre *</Label>
-                    <Input
+                    <InputUI
                       id="name"
                       value={template.name}
                       onChange={(e) => updateTemplate({ name: e.target.value })}
@@ -306,7 +314,7 @@ export default function CrearPlantillaPage() {
                 <div className="space-y-2">
                   <Label htmlFor="pattern">Patrón Base *</Label>
                   {isEditing ? (
-                    <Input value={selectedPattern?.name || "Cargando..."} disabled className="bg-muted" />
+                    <InputUI value={selectedPattern?.name || "Cargando..."} disabled className="bg-muted" />
                   ) : (
                     <Select
                       value={template.pattern_base_id}
@@ -320,7 +328,7 @@ export default function CrearPlantillaPage() {
                       </SelectTrigger>
                       <SelectContent>
                         {patterns.map((pattern) => (
-                          <SelectItem key={pattern.id} value={pattern.id}>
+                          <SelectItem key={pattern.id} value={pattern.id || ""}>
                             {pattern.name} ({pattern.code})
                           </SelectItem>
                         ))}
@@ -375,11 +383,11 @@ export default function CrearPlantillaPage() {
                           <p className="text-sm text-muted-foreground">{schema.description}</p>
                         </div>
                         <div>
-                          <Badge variant="outline">{schema.type}</Badge>
+                          <BadgeUI variant="outline">{schema.type}</BadgeUI>
                         </div>
                         <div>
                           {schema.type === "number" && (
-                            <Input
+                            <InputUI
                               type="number"
                               value={template.default_params?.[key] || ""}
                               onChange={(e) => updateDefaultParam(key, Number.parseFloat(e.target.value))}
@@ -405,7 +413,7 @@ export default function CrearPlantillaPage() {
                             </Select>
                           )}
                           {schema.type === "string" && !schema.enum && (
-                            <Input
+                            <InputUI
                               value={template.default_params?.[key] || ""}
                               onChange={(e) => updateDefaultParam(key, e.target.value)}
                             />
@@ -442,7 +450,7 @@ export default function CrearPlantillaPage() {
                 ) : (
                   <div className="space-y-4">
                     {patternParams.map(({ key, schema }) => {
-                      const isExposed = !!template.exposed_options?.[key]
+                      const isExposed = !!template.exposed_options?.filter((m) => m.parameter_key === key)
                       const controlType = schema.enum
                         ? "select"
                         : schema.type === "boolean"
@@ -463,7 +471,7 @@ export default function CrearPlantillaPage() {
                             </div>
                             <p className="ml-6 text-sm text-muted-foreground">{schema.description}</p>
                           </div>
-                          <Badge variant={isExposed ? "default" : "outline"}>{controlType}</Badge>
+                          <BadgeUI variant={isExposed ? "default" : "outline"}>{controlType}</BadgeUI>
                         </div>
                       )
                     })}
@@ -482,10 +490,10 @@ export default function CrearPlantillaPage() {
                     <CardTitle>Reglas de Compatibilidad</CardTitle>
                     <p className="text-sm text-muted-foreground">Define restricciones entre opciones</p>
                   </div>
-                  <Button onClick={addCompatibilityRule} size="sm">
+                  <ButtonUI onClick={addCompatibilityRule} size="sm">
                     <Plus className="mr-2 h-4 w-4" />
                     Agregar Regla
-                  </Button>
+                  </ButtonUI>
                 </div>
               </CardHeader>
               <CardContent>
@@ -499,13 +507,13 @@ export default function CrearPlantillaPage() {
                           <div className="space-y-4">
                             <div className="flex items-start justify-between">
                               <Label>Regla {index + 1}</Label>
-                              <Button variant="ghost" size="icon" onClick={() => removeCompatibilityRule(index)}>
+                              <ButtonUI variant="ghost" size="icon" onClick={() => removeCompatibilityRule(index)}>
                                 <Trash2 className="h-4 w-4" />
-                              </Button>
+                              </ButtonUI>
                             </div>
                             <div className="space-y-2">
                               <Label>Condición (ej: cuello=mao)</Label>
-                              <Input
+                              <InputUI
                                 value={rule.condition}
                                 onChange={(e) =>
                                   updateCompatibilityRule(index, {
@@ -517,7 +525,7 @@ export default function CrearPlantillaPage() {
                             </div>
                             <div className="space-y-2">
                               <Label>Acción (ej: puño!=francés)</Label>
-                              <Input
+                              <InputUI
                                 value={rule.action}
                                 onChange={(e) =>
                                   updateCompatibilityRule(index, {
@@ -530,10 +538,10 @@ export default function CrearPlantillaPage() {
                             <div className="space-y-2">
                               <Label>Descripción</Label>
                               <Textarea
-                                value={rule.description}
+                                value={rule.message}
                                 onChange={(e) =>
                                   updateCompatibilityRule(index, {
-                                    description: e.target.value,
+                                    message: e.target.value,
                                   })
                                 }
                                 placeholder="Explicación de la regla"
@@ -564,7 +572,7 @@ export default function CrearPlantillaPage() {
                 ) : (
                   <div className="space-y-6">
                     {patternPieces.map((piece: any) => {
-                      const pieceMaterials = template.materials_policy?.[piece.id] || []
+                      const pieceMaterials = template.materials_policy?.pieces?.[piece.id]?.allowed_materials || []
 
                       return (
                         <Card key={piece.id}>
@@ -573,7 +581,7 @@ export default function CrearPlantillaPage() {
                           </CardHeader>
                           <CardContent className="space-y-4">
                             <div className="flex gap-2">
-                              <Input
+                              <InputUI
                                 placeholder="Agregar material (ej: Algodón 100%)"
                                 value={newMaterial}
                                 onChange={(e) => setNewMaterial(e.target.value)}
@@ -584,7 +592,7 @@ export default function CrearPlantillaPage() {
                                   }
                                 }}
                               />
-                              <Button
+                              <ButtonUI
                                 onClick={() => {
                                   if (newMaterial.trim()) {
                                     addMaterialToPiece(piece.id, newMaterial.trim())
@@ -593,11 +601,11 @@ export default function CrearPlantillaPage() {
                                 }}
                               >
                                 <Plus className="h-4 w-4" />
-                              </Button>
+                              </ButtonUI>
                             </div>
                             <div className="flex flex-wrap gap-2">
                               {pieceMaterials.map((material) => (
-                                <Badge key={material} variant="secondary" className="gap-1">
+                                <BadgeUI key={material} variant="secondary" className="gap-1">
                                   {material}
                                   <button
                                     onClick={() => removeMaterialFromPiece(piece.id, material)}
@@ -605,7 +613,7 @@ export default function CrearPlantillaPage() {
                                   >
                                     <X className="h-3 w-3" />
                                   </button>
-                                </Badge>
+                                </BadgeUI>
                               ))}
                               {pieceMaterials.length === 0 && (
                                 <p className="text-sm text-muted-foreground">
@@ -641,25 +649,25 @@ export default function CrearPlantillaPage() {
                           alt="Hero"
                           className="h-full w-full object-cover"
                         />
-                        <Button
+                        <ButtonUI
                           variant="destructive"
                           size="icon"
                           className="absolute right-2 top-2"
                           onClick={() =>
                             updateTemplate({
-                              media: { ...template.media, hero_url: "" },
+                              media: { gallery: template.media?.gallery || [], hero_url: "" },
                             })
                           }
                         >
                           <X className="h-4 w-4" />
-                        </Button>
+                        </ButtonUI>
                       </div>
                     )}
                     <div className="flex h-48 w-48 items-center justify-center rounded-lg border border-dashed">
                       <div className="text-center">
                         <Upload className="mx-auto h-8 w-8 text-muted-foreground" />
                         <p className="mt-2 text-sm text-muted-foreground">Subir imagen</p>
-                        <Input
+                        <InputUI
                           type="file"
                           accept="image/*"
                           className="mt-2"
@@ -669,7 +677,7 @@ export default function CrearPlantillaPage() {
                             if (file) {
                               const url = URL.createObjectURL(file)
                               updateTemplate({
-                                media: { ...template.media, hero_url: url },
+                                media: { gallery: template.media?.gallery || [], hero_url: url },
                               })
                             }
                           }}
@@ -689,25 +697,25 @@ export default function CrearPlantillaPage() {
                           alt={`Gallery ${index + 1}`}
                           className="h-full w-full object-cover"
                         />
-                        <Button
+                        <ButtonUI
                           variant="destructive"
                           size="icon"
                           className="absolute right-1 top-1"
                           onClick={() => {
-                            const newGallery = template.media?.gallery?.filter((_, i) => i !== index)
+                            const newGallery = template.media?.gallery?.filter((_, i) => i !== index) || []
                             updateTemplate({
-                              media: { ...template.media, gallery: newGallery },
+                              media: { hero_url: template.media?.hero_url || "", gallery: newGallery },
                             })
                           }}
                         >
                           <X className="h-3 w-3" />
-                        </Button>
+                        </ButtonUI>
                       </div>
                     ))}
                     <div className="flex h-32 items-center justify-center rounded-lg border border-dashed">
                       <div className="text-center">
                         <Upload className="mx-auto h-6 w-6 text-muted-foreground" />
-                        <Input
+                        <InputUI
                           type="file"
                           accept="image/*"
                           multiple
@@ -718,7 +726,7 @@ export default function CrearPlantillaPage() {
                             const urls = files.map((file) => URL.createObjectURL(file))
                             updateTemplate({
                               media: {
-                                ...template.media,
+                                hero_url: template.media?.hero_url || "",
                                 gallery: [...(template.media?.gallery || []), ...urls],
                               },
                             })

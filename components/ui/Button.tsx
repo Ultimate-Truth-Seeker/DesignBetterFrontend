@@ -15,8 +15,10 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
  const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", as: Comp = "button", asChild, ...props }, ref) => {
     const Component = asChild ? Comp : "button";
+    console.log(props, Component)
+      
     return (
-      <Component
+      <button
         className={cn(
           "px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
           variant === "primary" && "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
@@ -28,7 +30,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
           className
         )}
         ref={ref}
-        {...props}
+        //{...props}
       />
     );
   }
