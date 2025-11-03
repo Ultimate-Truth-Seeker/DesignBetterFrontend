@@ -1,15 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+//import { useRouter } from 'next/navigation';
 import MedidasForm from '@/components/designer/MedidasForm';
 
 
 
 
 import { generarGeometria } from '@/components/designer/generarGeometria';
-import Navbar from '@/components/DashNavbar';
 import { DesignerNavbar } from '@/components/designer/DesignerNavbar';
-import { useAuth } from '@/components/AuthProvider';
 import { getAccessToken } from '@/lib/auth-client';
 
 interface Medidas {
@@ -34,7 +32,6 @@ interface PatronFormData {
 }
 
 export default function IngresoPatronesPage() {
-  const router = useRouter();
   const medidasEsperadas = ['largo', 'ancho', 'cintura']; 
   const [formData, setFormData] = useState<PatronFormData>({
   

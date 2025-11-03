@@ -5,12 +5,10 @@ import { PedidoDetallado } from '@/lib/types';
 import { fetchPedidoDetallado } from '@/lib/api/disenadores';
 import TimelinePage from './timeline'; 
 import { PaymentMethodViewer } from '@/components/clients/PaymentMethodViewer';
+import { useParams } from "next/navigation";
 
-export default function PedidoDisenadorPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function PedidoDisenadorPage() {
+  const params = useParams()
   const pedidoId = Number(params.id);
   const [pedido, setPedido] = useState<PedidoDetallado | null>(null);
   const [loading, setLoading] = useState(true);
@@ -47,7 +45,7 @@ export default function PedidoDisenadorPage({
 
       {/* Timeline del pedido */}
       <div className="bg-white p-6 rounded-lg border">
-        <TimelinePage params={params} />
+        <TimelinePage params={{id: pedidoId.toString()}} />
       </div>
 
       {/* Método de pago */}

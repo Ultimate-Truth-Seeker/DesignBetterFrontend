@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/Button"
+import { Button } from "@/components/ui/button"
 import { TemplateCard } from "@/components/template-card"
 import type { Template } from "@/types/template"
 

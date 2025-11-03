@@ -1,16 +1,14 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
+import { useParams } from "next/navigation"
 import { fetchPedidoDetalle } from '@/lib/api/clientes';
-import { validateRole } from '@/lib/auth';
+//import { validateRole } from '@/lib/auth';
 import { StatusBadge } from '@/components/clients/StatusBadge';
 import Link from 'next/link';
 
-export default async function PedidoDetailPage({
-  params
-}: {
-  params: { id: string }
-}) {
-  await validateRole('CLIENTE');
-  const pedido = await fetchPedidoDetalle(params.id);
+export default function PedidoDetailPage() {
+  const params = useParams()
+  //await validateRole('CLIENTE');
+  const pedido = fetchPedidoDetalle(params?.id as string);
 
   return (
     <div className="space-y-6">

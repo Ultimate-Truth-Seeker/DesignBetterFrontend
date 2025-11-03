@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   // Forward de cookies al backend (si tu backend lee la cookie 'access')
   const cookie = req.headers.get('cookie') || '';
 
-  const res = await fetch(${BACKEND_URL}/me, {
+  const res = await fetch(`${BACKEND_URL}/me`, {
     headers: {
       cookie, // el backend verá 'access' y/o 'refresh'
       'Accept': 'application/json',

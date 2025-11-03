@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
+import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { GarmentWizard } from '@/components/garment/GarmentWizard';
 import { BodyMeasurements } from './Medidas';
@@ -47,7 +48,7 @@ export function NewPedidoForm({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let numericValue = parseFloat(value);
+    const numericValue = parseFloat(value);
     let finalValue = '';
     
     if (!isNaN(numericValue)) {
@@ -65,7 +66,7 @@ export function NewPedidoForm({
     );
     setFilteredTemplates(results);
     setFocusedIndex(-1);
-  }, [searchTerm]);
+  }, [searchTerm, templates]);
 
   const handleInputSelect = (templateId: string) => {
     const template = templates.find(t => t.id === templateId);
@@ -306,7 +307,7 @@ export function NewPedidoForm({
       <div className="flex gap-4">
         <Button type="submit">Enviar pedido</Button>
         <Button variant="outline" type="button" asChild>
-          <a href="/dashboard/cliente/pedidos">Cancelar</a>
+          <Link href="/dashboard/cliente/pedidos">Cancelar</Link>
         </Button>
       </div>
 

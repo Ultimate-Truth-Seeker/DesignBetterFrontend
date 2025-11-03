@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
@@ -12,13 +12,12 @@ import { MEASUREMENT_SCHEMA, MEASUREMENT_GUIDES, type BodyProfile } from "@/type
 import { MeasurementGuideDialog } from "@/components/measurement-guide-dialog"
 import { BodyProfileStorage } from "@/lib/body-profile-storage"
 import dynamic from "next/dynamic";
+import { useParams } from "next/navigation"
 
-export default function PersonalizarTemplatePage({
-  params,
-}: {
-  params: { templateId: string }
-}) {
+export default function PersonalizarTemplatePage() {
+  const params = useParams()
   const { templateId } = params
+  console.log(templateId)
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
 
@@ -40,6 +39,7 @@ export default function PersonalizarTemplatePage({
   const AvatarViewer = dynamic(() => import("./avatarviewer"), { ssr: false });
 
   const [height, setHeight] = useState(170);
+  setHeight(170)
   const [shoulder, setShoulder] = useState(40);
   const [waist, setWaist] = useState(70);
   const [generate, setGenerate] = useState(false);
@@ -88,9 +88,9 @@ export default function PersonalizarTemplatePage({
       delete newErrors[code]
       setErrors(newErrors)
       if (code === "waist") {
-        setWaist(value)
+        setWaist(Number(value))
       } else if (code === "shoulder_width") {
-        setShoulder(value)
+        setShoulder(Number(value))
       }
     }
     
@@ -176,9 +176,9 @@ export default function PersonalizarTemplatePage({
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">Personalizar Plantilla</h1>
-            <Button variant="outline" onClick={() => router.back()}>
+            <ButtonUI variant="outline" onClick={() => router.back()}>
               Cancelar
-            </Button>
+            </ButtonUI>
           </div>
 
           {/* Progress Steps */}
@@ -231,7 +231,7 @@ export default function PersonalizarTemplatePage({
 
                 <div className="space-y-2">
                   <Label htmlFor="profile-name">Nombre del perfil *</Label>
-                  <Input
+                  <InputUI
                     id="profile-name"
                     value={profileName}
                     onChange={(e) => setProfileName(e.target.value)}
@@ -290,10 +290,10 @@ export default function PersonalizarTemplatePage({
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-semibold">Medidas Corporales</h2>
-                <Button onClick={handleSaveProfile} variant="outline" size="sm">
+                <ButtonUI onClick={handleSaveProfile} variant="outline" size="sm">
                   <Save className="h-4 w-4 mr-2" />
                   Guardar Perfil
-                </Button>
+                </ButtonUI>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -304,18 +304,18 @@ export default function PersonalizarTemplatePage({
                         {schema.display_name}
                         {schema.required && <span className="text-destructive">*</span>}
                       </Label>
-                      <Button
+                      <ButtonUI
                         variant="ghost"
                         size="sm"
                         className="h-6 w-6 p-0"
                         onClick={() => setSelectedGuide(schema.code)}
                       >
                         <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                      </Button>
+                      </ButtonUI>
                     </div>
 
                     <div className="flex gap-2">
-                      <Input
+                      <InputUI
                         id={schema.code}
                         type="number"
                         min={schema.min}
@@ -352,14 +352,14 @@ export default function PersonalizarTemplatePage({
 
             {/* Navigation */}
             <div className="flex justify-between">
-              <Button variant="outline" onClick={() => router.back()}>
+              <ButtonUI variant="outline" onClick={() => router.back()}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Volver
-              </Button>
-              <Button onClick={handleNextStep}>
+              </ButtonUI>
+              <ButtonUI onClick={handleNextStep}>
                 Siguiente: Opciones de Plantilla
                 <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
+              </ButtonUI>
             </div>
           </div>
         )}

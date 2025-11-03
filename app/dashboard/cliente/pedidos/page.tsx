@@ -1,11 +1,11 @@
 'use client'
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { fetchPedidosCliente } from '@/lib/api/clientes';
+import { fetchPedidosCliente, PedidoAPI } from '@/lib/api/clientes';
 import { EmptyState } from '@/components/clients/EmptyState';
 import { PedidoList } from '@/components/clients/PedidoList';
 import { PedidoFilter } from '@/components/clients/PedidoFilter';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -48,7 +48,7 @@ export default function PedidosPage() {
 }
 
 function PedidoListWrapper({ estado }: { estado: string }) {
-  const [pedidos, setPedidos] = useState([]);
+  const [pedidos, setPedidos] = useState<PedidoAPI[]>();
   useEffect(() => {
         (async () => {
           try {
@@ -62,10 +62,9 @@ function PedidoListWrapper({ estado }: { estado: string }) {
       }, []);
   const pedidosFiltrados = useMemo(() => {
     if (estado === 'todos') return pedidos;
-    return pedidos.filter((p: { estado: string; }) => p.estado?.toLowerCase() === estado);
+    return pedidos?.filter((p: { estado: string; }) => p.estado?.toLowerCase() === estado);
   }, [pedidos, estado]);
-
-  if (pedidosFiltrados.length === 0) {
+  if (pedidosFiltrados?.length === 0) {
     return (
       <EmptyState
         title="No hay pedidos"
@@ -74,5 +73,5 @@ function PedidoListWrapper({ estado }: { estado: string }) {
     );
   }
 
-  return <PedidoList pedidos={pedidosFiltrados} />;
+  return <PedidoList pedidos={pedidosFiltrados? pedidosFiltrados : []} />;
 }

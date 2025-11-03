@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Minimize2, Maximize2, User, Bot } from 'lucide-react';
+import { Send, Minimize2, User, Bot } from 'lucide-react';
 
 // Definir tipos para los mensajes
 type Message = {
@@ -133,7 +133,7 @@ const FashionChatbot = () => {
       text: "🔄 **Conectando con asesor humano...**\n\nHe iniciado la transferencia a nuestro equipo de especialistas. Un asesor se pondrá en contacto contigo en los próximos minutos. Mientras tanto, puedes seguir escribiéndome si tienes otras consultas.\n\n📞 También puedes contactarnos directamente:\n• WhatsApp: +502 1234-5678\n• Email: asesores@fashiondesign.com",
       isBot: true,
       timestamp: new Date(),
-      isTransfer: true
+      isTransfer: showTransferMessage
     };
 
     setMessages(prev => [...prev, transferMessage]);

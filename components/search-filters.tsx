@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
-import { Badge } from "@/components/ui/Badge"
+import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
 
 interface SearchFiltersProps {
@@ -11,12 +11,13 @@ interface SearchFiltersProps {
 }
 
 export function SearchFilters({ onFiltersChange }: SearchFiltersProps) {
+  if (onFiltersChange?.name) {}
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>(["Spring", "Smart", "Modern"])
   const [priceRange, setPriceRange] = useState([0, 100])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
 
-  const keywords = ["Spring", "Smart", "Modern", "Elegant", "Casual", "Summer", "Urban"]
+  //const keywords = ["Spring", "Smart", "Modern", "Elegant", "Casual", "Summer", "Urban"]
   const colors = ["Black", "White", "Blue", "Red", "Green", "Navy", "Gray", "Beige"]
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"]
 

@@ -1,8 +1,8 @@
-export { Badge } from './Badge';
-export { Button } from './Button';
-export { Card } from './Card';
+export { Badge } from './badge';
+export { Button } from './button';
+export { Card } from './card';
 export { Divider } from './Divider';
-export { Input } from './Input';
+export { Input } from './input';
 export { Checkbox } from './checkbox'
 export { Slider } from './slider'
 export { Collapsible } from './collapsible'

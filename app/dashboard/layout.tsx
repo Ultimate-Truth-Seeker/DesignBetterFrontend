@@ -1,5 +1,4 @@
 import ProtectedRoute from "@/components/ProtectedRoute"
-import DashNavbar from "@/components/DashNavbar"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return <ProtectedRoute>

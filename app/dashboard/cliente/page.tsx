@@ -1,7 +1,7 @@
 'use client'
 import {PedidoStatusCards} from '@/components/clients/PedidoStatusCards';
 import QuickActions from '@/components/clients/QuickActions';
-import { fetchClientDashboard, fetchPedidosCliente } from '@/lib/api/clientes';
+import { fetchPedidosCliente } from '@/lib/api/clientes';
 import { Suspense, useState, useEffect } from 'react';
 import LoadingSkeleton from '@/components/ui/LoadingSkeleton';
 import { DashboardCliente } from '@/lib/types';

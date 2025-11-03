@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown } from "lucide-react";
@@ -13,7 +13,8 @@ interface NavbarProps {
   user?: DecodedToken | null;
 }
 
-function Navbar({ user = useUser() }: NavbarProps) {
+function Navbar({user}: NavbarProps) {
+  user = useUser() 
   const { logout } = useAuth();
   return (
     <nav className="border-b bg-background px-4 py-3">

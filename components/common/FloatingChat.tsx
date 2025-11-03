@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Send, Search, Users, MessageSquare } from 'lucide-react';
+import { Send, Search, MessageSquare } from 'lucide-react';
 import { 
   listarConversaciones, 
   obtenerConversacion, 
@@ -10,7 +10,6 @@ import {
   crearConversacion,
   Conversacion,
   Mensaje,
-  UsuarioMensajeria
 } from '@/lib/api/clientes';
 
 export default function MensajesPage() {
@@ -41,7 +40,7 @@ export default function MensajesPage() {
     };
 
     cargarConversaciones();
-  }, []);
+  }, [conversacionActiva]);
 
   // Cargar mensajes cuando cambia la conversación activa
   useEffect(() => {
@@ -102,6 +101,7 @@ export default function MensajesPage() {
       
       setConversaciones([nuevaConversacion, ...conversaciones]);
       setConversacionActiva(nuevaConversacion);
+      if (creandoNuevaConversacion) {}
       setCreandoNuevaConversacion(false);
     } catch (error) {
       console.error('Error al crear conversación:', error);
@@ -139,7 +139,7 @@ export default function MensajesPage() {
             />
           </div>
           <button
-            onClick={() => setCreandoNuevaConversacion(true)}
+            onClick={() => {setCreandoNuevaConversacion(true); handleCrearConversacion(1)}}
             className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center justify-center"
           >
             <MessageSquare className="h-4 w-4 mr-2" />

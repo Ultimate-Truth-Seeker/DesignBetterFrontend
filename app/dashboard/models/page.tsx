@@ -1,7 +1,7 @@
 "use client"
 
 import React, { Suspense, useMemo, useState } from 'react'
-// @ts-ignore - no type declarations for next/dynamic in this environment
+//ts-expect-error - no type declarations for next/dynamic in this environment - quite el arroba para no activarlo
 import dynamic from 'next/dynamic'
 import { Environment, OrbitControls, useGLTF, Html } from '@react-three/drei'
 

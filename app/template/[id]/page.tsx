@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import Link from 'next/link';
-import { Button } from "@/components/ui/Button"
-import { Badge } from "@/components/ui/Badge"
+import { ButtonUI } from "@/components/ui/button"
+import { BadgeUI } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { ChevronDown, Heart, ExternalLink } from "lucide-react"
@@ -67,14 +67,14 @@ export default function TemplateDetailPage() {
                 alt={template.title}
                 className="h-96 w-full object-cover lg:h-[500px]"
               />
-              <Button
+              <ButtonUI
                 variant="ghost"
                 size="sm"
                 className="absolute right-3 top-3 h-8 w-8 p-0"
                 onClick={() => setIsFavorite(!isFavorite)}
               >
                 <Heart className={`h-4 w-4 ${isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"}`} />
-              </Button>
+              </ButtonUI>
             </div>
           </div>
 
@@ -83,10 +83,10 @@ export default function TemplateDetailPage() {
             {/* Header */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <BadgeUI variant="secondary" className="bg-green-100 text-green-800">
                   {template.category}
-                </Badge>
-                {template.isNew && <Badge className="bg-green-600 text-white">New</Badge>}
+                </BadgeUI>
+                {template.isNew && <BadgeUI className="bg-green-600 text-white">New</BadgeUI>}
               </div>
               <h1 className="text-3xl font-bold text-foreground">{template.title}</h1>
               <p className="text-2xl font-semibold text-foreground">${template.basePrice}</p>
@@ -137,23 +137,23 @@ export default function TemplateDetailPage() {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
+              <ButtonUI className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
                 <Link href={`/personalizar/${templateId}`}>
                   Personaliza esta plantilla 
                 </Link>
-              </Button>
+              </ButtonUI>
 
-              <Button
+              <ButtonUI
                 variant="outline"
                 className="w-full border-green-600 text-green-600 hover:bg-green-50 bg-transparent"
                 size="lg"
               >
                 <Link href="/test" target="_blank" rel="noopener noreferrer">
 
-                <ExternalLink className="mr-2 h-4 w-4" onClick="/test"/>
+                <ExternalLink className="mr-2 h-4 w-4"/>
                 Visualizar en 3D
                 </Link>
-              </Button>
+              </ButtonUI>
             </div>
 
             {/* Additional Info */}

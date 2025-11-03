@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/Button"
-import { Input } from "@/components/ui/Input"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
@@ -209,7 +209,7 @@ export function PiezasStep({ pattern, onUpdate }: PiezasStepProps) {
                     {selectedPieceData.points.length} puntos definidos
                   </div>
                   {selectedPieceData.points.map((point, index) => (
-                    <div key={point.id} className="text-xs p-2 bg-accent rounded">
+                    <div key={point.id} className="text-xs p-2 bg-accent rounded" name={index}>
                       <div className="font-mono">{point.id}</div>
                       <div>
                         X: {point.x}, Y: {point.y}

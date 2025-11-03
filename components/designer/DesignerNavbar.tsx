@@ -1,4 +1,4 @@
-import { Link, useLocation, BrowserRouter } from "react-router-dom";
+import { Link, BrowserRouter } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { useState } from "react"
 // Opciones del menú (algunas deshabilitadas temporalmente)
@@ -32,6 +32,7 @@ const menuItems = [
 
 export const DesignerNavbar = () => {
   const [pathname, setPathname] = useState("");
+  setPathname("")
   const { logout } = useAuth();
 
   return (

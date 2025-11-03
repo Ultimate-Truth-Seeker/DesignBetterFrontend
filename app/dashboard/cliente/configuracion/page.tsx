@@ -1,8 +1,8 @@
 import { updateUserProfile } from '@/lib/api/clientes';
-import { getCurrentUser } from '@/lib/auth';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card } from '@/components/ui/Card';
+//import { getCurrentUser } from '@/lib/auth';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
 import { Divider } from '@/components/ui/Divider';
 
 export default async function ConfiguracionPage() {
@@ -52,7 +52,7 @@ export default async function ConfiguracionPage() {
             <label>Recibir notificaciones por email</label>
             <input 
               type="checkbox" 
-              defaultChecked={user?.preferences?.notifications || false}
+              defaultChecked={false}//user?.preferences?.notifications || false}// solution temp
               className="toggle"
               name="notifications"
             />
@@ -62,7 +62,7 @@ export default async function ConfiguracionPage() {
             <label>Modo oscuro</label>
             <input 
               type="checkbox" 
-              defaultChecked={user?.preferences?.darkMode || false}
+              defaultChecked={false}//user?.preferences?.darkMode || false}
               className="toggle"
               name="darkMode"
             />
@@ -71,7 +71,8 @@ export default async function ConfiguracionPage() {
       </Card>
 
       {/* Sección 3: Zona peligrosa */}
-      <Card title="Zona peligrosa" danger>
+      <Card title="Zona peligrosa" //danger
+      >
         <div className="space-y-4">
           <Button variant="outline" //onClick={() => {/* Lógica para cambiar contraseña */}}>
             >Cambiar contraseña

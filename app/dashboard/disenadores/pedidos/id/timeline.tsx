@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { PedidoDetallado, EstadoPedido } from '@/lib/types';
 import { fetchPedidoDetallado, updatePedidoEstado } from '@/lib/api/disenadores';
 import { TrackingTimeline } from '@/components/clients/TrackingTimeline';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 export default function TimelinePage({

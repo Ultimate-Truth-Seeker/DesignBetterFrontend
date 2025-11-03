@@ -1,6 +1,4 @@
 import Navbar from "@/components/DashNavbar";
-import Hero from "@/components/Hero";
-import { useAuth } from "@/components/AuthProvider"
 
 
 export default function Dashboard() {

@@ -10,6 +10,7 @@ export default function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [name, setName] = useState("")
     const [role, setRole] = useState("")
+    setRole("")
     const [error, setError] = useState("")
     const { isAuthenticated } = useAuth()
     const router = useRouter()
@@ -34,7 +35,7 @@ export default function RegisterForm() {
       await registerUser({ email, name, password, confirmPassword, role })
       // Aviso del navegador antes de redirigir
       if (typeof window !== "undefined") {
-        window.alert(Te enviamos un correo de confirmación a ${email}.\nPor favor revisa tu bandeja de entrada y sigue el enlace para activar tu cuenta.)
+        window.alert(`Te enviamos un correo de confirmación a ${email}.\nPor favor revisa tu bandeja de entrada y sigue el enlace para activar tu cuenta.`)
       }
       router.push("/login")
     } catch (err: any) {

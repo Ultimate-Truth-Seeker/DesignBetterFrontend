@@ -1,18 +1,17 @@
 'use client'
 import {useState, useEffect, useMemo} from 'react'
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { fetchPedidoTrackingClient, submitFeedback } from '@/lib/api/clientes';
-import { validateRole } from '@/lib/auth';
+import { fetchPedidoTrackingClient } from '@/lib/api/clientes';
 import { HistorialItem, PedidoTracking } from '@/lib/types';
 import { TrackingTimeline } from '@/components/clients/TrackingTimeline';
+import { useParams } from "next/navigation";
 
-export default function FeedbackPage({
-  pedidoId
-}: {
-  pedidoId: number
-}) {
+export default function FeedbackPage() {
+  const params = useParams()
+  const pedidoId = Number(params?.id)
   function handleSubmit(formData: FormData) {
+    if (formData) {}
     //'use server';
     //await validateRole('CLIENTE');
     
@@ -30,10 +29,11 @@ export default function FeedbackPage({
     (async () => {
       try {
         setLoading(true);
+        console.log(loading);
         const data = await fetchPedidoTrackingClient(pedidoId);
         if (!cancel) setTracking(data);
       } catch (e: any) {
-        if (!cancel) setErr(e?.message ?? 'Error cargando tracking');
+        if (!cancel) setErr(e?.message ?? 'Error cargando tracking'); console.log(err === e);
       } finally {
         if (!cancel) setLoading(false);
       }

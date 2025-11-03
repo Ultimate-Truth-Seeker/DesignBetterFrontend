@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 export default function QuickActions() {
   const router = useRouter();

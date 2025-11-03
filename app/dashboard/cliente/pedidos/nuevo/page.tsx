@@ -1,13 +1,10 @@
 'use client'
 
-import { redirect } from 'next/navigation';
 import { NewPedidoForm } from '@/components/clients/NewPedidoForm';
-import { createPedido, getPlantillas, NuevoPedidoPayload } from '@/lib/api/clientes';
-import { validateRole } from '@/lib/auth';
-import { Button } from '@/components/ui';
+import { createPedido, NuevoPedidoPayload } from '@/lib/api/clientes';
 
 export default function NewPedidoPage() {
-  const templates = getPlantillas(); // server-side
+  //const templates = getPlantillas(); // server-side
   async function handleCreatePedido(formData: FormData) {
   //'use server';
 

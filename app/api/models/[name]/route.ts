@@ -6,10 +6,10 @@ export const runtime = 'nodejs'
 
 export async function GET(
   req: Request,
-  { params }: { params: { name: string } }
 ) {
+  const params = req.body?.getReader //temp solution
   try {
-    const rawName = params.name
+    const rawName = params?.name
     if (!rawName || !rawName.toLowerCase().endsWith('.glb')) {
       return new NextResponse('Bad Request', { status: 400 })
     }

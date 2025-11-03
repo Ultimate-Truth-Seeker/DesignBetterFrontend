@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { PageHeader } from "@/components/page-header"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button, ButtonUI } from "@/components/ui/button"
+import { InputUI } from "@/components/ui/input"
 import { PatternAPI } from "@/lib/pattern-api"
 import type { Pattern } from "@/types/pattern"
 import { PatternCard } from "@/components/pattern-card"
@@ -89,7 +89,7 @@ export default function PatternsPage() {
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
+            <InputUI
               placeholder="Buscar patrones por nombre, código o descripción..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -98,34 +98,34 @@ export default function PatternsPage() {
           </div>
 
           <div className="flex gap-2">
-            <Button
+            <ButtonUI
               variant={statusFilter === "all" ? "default" : "outline"}
               onClick={() => setStatusFilter("all")}
               size="sm"
             >
               Todos
-            </Button>
-            <Button
+            </ButtonUI>
+            <ButtonUI
               variant={statusFilter === "draft" ? "default" : "outline"}
               onClick={() => setStatusFilter("draft")}
               size="sm"
             >
               Borradores
-            </Button>
-            <Button
+            </ButtonUI>
+            <ButtonUI
               variant={statusFilter === "published" ? "default" : "outline"}
               onClick={() => setStatusFilter("published")}
               size="sm"
             >
               Publicados
-            </Button>
-            <Button
+            </ButtonUI>
+            <ButtonUI
               variant={statusFilter === "archived" ? "default" : "outline"}
               onClick={() => setStatusFilter("archived")}
               size="sm"
             >
               Archivados
-            </Button>
+            </ButtonUI>
           </div>
 
           <Link href="/patterns/crear-patron">

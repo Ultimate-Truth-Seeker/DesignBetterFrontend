@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/Input"
-import { Button } from "@/components/ui/Button"
+import { InputUI } from "@/components/ui/input"
+import { ButtonUI } from "@/components/ui/button"
 import { Search } from "lucide-react"
 import { SearchFilters } from "@/components/search-filters"
 import { TemplateCard } from "@/components/template-card"
@@ -78,7 +78,7 @@ export default function SearchPage() {
             {/* Search Input */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
+              <InputUI
                 placeholder="Search templates..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -89,7 +89,7 @@ export default function SearchPage() {
             {/* Sort Options */}
             <div className="flex flex-wrap gap-2">
               {sortOptions.map((option) => (
-                <Button
+                <ButtonUI
                   key={option.value}
                   variant={sortBy === option.value ? "default" : "outline"}
                   size="sm"
@@ -97,7 +97,7 @@ export default function SearchPage() {
                   className={sortBy === option.value ? "bg-primary text-primary-foreground" : ""}
                 >
                   {option.label}
-                </Button>
+                </ButtonUI>
               ))}
             </div>
           </div>

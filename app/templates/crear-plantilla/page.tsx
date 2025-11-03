@@ -29,10 +29,10 @@ export default function CrearPlantillaPage() {
     name: "",
     pattern_base_id: "",
     default_params: {},
-    exposed_options: {},
+    exposed_options: [],
     compatibility_rules: [],
-    materials_policy: {},
-    size_range: {},
+    materials_policy: { pieces : {}},
+    size_range: { type: "standard"},
     media: { hero_url: "", gallery: [] },
     status: "draft",
   })
@@ -58,11 +58,12 @@ export default function CrearPlantillaPage() {
     const loadTemplate = async () => {
       if (templateId) {
         const loadedTemplate = await templateApi.fetchTemplate(templateId)
+        if (loadedTemplate) {
         setTemplate(loadedTemplate)
 
         // Load the associated pattern
         const pattern = await patternApi.getPattern(loadedTemplate.pattern_base_id)
-        setSelectedPattern(pattern)
+        setSelectedPattern(pattern)}
       }
     }
     loadTemplate()
@@ -80,10 +81,10 @@ export default function CrearPlantillaPage() {
       }
 
       // Initialize materials_policy from pattern's pieces
-      const materialsPolicy: Record<string, string[]> = {}
+      const materialsPolicy: Record<string, Record<string, string[]>> = {}
       if (selectedPattern.pieces) {
         selectedPattern.pieces.forEach((piece: any) => {
-          materialsPolicy[piece.id] = []
+          materialsPolicy[piece.id] = {"allowed_materials" : []}
         })
       }
 
@@ -91,7 +92,7 @@ export default function CrearPlantillaPage() {
         ...prev,
         pattern_base_id: selectedPattern.id,
         default_params: defaultParams,
-        materials_policy: materialsPolicy,
+        materials_policy:{ pieces: materialsPolicy}
       }))
     }
   }, [selectedPattern, isEditing])
@@ -121,6 +122,7 @@ export default function CrearPlantillaPage() {
   }, [hasUnsavedChanges])
 
   const handleSave = async (isAutosave = false) => {
+    if (isAutosave === false) {}
     setIsSaving(true)
     try {
       if (isEditing && template.id) {

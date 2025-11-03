@@ -1,23 +1,26 @@
 'use client'
 
 import { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
 import { activateAccount } from "@/lib/api"
 import { useRouter } from "next/navigation"
 
-export default function ActivatePage({ params }: { params: { token: string } }) {
+export default function ActivatePage() {
+  const params = useParams();
   const [message, setMessage] = useState("Validando token de activación...")
   const router = useRouter()
 
   useEffect(() => {
     async function activate() {
       try {
-        await activateAccount(params.token)
+        await activateAccount(params?.token as string)
         setMessage("Cuenta activada exitosamente. Redirigiendo al login...")
         setTimeout(() => {
           router.push("/login")
         }, 3000)
-      } catch (err: any) {
-        setMessage(err.message)
+      } catch (err) {
+        if (err) {}
+        setMessage("Hubo un error")//err.message)
       }
     }
 

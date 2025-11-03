@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { logoutUser } from '@/lib/auth/actions';
 import { useAuth } from "@/components/AuthProvider"
-import { PaymentMethodSelector } from '@/components/clients/PaymentMethodSelector';
+//import { PaymentMethodSelector } from '@/components/clients/PaymentMethodSelector';
 
 export default function ClientNavbar() {
   const pathname = usePathname();

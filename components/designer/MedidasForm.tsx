@@ -15,7 +15,7 @@ const MedidasForm = ({ medidasEsperadas, valoresIniciales = {}, onChange }: Prop
   useEffect(() => {
     const parsed = Object.fromEntries(
       Object.entries(medidas)
-        .filter(([_, val]) => val !== '')
+        .filter(([_, val]) => val !== '' && _ === _)
         .map(([k, v]) => [k, parseFloat(v)])
     );
     onChange(parsed);

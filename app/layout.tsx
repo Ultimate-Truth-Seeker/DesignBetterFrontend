@@ -4,7 +4,7 @@ import "@/styles/globals.css";
 import { AuthProvider } from "@/components/AuthProvider"
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Navbar } from "@/components/Navbar";
-import { decodeAccessToken, getAccessToken } from "@/lib/auth-client";
+//import { decodeAccessToken, getAccessToken } from "@/lib/auth-client";
 import Footer from "@/components/Footer";
 
 
@@ -24,20 +24,20 @@ export const metadata: Metadata = {
   description: "Busca y personaliza tu vestuario",
 };
 
-function getUser() {
-  const access = getAccessToken()
-  if (access) {
-    return decodeAccessToken(access)
-  }
-  return null
-}
+//function getUser() {
+  //const access = getAccessToken()
+//  if (access) {
+  //  return decodeAccessToken(access)
+  //}
+  //return null
+//}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+  //const us = getUser();
   return (
     <html lang="en">
       <body

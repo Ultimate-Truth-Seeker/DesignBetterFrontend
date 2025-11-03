@@ -1,5 +1,5 @@
 'use client';
-import { Badge } from '../ui/Badge';
+import { Badge } from '../ui/badge';
 
 type Props = {
   pendientes: number;

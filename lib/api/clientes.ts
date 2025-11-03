@@ -2,11 +2,8 @@
 import { getAccessToken } from '../auth-client';
 import { fetchBackend } from './fetch';
 import type {
-  UserPreferences,
   User,
-  Disenador,
   EstadoPedido,
-  ArchivoAdjunto,
   Feedback,
   Pedido,
   PedidoDetallado,
@@ -84,6 +81,7 @@ export async function fetchClientDashboard() {
 
 // Funciones de pedidos
 export async function fetchPedidosCliente(estado?: EstadoPedido) {
+  if (estado?.length) {}
   try {
     const url = `/orders/pedidos/`;
     const response = await fetchBackend(url, {

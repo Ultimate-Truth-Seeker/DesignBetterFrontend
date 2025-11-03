@@ -2,14 +2,14 @@
 'use client'
 
 import { GoogleLogin } from '@react-oauth/google'
-import { useRouter } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
 import { useAuth } from "@/components/AuthProvider"
 import { saveTokens } from "@/lib/auth-store"
 
 
 
 export default function LoginConGoogle() {
-  const router = useRouter()
+  //const router = useRouter()
   const { login } = useAuth()
 
   return (

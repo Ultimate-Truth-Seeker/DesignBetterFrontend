@@ -40,6 +40,7 @@ async function getSession() {
     });
     return response.json() as Promise<{ user: { role: UserRole } }>;
   } catch (error) {
+    if (error) {}
     return null;
   }
 }

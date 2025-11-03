@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 const FILTER_OPTIONS = [
   { value: 'todos', label: 'Todos los pedidos' },

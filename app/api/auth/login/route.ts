@@ -5,7 +5,7 @@ const BACKEND_URL = process.env.BACKEND_URL!;
 
 export async function POST(req: NextRequest) {
   const body = await req.json(); // { email, password } o lo que uses
-  const res = await fetch(${BACKEND_URL}/auth/login, {
+  const res = await fetch(`${BACKEND_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // no mandes credenciales aquí, es login
