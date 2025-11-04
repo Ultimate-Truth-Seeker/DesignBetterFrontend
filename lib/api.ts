@@ -1,4 +1,8 @@
+import { getBaseUrl } from "./api/base-url"
+
 // lib/api.ts
+const baseUrl = getBaseUrl()
+
 export async function registerUser(data: {
     email: string
     password: string
@@ -9,7 +13,7 @@ export async function registerUser(data: {
     if (data.password != data.confirmPassword) {
         throw new Error("Error en el registro: las contraseñas no coinciden")
     }
-    const res = await fetch("http://localhost:8000/auth/register/", {
+    const res = await fetch(`${baseUrl}/auth/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +44,7 @@ export async function registerUser(data: {
     }
   
     const res = await fetch(
-      `http://localhost:8000/auth/activate/${email}:${token}/`,
+      `${baseUrl}/auth/activate/${email}:${token}/`,
       {
         method: "GET",
       }
@@ -55,7 +59,7 @@ export async function registerUser(data: {
   }
  
   export async function loginUser(data: { email: string; password: string }) {
-    const res = await fetch("http://localhost:8000/auth/login/", {
+    const res = await fetch(`${baseUrl}/auth/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +78,7 @@ export async function registerUser(data: {
     return await res.json() // { access: "...", refresh: "..." }
   }
   export async function refreshToken(refresh: string) {
-    const res = await fetch("http://localhost:8000/auth/token/refresh/", {
+    const res = await fetch(`${baseUrl}/auth/token/refresh/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 "use client";
+import { getBaseUrl } from "@/lib/api/base-url";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -10,12 +11,13 @@ export default function ResetPasswordPage() {
 
   const uid = params?.uid as string;
   const token = params?.token as string;
+  const baseUrl = getBaseUrl();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
 
-    const response = await fetch("http://localhost:8000/auth/password-reset/confirm/", {
+    const response = await fetch(`${baseUrl}/auth/password-reset/confirm/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

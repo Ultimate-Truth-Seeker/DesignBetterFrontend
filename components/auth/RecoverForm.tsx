@@ -1,15 +1,16 @@
 "use client";
+import { getBaseUrl } from "@/lib/api/base-url";
 import { useState } from "react";
 
 export default function RecoverForm() {
     const [email, setEmail] = useState("");
       const [status, setStatus] = useState<null | "success" | "error" | "loading">(null);
-    
+    const baseURL = getBaseUrl()
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("loading");
     
-        const res = await fetch("http://localhost:8000/auth/password-reset/", {
+        const res = await fetch(`${baseURL}/auth/password-reset/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ correo_electronico: email }),

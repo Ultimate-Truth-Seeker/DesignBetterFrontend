@@ -7,7 +7,7 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:8000"
+      NEXT_PUBLIC_BACKEND_URL: "http://localhost:8000"
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:3000 || exit 1"]
       interval: 5s

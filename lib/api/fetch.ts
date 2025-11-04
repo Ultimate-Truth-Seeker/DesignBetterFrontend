@@ -1,9 +1,11 @@
+import { getBaseUrl } from "./base-url";
+
 // lib/api/fetch.ts
 export async function fetchBackend(
     endpoint: string,
     options?: RequestInit
   ): Promise<Response> {
-    const baseUrl = 'http://localhost:8000';
+    const baseUrl = getBaseUrl();
     
     const headers = {
       'Content-Type': 'application/json',

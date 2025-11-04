@@ -39,7 +39,6 @@ export default function PersonalizarTemplatePage() {
   const AvatarViewer = dynamic(() => import("./avatarviewer"), { ssr: false });
 
   const [height, setHeight] = useState(170);
-  setHeight(170)
   const [shoulder, setShoulder] = useState(40);
   const [waist, setWaist] = useState(70);
   const [generate, setGenerate] = useState(false);
@@ -91,6 +90,8 @@ export default function PersonalizarTemplatePage() {
         setWaist(Number(value))
       } else if (code === "shoulder_width") {
         setShoulder(Number(value))
+      } else {
+        setHeight(height)
       }
     }
     

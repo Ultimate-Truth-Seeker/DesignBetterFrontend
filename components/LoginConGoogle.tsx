@@ -5,20 +5,21 @@ import { GoogleLogin } from '@react-oauth/google'
 //import { useRouter } from 'next/navigation'
 import { useAuth } from "@/components/AuthProvider"
 import { saveTokens } from "@/lib/auth-store"
+import { getBaseUrl } from '@/lib/api/base-url'
 
 
 
 export default function LoginConGoogle() {
   //const router = useRouter()
   const { login } = useAuth()
-
+  const baseUrl = getBaseUrl()
   return (
     <div className="flex justify-center">
       <GoogleLogin
         onSuccess={async (credentialResponse) => {
           const token = credentialResponse.credential
 
-          const response = await fetch('http://localhost:8000/auth/social/google/', {
+          const response = await fetch(`${baseUrl}/auth/social/google/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
