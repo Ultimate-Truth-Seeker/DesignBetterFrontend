@@ -11,6 +11,7 @@ export default function RegisterForm() {
     const [name, setName] = useState("")
     const [role, setRole] = useState("")
     const [error, setError] = useState("")
+    const [acceptedTerms, setAcceptedTerms] = useState(false)
     const { isAuthenticated } = useAuth()
     const router = useRouter()
   
@@ -24,6 +25,13 @@ export default function RegisterForm() {
     e.preventDefault()
     setError("")
     setRole("")
+    
+    // Validación de términos y condiciones
+    if (!acceptedTerms) {
+      setError("Debes aceptar los Términos y Condiciones para continuar")
+      return
+    }
+    
     // Validación rápida en el cliente
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden")
@@ -60,7 +68,11 @@ export default function RegisterForm() {
       <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">O</div>
 
       {/* Form */}
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {error && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+          <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="grid gap-y-4">
@@ -129,17 +141,44 @@ export default function RegisterForm() {
           {/* End Form Group */}
 
           {/* Checkbox */}
-          <div className="flex items-center">
-            <div className="flex">
-              <input id="remember-me" name="remember-me" type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+          <div className="flex items-start">
+            <div className="flex items-center h-5">
+              <input 
+                id="accept-terms" 
+                name="accept-terms" 
+                type="checkbox" 
+                className="shrink-0 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+              />
             </div>
             <div className="ms-3">
-            <label htmlFor="remember-me" className="text-sm dark:text-white">Acepto los <a className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500" href="#">Términos y Condiciones</a></label>
-          </div>
+              <label htmlFor="accept-terms" className="text-sm dark:text-white">
+                Acepto los{" "}
+                <a 
+                  className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500" 
+                  href="/terminos-condiciones" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Términos y Condiciones
+                </a>
+              </label>
+            </div>
           </div>
           {/* End Checkbox */}
 
-          <button type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Registrarse</button>
+          <button 
+            type="submit" 
+            disabled={!acceptedTerms}
+            className={`w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white transition-all ${
+              acceptedTerms 
+                ? 'bg-blue-600 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700' 
+                : 'bg-gray-400 cursor-not-allowed dark:bg-neutral-700'
+            }`}
+          >
+            Registrarse
+          </button>
         </div>
       </form>
       {/* End Form */}
