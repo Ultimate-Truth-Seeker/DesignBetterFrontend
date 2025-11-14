@@ -38,10 +38,18 @@ export interface ExposedOption {
 // Compatibility rules between options
 export interface CompatibilityRule {
   id: string
-  condition: string // e.g., "collar === 'mao'"
-  action: "forbid" | "require" | "suggest"
-  target: string // e.g., "cuff !== 'french'"
-  message: string
+  condition: {
+    param: string
+    operator: "equals" | "not_equals" | "in" | "not_in"
+    value: any
+  }
+  then: {
+    param: string
+    action: "disable" | "require" | "set" | "suggest"
+    value?: any
+    allowed_values?: any[]
+  }
+  message?: string
 }
 
 // Materials policy per piece

@@ -11,7 +11,7 @@ export const templateApi = {
     // Return mock data
     return [
       {
-        id: "tpl-1",
+        id: "1",
         code: "TPL-SHIRT-001",
         name: "Classic Button-Down Shirt",
         pattern_base_id: "pat-1",
@@ -49,9 +49,18 @@ export const templateApi = {
         compatibility_rules: [
           {
             id: "rule-1",
-            condition: "collar_type === 'button-down'",
-            action: "suggest",
-            target: "fit === 'slim'",
+            condition: {
+              param: "collar_type",
+              operator: "equals",
+              value: "button-down"
+            },//"collar_type === 'button-down'",
+            //action: "suggest",
+            then: {
+              param: "fit",
+              action: "suggest",
+              value: "slim"
+            },
+            //target: "fit === 'slim'",
             message: "Button-down collars work best with slim fit",
           },
         ],
@@ -184,9 +193,18 @@ export const templateApi = {
         compatibility_rules: [
           {
             id: "rule-2",
-            condition: "fit === 'slim'",
-            action: "forbid",
-            target: "pleats === true",
+            condition: {
+              param: "fit",
+              operator: "equals",
+              value: "slim"
+            },//"collar_type === 'button-down'",
+            //action: "suggest",
+            then: {
+              param: "pleats",
+              action: "disable",
+              value: "true"
+            },
+            //target: "fit === 'slim'",
             message: "Slim fit pants cannot have pleats",
           },
         ],
