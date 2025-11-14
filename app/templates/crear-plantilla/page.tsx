@@ -84,7 +84,7 @@ export default function CrearPlantillaPage() {
       const materialsPolicy: Record<string, {allowed_materials: string[]}> = {}
       if (selectedPattern.pieces) {
         selectedPattern.pieces.forEach((piece: any) => {
-          materialsPolicy[piece.id]["allowed_materials"] = []
+          materialsPolicy[piece.id] = {allowed_materials: []}
         })
       }
 
@@ -160,13 +160,11 @@ export default function CrearPlantillaPage() {
 
   const toggleExposedOption = (paramKey: string, controlType: string) => {
     setTemplate((prev) => {
-      const newExposedOptions = { ...prev.exposed_options } as Record<string, any>
-      if (newExposedOptions[paramKey]) {
-        delete newExposedOptions[paramKey]
-      } else {
-        newExposedOptions[paramKey] = { type: controlType }
-      }
-      return { ...prev, exposed_options: newExposedOptions as ExposedOption[] }
+      const isExposed = (prev.exposed_options || []).filter((op) => paramKey === op.parameter_key).length > 0
+      if (!isExposed) {
+        return {...prev, exposed_options: [...(prev.exposed_options || []), {parameter_key: paramKey, type: controlType} as ExposedOption]}
+      } 
+      return { ...prev, exposed_options: [...(prev.exposed_options || [])] }
     })
     setHasUnsavedChanges(true)
   }
@@ -174,7 +172,7 @@ export default function CrearPlantillaPage() {
   const addCompatibilityRule = () => {
     setTemplate((prev) => ({
       ...prev,
-      compatibility_rules: [...(prev.compatibility_rules || []), { id: "", target: "", message: "", condition: "", action: "suggest", description: "" }],
+      compatibility_rules: [...(prev.compatibility_rules || []), { id: "",  message: "", condition: {param: "", operator: "equals", value: ""}, then: {param: "", action: "require"}}],
     }))
     setHasUnsavedChanges(true)
   }
@@ -514,10 +512,10 @@ export default function CrearPlantillaPage() {
                             <div className="space-y-2">
                               <Label>Condición (ej: cuello=mao)</Label>
                               <InputUI
-                                value={rule.condition}
+                                value={rule.condition.param}
                                 onChange={(e) =>
                                   updateCompatibilityRule(index, {
-                                    condition: e.target.value,
+                                    condition: {param: e.target.value, operator: rule.condition.operator, value: rule.condition.value},
                                   })
                                 }
                                 placeholder="parametro=valor"
@@ -526,10 +524,10 @@ export default function CrearPlantillaPage() {
                             <div className="space-y-2">
                               <Label>Acción (ej: puño!=francés)</Label>
                               <InputUI
-                                value={rule.action}
+                                value={rule.then.param}
                                 onChange={(e) =>
                                   updateCompatibilityRule(index, {
-                                    action: e.target.value,
+                                    then: {param: e.target.value, action: rule.then.action}
                                   })
                                 }
                                 placeholder="parametro!=valor"

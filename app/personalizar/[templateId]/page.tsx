@@ -7,19 +7,28 @@ import { InputUI } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
-import { HelpCircle, Save, ArrowRight, ArrowLeft, User } from "lucide-react"
+import { HelpCircle, Save, ArrowRight, ArrowLeft, User, Settings, Loader2 } from "lucide-react"
 import { MEASUREMENT_SCHEMA, MEASUREMENT_GUIDES, type BodyProfile } from "@/types/body-measurement"
 import { MeasurementGuideDialog } from "@/components/measurement-guide-dialog"
 import { BodyProfileStorage } from "@/lib/body-profile-storage"
+import { TemplateOptionsSelector } from "@/components/template-options-selector"
+import { templateApi } from "@/lib/template-api"
+import { configurationApi } from "@/lib/configuration-api"
+import type { DesignerTemplate } from "@/types/designer-template"
+import type { Configuration } from "@/types/configuration"
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation"
 
 export default function PersonalizarTemplatePage() {
   const params = useParams()
   const { templateId } = params
-  console.log(templateId)
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
+
+  // Template data
+  const [template, setTemplate] = useState<DesignerTemplate | null>(null)
 
   // Body measurements state
   const [profileName, setProfileName] = useState("")
@@ -28,6 +37,17 @@ export default function PersonalizarTemplatePage() {
   const [unitSystem, setUnitSystem] = useState<"metric" | "imperial">("metric")
   const [measurements, setMeasurements] = useState<Record<string, number>>({})
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [savedProfileId, setSavedProfileId] = useState<string>("")
+
+  // Template options state
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, any>>({})
+  const [resolvedParams, setResolvedParams] = useState<Record<string, any>>({})
+
+  // Material assignments state
+  const [materialAssignments, setMaterialAssignments] = useState<Record<string, string>>({})
+
+  // Configuration
+  const [configuration, setConfiguration] = useState<Configuration | null>(null)
 
   // Guide dialog state
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null)
@@ -58,8 +78,22 @@ export default function PersonalizarTemplatePage() {
   }, [height, shoulder, waist]);
 
   useEffect(() => {
+    const loadTemplate = async () => {
+      try {
+        setIsLoading(true)
+        const templateData = await templateApi.fetchTemplate(templateId as string)
+        setTemplate(templateData)
+      } catch (error) {
+        console.error("[v0] Error loading template:", error)
+        alert("Error al cargar la plantilla")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadTemplate()
     setSavedProfiles(BodyProfileStorage.getProfiles())
-  }, [])
+  }, [templateId])
 
   const handleMeasurementChange = (code: string, value: string) => {
     const numValue = Number.parseFloat(value)
@@ -94,7 +128,7 @@ export default function PersonalizarTemplatePage() {
         setHeight(height)
       }
     }
-    
+
     setMeasurements({ ...measurements, [code]: numValue })
   }
 
@@ -135,6 +169,7 @@ export default function PersonalizarTemplatePage() {
 
     BodyProfileStorage.saveProfile(profile)
     setSavedProfiles(BodyProfileStorage.getProfiles())
+    setSavedProfileId(profile.id)
     alert("Perfil guardado exitosamente")
   }
 
@@ -147,6 +182,7 @@ export default function PersonalizarTemplatePage() {
       setSizeSystem(profile.size_system)
       setUnitSystem(profile.unit_system)
       setMeasurements(profile.measures)
+      setSavedProfileId(profile.id)
     }
   }
 
@@ -157,18 +193,96 @@ export default function PersonalizarTemplatePage() {
     }
 
     // Save profile automatically before proceeding
-    if (profileName.trim()) {
+    if (profileName.trim() && !savedProfileId) {
       handleSaveProfile()
     }
 
     setCurrentStep(1)
-    // TODO: Navigate to next step (template options)
+  }
+
+  const handleOptionsChange = (options: Record<string, any>, params: Record<string, any>) => {
+    setSelectedOptions(options)
+    setResolvedParams(params)
+  }
+
+  const calculateCostBreakdown = () => {
+    const basePrice = 50//template?.base_price || 50
+    const materialCosts: Record<string, number> = {}
+
+    // Mock material costs
+    Object.keys(materialAssignments).forEach((pieceId) => {
+      materialCosts[pieceId] = 10 // Mock cost per piece
+    })
+
+    const totalMaterialCost = Object.values(materialCosts).reduce((sum, cost) => sum + cost, 0)
+    const customizationFees = Object.keys(selectedOptions).length * 5 // $5 per customization
+    const total = basePrice + totalMaterialCost + customizationFees
+
+    return {
+      base_price: basePrice,
+      material_costs: materialCosts,
+      customization_fees: customizationFees,
+      total,
+    }
+  }
+
+  const handleCreateConfiguration = async () => {
+    if (!template) return
+
+    try {
+      setIsSaving(true)
+
+      const costBreakdown = calculateCostBreakdown()
+
+      const configData: Partial<Configuration> = {
+        template_id: templateId as string,
+        measurement_source: savedProfileId ? "table" : "custom",
+        measurement_table_id: savedProfileId || undefined,
+        custom_measures: !savedProfileId ? measurements : undefined,
+        selected_options: selectedOptions,
+        resolved_params: resolvedParams,
+        pieces_2d: null, // Will be implemented later
+        material_assignments: materialAssignments,
+        cost_breakdown: costBreakdown,
+        price_total: costBreakdown.total,
+        state: "draft",
+      }
+
+      const newConfig = await configurationApi.createConfiguration(configData)
+      setConfiguration(newConfig)
+      const newcdid = configuration?.id || ""
+      console.log(newcdid)
+
+      // Navigate to checkout
+      router.push(`/checkout/config_1730720123456`)//${newConfig.id}`)
+    } catch (error) {
+      console.error("[v0] Error creating configuration:", error)
+      alert("Error al crear la configuración")
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const steps = [
     { id: 0, name: "Medidas Corporales", icon: User },
-    { id: 1, name: "Opciones de Plantilla", icon: ArrowRight },
+    { id: 1, name: "Opciones de Plantilla", icon: Settings },
   ]
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  if (!template) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Plantilla no encontrada</p>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -176,7 +290,10 @@ export default function PersonalizarTemplatePage() {
       <div className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Personalizar Plantilla</h1>
+            <div>
+              <h1 className="text-2xl font-bold">Personalizar Plantilla</h1>
+              <p className="text-sm text-muted-foreground mt-1">{template.name}</p>
+            </div>
             <ButtonUI variant="outline" onClick={() => router.back()}>
               Cancelar
             </ButtonUI>
@@ -208,7 +325,8 @@ export default function PersonalizarTemplatePage() {
       {/* Content */}
       <div className="container mx-auto px-4 py-8">
         {currentStep === 0 && (
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="mx-auto grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 items-start">
+            <div className="space-y-6">
             {/* Profile Selection */}
             <Card className="p-6">
               <h2 className="text-xl font-semibold mb-4">Perfil de Medidas</h2>
@@ -342,15 +460,6 @@ export default function PersonalizarTemplatePage() {
               </div>
             </Card>
 
-            <button
-                onClick={() => setGenerate(true)}
-                className="bg-black text-white px-6 py-2 rounded-lg mb-8"
-            >
-                Generar Avatar
-            </button>
-
-            {generate && <AvatarViewer url={modelUrl} scale={scale} />}
-
             {/* Navigation */}
             <div className="flex justify-between">
               <ButtonUI variant="outline" onClick={() => router.back()}>
@@ -362,15 +471,141 @@ export default function PersonalizarTemplatePage() {
                 <ArrowRight className="h-4 w-4 ml-2" />
               </ButtonUI>
             </div>
+            </div> {/* end left column */}
+
+            {/* Right column: Avatar preview */}
+            <div className="sticky top-4">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Vista previa 3D</h3>
+
+                <button
+                  onClick={() => setGenerate(true)}
+                  className="bg-black text-white px-6 py-2 rounded-lg mb-4"
+                >
+                  Generar Avatar
+                </button>
+
+                {generate && <AvatarViewer url={modelUrl} scale={scale} />}
+              </Card>
+            </div>
           </div>
         )}
 
         {currentStep === 1 && (
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 items-start">
+            <div className="space-y-6">
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Opciones de Plantilla</h2>
-              <p className="text-muted-foreground">Esta sección se implementará en el siguiente paso...</p>
+              <TemplateOptionsSelector template={template} onOptionsChange={handleOptionsChange} />
             </Card>
+
+            {/* Material Assignments */}
+            {[].length > 0 && (//template.pieces && Array.isArray(template.pieces) && template.pieces.length > 0 && (
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Asignación de Materiales</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Selecciona los materiales para cada pieza del patrón
+                </p>
+
+                <div className="space-y-4">
+                  {[].map((piece: any) => (//template.pieces.
+                    <div key={piece.id} className="flex items-center gap-4">
+                      <Label className="w-32">{piece.name}</Label>
+                      <Select
+                        value={materialAssignments[piece.id] || ""}
+                        onValueChange={(value) =>
+                          setMaterialAssignments({
+                            ...materialAssignments,
+                            [piece.id]: value,
+                          })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar material..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(template.materials_policy as any)?.[piece.id]?.map((material: string) => (
+                            <SelectItem key={material} value={material}>
+                              {material}
+                            </SelectItem>
+                          )) || (
+                            <>
+                              <SelectItem value="cotton">Algodón</SelectItem>
+                              <SelectItem value="polyester">Poliéster</SelectItem>
+                              <SelectItem value="wool">Lana</SelectItem>
+                            </>
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
+
+            {/* Cost Summary */}
+            <Card className="p-6 bg-muted/50">
+              <h3 className="text-lg font-semibold mb-4">Resumen de Costos</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Precio base:</span>
+                  <span>${calculateCostBreakdown().base_price}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Materiales:</span>
+                  <span>
+                    ${Object.values(calculateCostBreakdown().material_costs).reduce((sum, cost) => sum + cost, 0)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Personalización:</span>
+                  <span>${calculateCostBreakdown().customization_fees}</span>
+                </div>
+                <div className="border-t pt-2 mt-2">
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total:</span>
+                    <span>${calculateCostBreakdown().total}</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Navigation */}
+            <div className="flex justify-between">
+              <ButtonUI variant="outline" onClick={() => setCurrentStep(0)}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Volver
+              </ButtonUI>
+              <ButtonUI onClick={handleCreateConfiguration} disabled={isSaving}>
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Creando...
+                  </>
+                ) : (
+                  <>
+                    Continuar al Checkout
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </>
+                )}
+              </ButtonUI>
+            </div>
+            </div> {/* end left column */}
+
+            {/* Right column: Avatar preview */}
+            <div className="sticky top-4">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Vista previa 3D</h3>
+
+                <button
+                  onClick={() => setGenerate(true)}
+                  className="bg-black text-white px-6 py-2 rounded-lg mb-4"
+                >
+                  Generar Avatar
+                </button>
+
+                {generate && <AvatarViewer url={modelUrl} scale={scale} />}
+              </Card>
+            </div>
           </div>
         )}
       </div>
