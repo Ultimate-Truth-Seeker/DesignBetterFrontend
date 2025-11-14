@@ -485,7 +485,7 @@ export default function PersonalizarTemplatePage() {
                   Generar Avatar
                 </button>
 
-                {generate && <AvatarViewer url={modelUrl} scale={scale} />}
+                {generate && <AvatarViewer bodyUrl={modelUrl} bodyScale={scale} clothingUrl="/models/macbook_laptop.glb"/>}
               </Card>
             </div>
           </div>
@@ -603,7 +603,7 @@ export default function PersonalizarTemplatePage() {
                   Generar Avatar
                 </button>
 
-                {generate && <AvatarViewer url={modelUrl} scale={scale} />}
+                {generate && <AvatarViewer bodyUrl="/models/macbook_laptop.glb" bodyScale={scale} clothingUrl="/models/Formal_Dress.glb"/>}
               </Card>
             </div>
           </div>

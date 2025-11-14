@@ -39,6 +39,7 @@
     "sonner": "^2.0.7",
     "three": "^0.180.0",
     "tw-animate-css": "^1.3.7",
+    "use-ammojs": "^0.2.21",
     "zod": "^3.22.4",
     "zustand": "^5.0.8"
   },
