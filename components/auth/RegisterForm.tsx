@@ -28,7 +28,7 @@ export default function RegisterForm() {
     
     // Validación de términos y condiciones
     if (!acceptedTerms) {
-      setError("Debes aceptar los Términos y Condiciones para continuar")
+      setError("Para continuar acepta los Términos y Condiciones")
       return
     }
     
@@ -69,8 +69,8 @@ export default function RegisterForm() {
 
       {/* Form */}
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-          <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+        <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 mb-4">
+          <p className="text-red-600 dark:text-red-400 text-sm line-clamp-2">{error}</p>
         </div>
       )}
 
@@ -80,7 +80,7 @@ export default function RegisterForm() {
           <div>
           <label htmlFor="email" className="block text-sm mb-2 dark:text-white">Correo electrónico</label>
             <div className="relative">
-              <input type="email" id="email" name="email" className="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="email-error" value={email}
+              <input type="email" id="email" name="email" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="email-error" value={email}
           onChange={(e) => setEmail(e.target.value)}/>
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -96,7 +96,7 @@ export default function RegisterForm() {
           <div>
             <label htmlFor="username" className="block text-sm mb-2 dark:text-white">Nombre</label>
             <div className="relative">
-              <input type="nombre" id="nombre" name="nombre" className="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="name-error" value={name}
+              <input type="nombre" id="nombre" name="nombre" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="name-error" value={name}
           onChange={(e) => setName(e.target.value)}/>
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -112,7 +112,7 @@ export default function RegisterForm() {
           <div>
           <label htmlFor="password" className="block text-sm mb-2 dark:text-white">Contraseña</label>
           <div className="relative">
-              <input type="password" id="password" name="password" className="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="password-error" value={password}
+              <input type="password" id="password" name="password" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="password-error" value={password}
           onChange={(e) => setPassword(e.target.value)}/>
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -128,7 +128,7 @@ export default function RegisterForm() {
           <div>
           <label htmlFor="confirm-password" className="block text-sm mb-2 dark:text-white">Confirmar contraseña</label>
           <div className="relative">
-              <input type="password" id="confirm-password" name="confirm-password" className="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="confirm-password-error" value={confirmPassword}
+              <input type="password" id="confirm-password" name="confirm-password" className="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" required aria-describedby="confirm-password-error" value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}/>
               <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                 <svg className="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -170,12 +170,7 @@ export default function RegisterForm() {
 
           <button 
             type="submit" 
-            disabled={!acceptedTerms}
-            className={`w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white transition-all ${
-              acceptedTerms 
-                ? 'bg-blue-600 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700' 
-                : 'bg-gray-400 cursor-not-allowed dark:bg-neutral-700'
-            }`}
+            className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white bg-blue-600 hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 transition-all dark:bg-blue-600 dark:hover:bg-blue-700"
           >
             Registrarse
           </button>
