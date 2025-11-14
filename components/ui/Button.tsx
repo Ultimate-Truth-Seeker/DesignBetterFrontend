@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { forwardRef } from "react";
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -12,13 +11,13 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
 };
 
- const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", as: Comp = "button", asChild, ...props }, ref) => {
-    const Component = asChild ? Comp : "button";
-    console.log(props, Component)
+function Button({ className, variant = "primary", asChild, ...props }: React.ComponentProps<"button"> &
+  ButtonProps) {
+    const Comp = asChild ? Slot : "button";
+    //console.log(Component)
       
     return (
-      <button
+      <Comp
         className={cn(
           "px-4 py-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
           variant === "primary" && "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
@@ -29,14 +28,12 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
           variant === "brand" && "bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-900",
           className
         )}
-        ref={ref}
-        //{...props}
+        //ref={ref}
+        {...props}
       />
     );
   }
-);
 
-Button.displayName = "Button";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
