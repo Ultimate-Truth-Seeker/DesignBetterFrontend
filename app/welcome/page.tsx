@@ -1,5 +1,6 @@
 'use client'
 
+import { getBaseUrl } from '@/lib/api/base-url'
 import { getAccessToken } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -10,9 +11,10 @@ export default function WelcomePage() {
   const handleRoleSelection = async (rol: 'cliente' | 'diseñador') => {
     setLoading(true)
     const token = getAccessToken()
+    const baseURL = getBaseUrl()
 
     try {
-      const response = await fetch('http://localhost:8000/auth/asignar-rol/', {
+      const response = await fetch(`${baseURL}/auth/asignar-rol/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
