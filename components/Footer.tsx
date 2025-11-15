@@ -1,4 +1,5 @@
 import { Instagram, Linkedin, Github } from "lucide-react";
+import Link from 'next/link'
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -20,30 +21,30 @@ export default function Footer() {
         {/* Navegación básica + redes */}
         <div className="flex flex-col items-start gap-4 md:items-end">
           <nav className="flex flex-wrap gap-4 text-sm">
-            <a href="/" className="text-gray-600 hover:text-black">
+            <Link href="/" className="text-gray-600 hover:text-black">
               Inicio
-            </a>
-            <a href="/template/search" className="text-gray-600 hover:text-black">
+            </Link>
+            <Link href="/template/search" className="text-gray-600 hover:text-black">
               Buscar plantillas
-            </a>
-            <a href="/patterns" className="text-gray-600 hover:text-black">
+            </Link>
+            <Link href="/patterns" className="text-gray-600 hover:text-black">
               Patrones
-            </a>
-            <a href="/terminos-condiciones" className="text-gray-600 hover:text-black">
+            </Link>
+            <Link href="/terminos-condiciones" className="text-gray-600 hover:text-black">
               Términos y condiciones
-            </a>
+            </Link>
           </nav>
 
           <div className="flex gap-3">
-            <a href="#" aria-label="Instagram" className="text-gray-600 hover:text-black">
+            <Link href="#" aria-label="Instagram" className="text-gray-600 hover:text-black">
               <Instagram className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="text-gray-600 hover:text-black">
+            </Link>
+            <Link href="#" aria-label="LinkedIn" className="text-gray-600 hover:text-black">
               <Linkedin className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="GitHub" className="text-gray-600 hover:text-black">
+            </Link>
+            <Link href="#" aria-label="GitHub" className="text-gray-600 hover:text-black">
               <Github className="h-5 w-5" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
