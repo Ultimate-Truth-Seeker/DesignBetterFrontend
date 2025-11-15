@@ -67,7 +67,7 @@ function GarmentSoftBody({
 
   if (!geometry) return null;
 
-  const [ref] = useSoftBody<THREE.Mesh>(() => ({
+  const [ref] = useSoftBody(() => ({
     type: SoftBodyType.TRIMESH,
     mass: 1,
   }));
@@ -99,11 +99,11 @@ export default function AvatarViewer({
             <ambientLight intensity={0.6} />
             <directionalLight position={[2, 4, 5]} intensity={1} />
 
-            <AvatarBody url={bodyUrl} scale={bodyScale} />
+            <AvatarBody url={clothingUrl || bodyUrl} scale={bodyScale} />
 
-            {clothingUrl && (
+            {clothingUrl && false && (
               <GarmentSoftBody
-                url={clothingUrl}
+                url={clothingUrl || ""}
                 scale={clothingScale}
                 initialOffset={[0, 0.5, 0]}
               />

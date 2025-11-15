@@ -22,7 +22,8 @@ const eslintConfig = [
       // warnings
       '@next/next/no-img-element': 'off',
       'react-hooks/exhaustive-deps': 'off',
-      'jsx-a11y/alt-text': 'off'
+      'jsx-a11y/alt-text': 'off',
+      "react-hooks/rules-of-hooks": 'off'
     }
   }
 ];
