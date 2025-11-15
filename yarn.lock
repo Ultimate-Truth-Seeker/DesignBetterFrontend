@@ -1497,10 +1497,6 @@ ammo-debug-drawer@^1.0.1:
   resolved "https://registry.npmjs.org/ammo-debug-drawer/-/ammo-debug-drawer-1.0.1.tgz"
   integrity sha512-oPvQh5CQKgFQpIuBMMKxT019aYoONOEnBLn91dAg3CrMWdSP/Om8rLWRX0VkAk45SEK/B0ybXB7nsjXsz8QEBw==
 
-ammo.js@kripken/ammo.js:
-  version "0.0.2"
-  resolved "git+ssh://git@github.com/kripken/ammo.js.git#1ed8b58c7058a5f697f2642ceef8ee20fdd55e10"
-
 ansi-escapes@^4.3.2:
   version "4.3.2"
   resolved "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-4.3.2.tgz"
@@ -4602,7 +4598,6 @@ use-ammojs@^0.2.21:
   integrity sha512-W6lVEOg1Sw7ZU1mcQdT07F9d347Gyb3wwFhvtz0G5masu+Rf0g0bSUo4cAAD0hIo2U+pQTXZZUyVLpMB/cP1KQ==
   dependencies:
     ammo-debug-drawer "^1.0.1"
-    ammo.js kripken/ammo.js
     stats.js "^0.17.0"
     three-stdlib "^2.4.0"
 
